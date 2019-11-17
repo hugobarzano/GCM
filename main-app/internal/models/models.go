@@ -6,3 +6,4 @@ type Workspace struct {
 	Members   int     `json:"members"`
 	Info 	  string  `json:"info"`
 }
+
