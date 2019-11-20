@@ -1,21 +1,30 @@
 package handlers
 
 import (
+	"fmt"
 	"main-app/internal/models"
 	"net/http"
 	"strconv"
 	"github.com/gin-gonic/gin"
+    "github.com/appleboy/gin-jwt"
 )
 
-var workspaces = []models.Workspace{
-	models.Workspace{1, 0, "this is a workspace to generate apps"},
-	models.Workspace{2, 0, "bullshit"},
+var workspaces = []models.Workspace1{
+	models.Workspace1{1, 0, "this is a workspace to generate apps"},
+	models.Workspace1{2, 0, "bullshit"},
 }
 
+func MyWorkspace(c *gin.Context) {
+	c.Header("Content-Type", "application/json")
+	c.JSON(http.StatusOK, workspaces)
+}
 
 
 func GetWorkspace(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
+	claims := jwt.ExtractClaims(c)
+	fmt.Println(claims)
+	fmt.Print(c.Keys)
 	c.JSON(http.StatusOK, workspaces)
 }
 

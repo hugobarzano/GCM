@@ -22,12 +22,13 @@ var jwtMiddleWare *jwtmiddleware.JWTMiddleware
 
 func main() {
 
-
-	c := database.GetMongoClient("mongodb://cesarcor1:cesarcor1@ds049624.mlab.com:49624/cesarcorpdb")
-	err := c.Ping(context.Background(), readpref.Primary())
+	mongoClient := database.GetMongoClient("mongodb://cesarcor1:cesarcor1@ds049624.mlab.com:49624/cesarcorpdb")
+	err := mongoClient.Ping(context.Background(), readpref.Primary())
 	if err != nil {
-		log.Fatal("Couldn't connect to the database", err)
+		log.Fatal("Couldn't connect to MongoDB", err)
 	}
+
+
 
 
 	err = godotenv.Load()
@@ -53,6 +54,7 @@ func main() {
 	}
 
 	// Start and run the server
+	//api.GET("/workspace",auth.AuthMiddleware(jwtMiddleWare),handlers.MyWorkspace)
 	api.GET("/workspaces",auth.AuthMiddleware(jwtMiddleWare),handlers.GetWorkspace)
 	api.POST("/workspace/join/:id", auth.AuthMiddleware(jwtMiddleWare),handlers.JoinWorkspace)
 	router.Run(":3000")

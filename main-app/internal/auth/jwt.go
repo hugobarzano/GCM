@@ -35,7 +35,6 @@ func getPemCert(token *jwt.Token) (string, error) {
 
 	var jwks = Jwks{}
 	err = json.NewDecoder(resp.Body).Decode(&jwks)
-
 	if err != nil {
 		return cert, err
 	}
@@ -74,8 +73,10 @@ func InitAuthMiddleware()*jwtmiddleware.JWTMiddleware{
 			if err != nil {
 				panic(err.Error())
 			}
-
+			fmt.Println(token)
 			result, _ := jwt.ParseRSAPublicKeyFromPEM([]byte(cert))
+			fmt.Println(result)
+			token.Claims.(jwt.MapClaims)
 			return result, nil
 		},
 		SigningMethod: jwt.SigningMethodRS256,
@@ -86,6 +87,7 @@ func InitAuthMiddleware()*jwtmiddleware.JWTMiddleware{
 func AuthMiddleware(middleware *jwtmiddleware.JWTMiddleware) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Get the client secret key
+		fmt.Print(middleware.Options.UserProperty)
 		err := middleware.CheckJWT(c.Writer, c.Request)
 		if err != nil {
 			// Token not found

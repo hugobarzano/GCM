@@ -1,0 +1,8 @@
+{{define "yield"}}
+    <h1>Thanks for reaching out!</h1>
+    <div class="well">
+        <p>{{.Owner}}</p>
+        <p>You are logged in!</p>
+        <form action="/logout" method="post"><input type="submit" value="Logout"></form>
+    </div>
+{{end}}
