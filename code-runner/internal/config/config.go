@@ -32,7 +32,6 @@ func GetConfig() *Config {
 	return cfg
 }
 
-
 func read() *Config {
 
 	c := &Config{

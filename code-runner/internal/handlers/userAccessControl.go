@@ -4,13 +4,13 @@ import (
 	"code-runner/internal/config"
 	"code-runner/internal/constants"
 	"code-runner/internal/models"
-	"go.mongodb.org/mongo-driver/bson"
 	"code-runner/internal/mongo"
 	"code-runner/internal/views"
 	"fmt"
 	"github.com/dghubble/gologin/v2/github"
 	oauth2Login "github.com/dghubble/gologin/v2/oauth2"
 	"github.com/dghubble/sessions"
+	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
 )
 
@@ -47,14 +47,14 @@ func index(w http.ResponseWriter, req *http.Request) {
 
 func workspace(w http.ResponseWriter, req *http.Request) {
 
-	session,err := sessionStore.Get(req,constants.SessionName)
-	if err !=nil{
+	session, err := sessionStore.Get(req, constants.SessionName)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	owner:=session.Values[constants.SessionUserName].(string)
+	owner := session.Values[constants.SessionUserName].(string)
 
-	workspace,err:=models.GetWorkspace(
+	workspace, err := models.GetWorkspace(
 		databaseClient,
 		bson.M{"owner": owner})
 
@@ -63,17 +63,17 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 	//	return
 	//}
 
-	if workspace == nil{
-		fmt.Println("First login for: "+owner)
-		workspace,err=models.CreateWorkspace(databaseClient,&models.Workspace{
-			Owner:owner,
+	if workspace == nil {
+		fmt.Println("First login for: " + owner)
+		workspace, err = models.CreateWorkspace(databaseClient, &models.Workspace{
+			Owner: owner,
 		})
-		if err !=nil {
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-	}else {
-		fmt.Println(owner+ "Already has a workspace")
+	} else {
+		fmt.Println(owner + "Already has a workspace")
 	}
 
 	if err := userAccessViews["workspace"].Render(w, workspace); err != nil {
@@ -83,7 +83,7 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 }
 
 func logout(w http.ResponseWriter, req *http.Request) {
-	if req.Method == "POST" {
+	if req.Method == http.MethodPost {
 		sessionStore.Destroy(w, constants.SessionName)
 	}
 	http.Redirect(w, req, "/", http.StatusFound)
@@ -135,7 +135,6 @@ func setupSession() http.Handler {
 		session.Values[constants.SessionUserKey] = *githubUser.ID
 		session.Values[constants.SessionUserName] = *githubUser.Login
 		session.Values[constants.SessionUserToken] = githubToken.AccessToken
-
 
 		if err = session.Save(w); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)

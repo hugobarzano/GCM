@@ -4,18 +4,57 @@ import (
 	"code-runner/internal/config"
 	"code-runner/internal/mongo"
 	"fmt"
+	"github.com/golang/protobuf/protoc-gen-go/generator"
+	"go.mongodb.org/mongo-driver/bson"
+	"math/rand"
 	"testing"
+	"time"
 )
+var seededRand *rand.Rand = rand.New(
+	rand.NewSource(time.Now().UnixNano()))
+const charset = "abcdefghijklmnopqrstuvwxyz" +
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-func Test_CreateWorkspace(t *testing.T)   {
-	databaseClient:= mongo.GetClient(config.GetConfig().MongoUri)
-	workspace:=CreateWorkspace(databaseClient,
+func StringWithCharset(length int, charset string) string {
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[seededRand.Intn(len(charset))]
+	}
+	return string(b)
+}
+
+func GenerateString(length int) string {
+	return StringWithCharset(length, charset)
+}
+
+func Test_CreateAppWithinWorkspace(t *testing.T) {
+	tesOwner:=GenerateString(10)
+	databaseClient := mongo.GetClient(config.GetConfig().MongoUri)
+	generator.New().Request.GetProtoFile()
+	workspaceCreate,err:=CreateWorkspace(databaseClient,
 		&Workspace{
-			ID: "testing3",
-			Owner: "hugo",
+			Owner: tesOwner,
+			Apps:[]App{},
 		})
 
-	//workspace:=GetWorkspace( databaseClient, bson.M{"owner": "hugo"})
-	fmt.Println(workspace)
+	if err !=nil {
+		t.Errorf(err.Error())
+		t.Fail()
+	}
+	fmt.Println(workspaceCreate)
 
+	workspaceGet,err:=GetWorkspace( databaseClient, bson.M{"owner": tesOwner})
+	fmt.Println(err)
+	fmt.Println(workspaceGet)
+
+	newApp:=App{
+		Name:"appName",
+		Repository:"http://github.user.repo",
+		Url: "TBD",
+	}
+
+	workspaceWithApp,err := InsertAppWithinWorkspace(databaseClient,workspaceGet,newApp)
+
+	fmt.Println(workspaceWithApp)
+	fmt.Println(err)
 }

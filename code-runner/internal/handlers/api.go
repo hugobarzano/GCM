@@ -14,6 +14,8 @@ func NewApi() *http.ServeMux {
 	mux.HandleFunc("/", index)
 	mux.Handle("/workspace", requireLogin(http.HandlerFunc(workspace)))
 	mux.HandleFunc("/logout", logout)
+	mux.HandleFunc("/apps", createApp)
+	mux.HandleFunc("/test", test)
 
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,
@@ -25,8 +27,8 @@ func NewApi() *http.ServeMux {
 
 	stateConfig := gologin.DebugOnlyCookieConfig
 	mux.Handle("/github/login", github.StateHandler(
-		stateConfig, github.LoginHandler(oauth2Config,nil)))
+		stateConfig, github.LoginHandler(oauth2Config, nil)))
 	mux.Handle("/github/callback", github.StateHandler(
-		stateConfig, github.CallbackHandler(oauth2Config, setupSession(),nil)))
+		stateConfig, github.CallbackHandler(oauth2Config, setupSession(), nil)))
 	return mux
 }

@@ -24,9 +24,9 @@ func GetClient(uri string) *mongo.Client {
 	return client
 }
 
-func TestMongoConnection()  {
+func TestMongoConnection() {
 
-	client:= GetClient(config.GetConfig().MongoUri)
+	client := GetClient(config.GetConfig().MongoUri)
 	err := client.Ping(context.Background(), readpref.Primary())
 	if err != nil {
 		log.Fatal("Couldn't connect to the MongoDB", err)
@@ -34,4 +34,3 @@ func TestMongoConnection()  {
 		log.Println("Connected to MongoDB!")
 	}
 }
-

@@ -8,37 +8,62 @@ import (
 )
 
 type App struct {
-	ID         string `bson:"_id" json:"_id,omitempty"`
-	Repository string `json:"repository"`
-	Url        string `json:"url"`
+	Name       string `bson:"_id"  json:"name"`
+	Repository string `bson:"repo" json:"repo"`
+	Spec       string `bson:"spec" json:"spec"`
+	Url        string `bson:"url"  json:"url"`
 }
 
-
 type Workspace struct {
-	ID    string `bson:"_id" json:"_id,omitempty"`
-	Owner string `bson:"owner" json:"owner,required"`
+	Owner string `bson:"_id" json:"owner,required"`
+	Des   string `bson:"des" json:"des,omitempty"`
 	Apps  []App  `bson:"apps" json:"apps,omitempty"`
 }
 
+func toMongoDoc(v interface{}) (doc *bson.D, err error) {
+	data, err := bson.Marshal(v)
+	if err != nil {
+		return
+	}
+
+	err = bson.Unmarshal(data, &doc)
+	return
+}
 
 
 func GetWorkspace(client *mongo.Client, filter bson.M) (*Workspace,error) {
 	var workspace *Workspace
 	collection := client.Database(constants.Database).Collection(constants.WorkspacesCollection)
 	documentReturned := collection.FindOne(context.TODO(), filter)
+
 	if err:=documentReturned.Decode(&workspace);err!=nil{
 		return nil, err
 	}
+
 	return workspace, nil
 }
 
 func CreateWorkspace(client *mongo.Client, ws *Workspace) (*Workspace,error) {
 	collection := client.Database(constants.Database).Collection(constants.WorkspacesCollection)
-	insertResult, err := collection.InsertOne(context.Background(), ws)
+	_, err := collection.InsertOne(context.Background(), ws)
+
 	if err != nil {
 		return  nil, err
 	}
-	ws.ID=insertResult.InsertedID.(string)
+
 	return ws, nil
 }
 
+func InsertAppWithinWorkspace(client *mongo.Client, ws *Workspace, app App) (*Workspace, error) {
+	collection := client.Database(constants.Database).Collection(constants.WorkspacesCollection)
+	query := bson.M{"owner": ws.Owner}
+	change := bson.M{"$push":bson.M{"apps":app}}
+	_,err:=collection.UpdateOne(context.Background(),query,change)
+
+	if err != nil {
+		return  nil, err
+	}
+
+	ws.Apps=append(ws.Apps,app)
+	return ws,nil
+}

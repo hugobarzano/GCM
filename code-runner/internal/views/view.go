@@ -9,7 +9,6 @@ import (
 
 var (
 	layoutsDir string = "internal/views/layouts"
-
 )
 
 type View struct {
