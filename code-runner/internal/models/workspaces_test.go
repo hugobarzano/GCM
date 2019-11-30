@@ -48,11 +48,12 @@ func Test_CreateAppWithinWorkspace(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(workspaceGet)
 
-	newApp:=App{
+	newApp:=&App{
 		Name:"appName",
 		Repository:"http://github.user.repo",
 		Url: "TBD",
 		Spec:"TBD",
+		Owner: tesOwner,
 	}
 
 	workspaceWithApp,err := InsertAppWithinWorkspace(databaseClient,workspaceGet,newApp)

@@ -14,6 +14,7 @@ type App struct {
 	Spec       string `bson:"spec" json:"spec"`
 	Des   string `bson:"des" json:"des,omitempty"`
 	Url        string `bson:"url"  json:"url"`
+	Owner        string `bson:"owner"  json:"owner"`
 }
 
 type Workspace struct {

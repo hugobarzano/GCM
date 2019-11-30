@@ -11,14 +11,14 @@ const (
 	HttpAddress          = "localhost:8080"
 	Database             = "generative-cloud"
 	WorkspacesCollection = "workspaces"
-	SourceCode = "https://github.com/hugobarzano/GCM"
+	SourceCode 			 = "https://github.com/hugobarzano/GCM"
 )
 
 
 
 var (
 	Version = "0.0.0"
-	GeneratorBanner =  `
+	GeneratedBanner =  `
 ***This App has been generated***`+"\n"+`
 ***Timestamp*** `+ time.Now().String()+ ``+"\n"+`
 gcm/`+Version+``+"\n"+`[source-code](`+SourceCode+`)`+"\n"+`

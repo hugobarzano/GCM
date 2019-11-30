@@ -24,29 +24,29 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 	}
 
 	session, err := sessionStore.Get(req, constants.SessionName)
-
 	if err != nil {
 		http.Error(w,
 			fmt.Sprintf("Session Error: %s", err.Error()),
 			http.StatusInternalServerError)
 		return
 	}
+	accessToken := session.Values[constants.SessionUserToken].(string)
+	user := session.Values[constants.SessionUserName].(string)
 
 	app := &models.App{
 		Name: strings.Replace(
 			req.FormValue("name"), "\"", "", -1),
 		Des: strings.Replace(
 			req.FormValue("description"), "\"", "", -1),
+			Owner:user,
 	}
 
-	accessToken := session.Values[constants.SessionUserToken].(string)
 	githubClient := repos.NewGithubClient(ctx, accessToken)
 	appRepo := githubClient.CreateRepo(
 		ctx,
 		app.Name,
 		app.Des)
 	app.Repository=appRepo.GetURL()
-	user := session.Values[constants.SessionUserName].(string)
 	workspace, err := models.GetWorkspace(databaseClient, bson.M{"_id": user})
 	_, err = models.InsertAppWithinWorkspace(databaseClient, workspace, app)
 
