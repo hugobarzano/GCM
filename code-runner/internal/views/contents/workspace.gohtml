@@ -12,8 +12,7 @@
     <div class="list-group">
     {{range $element := .Apps}}
         <li class="list-group-item enabled">{{$element.Name}}
-            <form action="/remove" method="put">
-                <input type="hidden" name="app" value="{{$element.Name}}" />
+            <form action="/remove/{{$element.Name}}" method="post">
                 <input type="submit" value="Delete APP">
             </form>
         </li>

@@ -5,10 +5,10 @@ import (
 	"code-runner/internal/models"
 	"code-runner/internal/repos"
 	"fmt"
-	googleGithub "github.com/google/go-github/github"
+	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
-	"log"
 	"net/http"
+	"strings"
 )
 
 func createApp(w http.ResponseWriter, req *http.Request) {
@@ -17,7 +17,7 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 
 	if err := req.ParseForm(); err != nil {
 		http.Error(w,
-			fmt.Sprintf("Error parsing form %s",err.Error()),
+			fmt.Sprintf("Error parsing form %s", err.Error()),
 			http.StatusInternalServerError)
 		return
 	}
@@ -26,30 +26,32 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		http.Error(w,
-			fmt.Sprintf("Session Error: %s",err.Error()),
+			fmt.Sprintf("Session Error: %s", err.Error()),
 			http.StatusInternalServerError)
 		return
 	}
 
-	accessToken := session.Values[constants.SessionUserToken].(string)
-	githubClient := repos.NewGithubClient(ctx,accessToken)
-	appRepo:=githubClient.CreateRepo(
-		ctx,
-		req.FormValue("name"),
-		req.FormValue("description"),)
 	app := models.App{
-		Name:       googleGithub.Stringify(appRepo.Name),
-		Repository: appRepo.GetURL(),
-		Url:        "TBD",
-		Spec: "TBD",
+		Name: strings.Replace(
+			req.FormValue("name"), "\"", "", -1),
+		Des: strings.Replace(
+			req.FormValue("description"), "\"", "", -1),
 	}
-	user:=session.Values[constants.SessionUserName].(string)
-	workspace,err:=models.GetWorkspace( databaseClient, bson.M{"_id": user})
-	_,err = models.InsertAppWithinWorkspace(databaseClient,workspace,app)
+
+	accessToken := session.Values[constants.SessionUserToken].(string)
+	githubClient := repos.NewGithubClient(ctx, accessToken)
+	appRepo := githubClient.CreateRepo(
+		ctx,
+		app.Name,
+		app.Des)
+	app.Repository=appRepo.GetURL()
+	user := session.Values[constants.SessionUserName].(string)
+	workspace, err := models.GetWorkspace(databaseClient, bson.M{"_id": user})
+	_, err = models.InsertAppWithinWorkspace(databaseClient, workspace, app)
 
 	if err != nil {
 		http.Error(w,
-			fmt.Sprintf("InsertAppWithinWorkspace Error: %s",err.Error()),
+			fmt.Sprintf("InsertAppWithinWorkspace Error: %s", err.Error()),
 			http.StatusInternalServerError)
 		return
 	}
@@ -57,27 +59,41 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 	http.Redirect(w, req, "/workspace", http.StatusFound)
 }
 
-func removeApp(w http.ResponseWriter, r *http.Request)  {
+func removeApp(w http.ResponseWriter, r *http.Request) {
 
-	if r.Method == http.MethodPut {
-		fmt.Println(r.Body)
-		app, ok := r.URL.Query()["app"]
-
-		if !ok || len(app[0]) < 1 {
-			log.Println("Url Param 'app' is missing")
+	if r.Method == http.MethodPost {
+		ctx := r.Context()
+		vars := mux.Vars(r)
+		app := vars["app"]
+		app = strings.Replace(app, "\"", "", -1)
+		fmt.Println(app)
+		if app == "" {
+			http.Error(w,
+				fmt.Sprintf("Url Param 'app' is missing"),
+				http.StatusInternalServerError)
 			return
 		}
+
 		session, _ := sessionStore.Get(r, constants.SessionName)
-		user:=session.Values[constants.SessionUserName].(string)
-		workspace,_:=models.GetWorkspace( databaseClient, bson.M{"_id": user})
-		fmt.Println(app)
-		_,err := models.RemoveAppWithinWorkspace(databaseClient,workspace,app[0])
-		if err!=nil{
-			fmt.Println("error removing app: "+err.Error())
+		user := session.Values[constants.SessionUserName].(string)
+		accessToken := session.Values[constants.SessionUserToken].(string)
+		githubClient := repos.NewGithubClient(ctx, accessToken)
+		res, err := githubClient.DeleteRepo(ctx, user, app)
 
+		if err != nil {
+			http.Error(w,
+				fmt.Sprintf("error removing code repository:%s", err.Error()),
+				http.StatusInternalServerError)
 		}
+		fmt.Println(res)
 
+		workspace, _ := models.GetWorkspace(databaseClient, bson.M{"_id": user})
+		_, err = models.RemoveAppWithinWorkspace(databaseClient, workspace, app)
+		if err != nil {
+			fmt.Println("error removing app: " + err.Error())
 		}
+		http.Redirect(w, r, "/workspace", http.StatusFound)
+	}
 	http.NotFound(w, r)
 	return
 }
