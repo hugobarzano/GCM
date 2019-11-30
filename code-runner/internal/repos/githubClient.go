@@ -36,12 +36,10 @@ func (client *Client)CreateRepo(ctx context.Context,name,des string)*googleGithu
 	return repo
 }
 
-func (client *Client)CommitFile(ctx context.Context,path,repo string,
+func (client *Client)CommitFile(ctx context.Context,user,repo,path string,
 	opts *googleGithub.RepositoryContentFileOptions)  {
 
-	_, _, err := client.github.Repositories.CreateFile(ctx,
-		"", repo,
-		path, opts)
+	_, _, err := client.github.Repositories.CreateFile(ctx, user, repo, path, opts)
 	if err != nil {
 		fmt.Println("Error on commit:"+err.Error())
 	}

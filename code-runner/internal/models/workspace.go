@@ -56,7 +56,7 @@ func CreateWorkspace(client *mongo.Client, ws *Workspace) (*Workspace,error) {
 	return ws, nil
 }
 
-func InsertAppWithinWorkspace(client *mongo.Client, ws *Workspace, app App) (*Workspace, error) {
+func InsertAppWithinWorkspace(client *mongo.Client, ws *Workspace, app *App) (*Workspace, error) {
 	collection := client.Database(constants.Database).Collection(constants.WorkspacesCollection)
 	query := bson.M{"_id": ws.Owner}
 	change := bson.M{"$push":bson.M{"apps":app}}
@@ -66,7 +66,7 @@ func InsertAppWithinWorkspace(client *mongo.Client, ws *Workspace, app App) (*Wo
 		return  nil, err
 	}
 
-	ws.Apps=append(ws.Apps,app)
+	ws.Apps=append(ws.Apps,*app)
 	return ws,nil
 }
 

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
+	"code-runner/internal/generator"
 	"code-runner/internal/models"
 	"code-runner/internal/repos"
 	"fmt"
@@ -31,7 +32,7 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	app := models.App{
+	app := &models.App{
 		Name: strings.Replace(
 			req.FormValue("name"), "\"", "", -1),
 		Des: strings.Replace(
@@ -56,6 +57,9 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	readme:=generator.GenerateAppReadme(app)
+	fileOptions:=repos.BuilFileOptions("Starting app...",user,"com.mail",readme)
+	githubClient.CommitFile(ctx,user,app.Name,"README.md",fileOptions)
 	http.Redirect(w, req, "/workspace", http.StatusFound)
 }
 
@@ -97,16 +101,3 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 	return
 }
-
-//func test(w http.ResponseWriter, r *http.Request) {
-//	fmt.Println("method:", r.Method) //get request method
-//	if r.Method == "GET" {
-//		t, _ := template.ParseFiles("internal/views/contents/workspace.gohtml")
-//		t.Execute(w, nil)
-//	} else {
-//		r.ParseForm()
-//		// logic part of log in
-//		fmt.Println("username:", r.Form["username"])
-//		fmt.Println("password:", r.Form["password"])
-//	}
-//}
