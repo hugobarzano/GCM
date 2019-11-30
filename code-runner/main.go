@@ -6,6 +6,7 @@ import (
 	"code-runner/internal/mongo"
 	"log"
 	"net/http"
+	"time"
 )
 
 func init()  {
@@ -13,8 +14,16 @@ func init()  {
 }
 
 func main() {
+
+	server := &http.Server{
+		Handler:      handlers.NewApi(),
+		Addr:         constants.HttpAddress,
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
 	log.Printf("Starting Server listening on %s\n", constants.HttpAddress)
-	err := http.ListenAndServe(constants.HttpAddress, handlers.NewApi())
+	err := server.ListenAndServe()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

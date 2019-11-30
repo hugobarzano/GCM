@@ -4,13 +4,14 @@ import (
 	"code-runner/internal/config"
 	"github.com/dghubble/gologin/v2"
 	"github.com/dghubble/gologin/v2/github"
+	"github.com/gorilla/mux"
 	"golang.org/x/oauth2"
 	githubOAuth2 "golang.org/x/oauth2/github"
 	"net/http"
 )
 
-func NewApi() *http.ServeMux {
-	mux := http.NewServeMux()
+func NewApi() *mux.Router {
+	mux := mux.NewRouter()
 	mux.HandleFunc("/", index)
 	mux.Handle("/workspace", requireLogin(http.HandlerFunc(workspace)))
 	mux.HandleFunc("/logout", logout)
