@@ -3,6 +3,7 @@ package models
 import (
 	"code-runner/internal/constants"
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -56,7 +57,7 @@ func CreateWorkspace(client *mongo.Client, ws *Workspace) (*Workspace,error) {
 
 func InsertAppWithinWorkspace(client *mongo.Client, ws *Workspace, app App) (*Workspace, error) {
 	collection := client.Database(constants.Database).Collection(constants.WorkspacesCollection)
-	query := bson.M{"owner": ws.Owner}
+	query := bson.M{"_id": ws.Owner}
 	change := bson.M{"$push":bson.M{"apps":app}}
 	_,err:=collection.UpdateOne(context.Background(),query,change)
 
@@ -65,5 +66,23 @@ func InsertAppWithinWorkspace(client *mongo.Client, ws *Workspace, app App) (*Wo
 	}
 
 	ws.Apps=append(ws.Apps,app)
+	return ws,nil
+}
+
+func RemoveAppWithinWorkspace(client *mongo.Client, ws *Workspace, appName string) (*Workspace, error) {
+	collection := client.Database(constants.Database).Collection(constants.WorkspacesCollection)
+	query := bson.M{"_id": ws.Owner}
+	change := bson.M{"$pull":bson.M{"apps":bson.M{"_id":appName}}}
+	_,err:=collection.UpdateOne(context.Background(),query,change)
+
+	if err != nil {
+		return  nil, err
+	}
+	for i:=range ws.Apps{
+		fmt.Println(ws.Apps[i])
+		if ws.Apps[i].Name == appName{
+			ws.Apps[i]=App{}
+		}
+	}
 	return ws,nil
 }

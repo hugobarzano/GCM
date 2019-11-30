@@ -9,9 +9,24 @@
         </div>
     </div>
 
+    <div class="list-group">
+    {{range $element := .Apps}}
+        <li class="list-group-item enabled">{{$element.Name}}
+            <form action="/remove" method="put">
+                <input type="hidden" name="app" value="{{$element.Name}}" />
+                <input type="submit" value="Delete APP">
+            </form>
+        </li>
+    {{end}}
+    </div>
+
+
+    <br><hr>
+    <h1>--</h1>
+    <h1>--</h1>
     <div class="container">
         <h2>Create App</h2>
-        <form class="form-horizontal" action="/apps">
+        <form class="form-horizontal" action="/createApp">
             <div class="form-group">
                 <label class="control-label col-sm-2">
                     Name:

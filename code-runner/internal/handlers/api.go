@@ -14,15 +14,16 @@ func NewApi() *http.ServeMux {
 	mux.HandleFunc("/", index)
 	mux.Handle("/workspace", requireLogin(http.HandlerFunc(workspace)))
 	mux.HandleFunc("/logout", logout)
-	mux.HandleFunc("/apps", createApp)
-	mux.HandleFunc("/test", test)
+	mux.HandleFunc("/createApp", createApp)
+	mux.HandleFunc("/remove", removeApp)
+	//mux.HandleFunc("/test", test)
 
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,
 		ClientSecret: config.GetConfig().GithubClientSecret,
 		RedirectURL:  "http://localhost:8080/github/callback",
 		Endpoint:     githubOAuth2.Endpoint,
-		Scopes:       []string{"public_repo"},
+		Scopes:       []string{"public_repo","delete_repo"},
 	}
 
 	stateConfig := gologin.DebugOnlyCookieConfig

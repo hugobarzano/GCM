@@ -7,6 +7,7 @@ require (
 	github.com/dghubble/sessions v0.1.0
 	github.com/fulldump/goconfig v1.6.0
 	github.com/go-stack/stack v1.8.0 // indirect
+	github.com/golang/protobuf v1.3.1
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/gorilla/mux v1.7.3

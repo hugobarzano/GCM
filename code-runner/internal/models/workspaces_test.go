@@ -34,7 +34,8 @@ func Test_CreateAppWithinWorkspace(t *testing.T) {
 	workspaceCreate,err:=CreateWorkspace(databaseClient,
 		&Workspace{
 			Owner: tesOwner,
-			Apps:[]App{},
+			Apps:  []App{},
+			Des: "testing",
 		})
 
 	if err !=nil {
@@ -43,7 +44,7 @@ func Test_CreateAppWithinWorkspace(t *testing.T) {
 	}
 	fmt.Println(workspaceCreate)
 
-	workspaceGet,err:=GetWorkspace( databaseClient, bson.M{"owner": tesOwner})
+	workspaceGet,err:=GetWorkspace( databaseClient, bson.M{"_id": tesOwner})
 	fmt.Println(err)
 	fmt.Println(workspaceGet)
 
@@ -51,10 +52,19 @@ func Test_CreateAppWithinWorkspace(t *testing.T) {
 		Name:"appName",
 		Repository:"http://github.user.repo",
 		Url: "TBD",
+		Spec:"TBD",
 	}
 
 	workspaceWithApp,err := InsertAppWithinWorkspace(databaseClient,workspaceGet,newApp)
 
 	fmt.Println(workspaceWithApp)
 	fmt.Println(err)
-}
+
+	newApp.Name="appNameToDele"
+	workspaceWithApp,err = InsertAppWithinWorkspace(databaseClient,workspaceGet,newApp)
+
+	workspaceWithoutApp,err:=RemoveAppWithinWorkspace(databaseClient,workspaceWithApp,newApp.Name)
+
+	fmt.Println(workspaceWithoutApp)
+	fmt.Println(err)
+	}
