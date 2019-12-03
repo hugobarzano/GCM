@@ -3,6 +3,7 @@ package handlers
 import (
 	"code-runner/internal/config"
 	"code-runner/internal/constants"
+	"code-runner/internal/deploy"
 	"code-runner/internal/mongo"
 	"code-runner/internal/views"
 	"github.com/dghubble/sessions"
@@ -18,7 +19,11 @@ var (
 		"workspace": views.NewView(
 			"base",
 			contentsDir+"/workspace.gohtml"),
+		"generate": views.NewView(
+			"base",
+			contentsDir+"/generate.gohtml"),
 	}
 
 	databaseClient = mongo.GetClient(config.GetConfig().MongoUri)
+	deployClient = deploy.GetDockerClient()
 )

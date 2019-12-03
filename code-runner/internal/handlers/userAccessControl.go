@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/dghubble/gologin/v2/github"
 	oauth2Login "github.com/dghubble/gologin/v2/oauth2"
-	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
 )
 
@@ -38,8 +37,7 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 	user := session.Values[constants.SessionUserName].(string)
 
 	workspace, err := models.GetWorkspace(
-		databaseClient,
-		bson.M{"_id": user})
+		databaseClient,user)
 
 	//if err !=nil{ //Preguntar a ivan como controlar error
 	//	http.Error(w, err.Error(), http.StatusInternalServerError)

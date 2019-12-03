@@ -56,15 +56,15 @@ func Test_CreateAppWithinWorkspace(t *testing.T) {
 		Owner: tesOwner,
 	}
 
-	workspaceWithApp,err := InsertAppWithinWorkspace(databaseClient,workspaceGet,newApp)
+	workspaceWithApp,err := PushApp(databaseClient,workspaceGet,newApp)
 
 	fmt.Println(workspaceWithApp)
 	fmt.Println(err)
 
 	newApp.Name="appNameToDele"
-	workspaceWithApp,err = InsertAppWithinWorkspace(databaseClient,workspaceGet,newApp)
+	workspaceWithApp,err = PushApp(databaseClient,workspaceGet,newApp)
 
-	workspaceWithoutApp,err:=RemoveAppWithinWorkspace(databaseClient,workspaceWithApp,newApp.Name)
+	workspaceWithoutApp,err:= PopApp(databaseClient,workspaceWithApp,newApp.Name)
 
 	fmt.Println(workspaceWithoutApp)
 	fmt.Println(err)

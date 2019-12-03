@@ -11,10 +11,24 @@
 
     <div class="list-group">
     {{range $element := .Apps}}
-        <li class="list-group-item enabled">{{$element.Name}}
+        <li class="list-group-item enabled"><h3>{{$element.Name}}</h3>
+            <br>
+            <br>
+            <p><h4>Description: </h4> {{$element.Des}}</p>
+            <a href="{{$element.Repository}}">Source-Code</a>
+
+            <hr>
+            <hr>
+            <div id="generate">
+                <a class="btn btn-large btn-info"
+                   href="/generate/{{$element.Name}}">Generate</a>
+            </div>
+
+            <hr>
             <form action="/remove/{{$element.Name}}" method="post">
                 <input type="submit" value="Delete APP">
             </form>
+
         </li>
     {{end}}
     </div>

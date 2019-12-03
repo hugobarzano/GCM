@@ -17,6 +17,8 @@ func NewApi() *mux.Router {
 	mux.HandleFunc("/logout", logout)
 	mux.HandleFunc("/createApp", createApp)
 	mux.HandleFunc("/remove/{app}", removeApp)
+	mux.HandleFunc("/generate/{app}", generateApp).
+		Methods(http.MethodGet,http.MethodPost)
 	//mux.HandleFunc("/test", test)
 
 	oauth2Config := &oauth2.Config{

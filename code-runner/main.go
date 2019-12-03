@@ -18,7 +18,6 @@ func main() {
 	server := &http.Server{
 		Handler:      handlers.NewApi(),
 		Addr:         constants.HttpAddress,
-		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
