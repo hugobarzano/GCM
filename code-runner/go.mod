@@ -3,6 +3,7 @@ module code-runner
 go 1.13
 
 require (
+	github.com/CenturyLinkLabs/docker-reg-client v0.0.0-20160427202337-1f659e57f245
 	github.com/Microsoft/go-winio v0.4.14 // indirect
 	github.com/dghubble/gologin/v2 v2.2.0
 	github.com/dghubble/sessions v0.1.0

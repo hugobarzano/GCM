@@ -114,7 +114,7 @@ func (client *Client)GetRepoTar(ctx context.Context,app models.App)error {
 
 func (client *Client)DeleteRepo(ctx context.Context,owner,repo string)(
 	*googleGithub.Response, error){
-
+	client.github.Repositories.Paackages
 	res, err := client.github.Repositories.Delete(ctx,owner,repo)
 
 	if err != nil {

@@ -18,7 +18,7 @@ func NewApi() *mux.Router {
 	mux.HandleFunc("/createApp", createApp)
 	mux.HandleFunc("/remove/{app}", removeApp)
 	mux.HandleFunc("/generate/{app}", generateApp).
-		Methods(http.MethodGet,http.MethodPost)
+		Methods(http.MethodGet, http.MethodPost)
 	//mux.HandleFunc("/test", test)
 
 	oauth2Config := &oauth2.Config{
@@ -26,7 +26,12 @@ func NewApi() *mux.Router {
 		ClientSecret: config.GetConfig().GithubClientSecret,
 		RedirectURL:  "http://localhost:8080/github/callback",
 		Endpoint:     githubOAuth2.Endpoint,
-		Scopes:       []string{"public_repo","delete_repo"},
+		Scopes: []string{
+			"public_repo",
+			"delete_repo",
+			"read:packages",
+			"write:packages",
+			"delete:packages"},
 	}
 
 	stateConfig := gologin.DebugOnlyCookieConfig

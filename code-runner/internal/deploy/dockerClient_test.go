@@ -1,6 +1,7 @@
 package deploy
 
 import (
+	"bytes"
 	"code-runner/internal/models"
 	"code-runner/internal/tools"
 	"context"
@@ -10,20 +11,56 @@ import (
 	"testing"
 )
 
-func TestClient_RunContainer(t *testing.T) {
+func TestClient_Push(t *testing.T) {
+
 	deployClient := GetDockerClient()
+
+	opt:=types.ImagePushOptions{
+		All: true,
+		RegistryAuth:"123",
+
+	}
+
+	auth:= types.AuthConfig{
+		Username: "user",
+		Password: "pass",
+	}
+
+	body,err:=deployClient.docker.RegistryLogin(context.Background(),auth)
+	fmt.Println(body)
+
+
+	resp, err := deployClient.docker.ImagePush(context.Background(), "docker.io/djan:latest", opt)
+
+
+	if err != nil{
+		fmt.Println(err)
+	}
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp)
+	newStr := buf.String()
+
+	fmt.Printf(newStr)
+
+	fmt.Println(resp)
+
+}
+
+func TestClient_RunContainer(t *testing.T) {
+	//deployClient := GetDockerClient()
 	//deployClient.RunContainerFromImage(context.Background(),"alpine")
 	//
 	//d:=`FROM    httpd:2.4
 	//			MAINTAINER    hugobarzano `
-	app := &models.App{
-		Name:  "apache",
-		Owner: "hugobarzano",
-	}
+	//app := &models.App{
+	//	Name:  "apache",
+	//	Owner: "hugobarzano",
+	//}
 
-	err:=deployClient.BuildImage(context.Background(),app)
+	//err:=deployClient.BuildImage(context.Background(),*app)
 
-	fmt.Println(err)
+	//fmt.Println(err)
 }
 
 func Test_New(t *testing.T)  {
@@ -35,7 +72,7 @@ func Test_New(t *testing.T)  {
 
 	deployClient := GetDockerClient()
 
-	repoPath:=tools.GetAppLocalPath(app)
+	repoPath:=tools.GetAppLocalPath(*app)
 	dockerBuildContext, err := os.Open(repoPath)
 	defer dockerBuildContext.Close()
 	if err!=nil{
