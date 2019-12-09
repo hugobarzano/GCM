@@ -36,7 +36,7 @@ func (client *Client)CreateRepo(ctx context.Context,name,des string)*googleGithu
 		Name:        googleGithub.String(name),
 		Private:     googleGithub.Bool(false),
 		Description: googleGithub.String(des),
-	}
+		}
 	repo, _, err := client.github.Repositories.Create(ctx, "", repoSpec)
 	if err != nil {
 		fmt.Println("Error creating repo"+err.Error())
@@ -46,13 +46,29 @@ func (client *Client)CreateRepo(ctx context.Context,name,des string)*googleGithu
 	return repo
 }
 
+func (client *Client)CreateFile(ctx context.Context,user,repo,path string,
+	opts *googleGithub.RepositoryContentFileOptions)  (*googleGithub.RepositoryContentResponse,error){
+
+		responseCon,res, err := client.github.Repositories.CreateFile(ctx, user, repo, path, opts)
+	if err != nil {
+		fmt.Println(err)
+		return nil,err
+	}
+	fmt.Println(responseCon)
+	fmt.Println(res)
+	return responseCon,err
+}
+
 func (client *Client)CommitFile(ctx context.Context,user,repo,path string,
 	opts *googleGithub.RepositoryContentFileOptions)  (*googleGithub.RepositoryContentResponse,error){
 
 	// if file exist we need to send sha attribute to override file
 
-	content,_,res,err:=client.github.Repositories.GetContents(ctx, user, repo, path, nil)
-
+	content,dir,res,err:=client.github.Repositories.GetContents(ctx, user, repo, path, nil)
+	fmt.Println("GET CONTENT:")
+	fmt.Println(content)
+	fmt.Println(res)
+	fmt.Println(dir)
 	if err!=nil{
 		if res.StatusCode != http.StatusNotFound{
 			return nil,err
@@ -62,11 +78,18 @@ func (client *Client)CommitFile(ctx context.Context,user,repo,path string,
 	if sha:=content.GetSHA();sha!=""{
 		opts.SHA=googleGithub.String(sha)
 	}
-	response, _, err := client.github.Repositories.CreateFile(ctx, user, repo, path, opts)
+
+	fmt.Println("SHA:")
+	fmt.Println(opts.SHA)
+	fmt.Println("CreateFILE")
+	responseCon,res, err := client.github.Repositories.CreateFile(ctx, user, repo, path, opts)
 	if err != nil {
+		fmt.Println(err)
 		return nil,err
 	}
-	return response,err
+	fmt.Println(responseCon)
+	fmt.Println(res)
+	return responseCon,err
 }
 
 func (client *Client)GetFile(ctx context.Context,user,repo,path string)string  {
@@ -114,7 +137,6 @@ func (client *Client)GetRepoTar(ctx context.Context,app models.App)error {
 
 func (client *Client)DeleteRepo(ctx context.Context,owner,repo string)(
 	*googleGithub.Response, error){
-	client.github.Repositories.Paackages
 	res, err := client.github.Repositories.Delete(ctx,owner,repo)
 
 	if err != nil {

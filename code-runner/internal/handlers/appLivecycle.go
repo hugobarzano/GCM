@@ -7,6 +7,7 @@ import (
 	"code-runner/internal/repos"
 	"fmt"
 	"github.com/gorilla/mux"
+	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -58,8 +59,8 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 	}
 
 	readme := generator.GenerateAppReadme(app)
-	fileOptions := repos.BuilFileOptions("Starting app...", user, "com.mail", readme)
-	_,err=githubClient.CommitFile(ctx, user, app.Name, "README.md", fileOptions)
+	fileOptions := repos.BuilFileOptions("Starting app...", user, readme)
+	_, err = githubClient.CommitFile(ctx, user, app.Name, "README.md", fileOptions)
 	if err != nil {
 		http.Error(w,
 			fmt.Sprintf("CommitFile Error: %s", err.Error()),
@@ -120,8 +121,8 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 
-		appObj,err:=models.GetApp(databaseClient,user,app)
-		if err!=nil{
+		appObj, err := models.GetApp(databaseClient, user, app)
+		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("Error getting app %s", err.Error()),
 				http.StatusNotFound)
@@ -148,8 +149,8 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
-		appObj,err:=models.GetApp(databaseClient,user,app)
-		if err!=nil{
+		appObj, err := models.GetApp(databaseClient, user, app)
+		if err != nil {
 			fmt.Println("error getting app")
 			http.Error(w,
 				fmt.Sprintf("Error getting app %s", err.Error()),
@@ -157,27 +158,44 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		dockerfile := generator.GenerateApacheDockerfile(appObj)
-		fileOptions := repos.BuilFileOptions("Generating Dockerfile", user, "com.mail", dockerfile)
-		ctx:=r.Context()
+		fileOptions := repos.BuilFileOptions("Generating Dockerfile", user, dockerfile)
+		ctx := r.Context()
 		githubClient := repos.NewGithubClient(ctx, accessToken)
-		_,err=githubClient.CommitFile(ctx, user, appObj.Name, "Dockerfile", fileOptions)
-		if err!= nil{
-			fmt.Println("error getting tar")
-		}
-		err=githubClient.GetRepoTar(ctx,*appObj)
-		if err!= nil{
-			fmt.Println("error getting tar")
+		_, err = githubClient.CommitFile(ctx, user, appObj.Name, "Dockerfile", fileOptions)
+
+		ciFileData, err := ioutil.ReadFile("internal/resources/ci/imageBuilder.yml")
+
+		if err != nil {
+			fmt.Println("Error Reading")
+			fmt.Println(err)
 		}
 
+		fmt.Println(ciFileData)
 
-		sha:=githubClient.GetSha(ctx,appObj.Owner,appObj.Name)
-		fmt.Print("REPO BODY:")
-		fmt.Print(sha)
+		ciFileOptions := repos.BuilFileOptions(
+			"Generating CI workflow action to build docker image",
+			user,
+			ciFileData)
+		_, err = githubClient.CommitFile(ctx, user, appObj.Name, ".github/workflows/ci.yml", ciFileOptions)
 
-		err =deployClient.BuildImage(ctx,*appObj,sha)
-		if err!=nil{
-			fmt.Println("error building imagen")
+		if err != nil {
+			fmt.Println("Error commit")
+			fmt.Println(err)
 		}
+		//err=githubClient.GetRepoTar(ctx,*appObj)
+		//if err!= nil{
+		//	fmt.Println("error getting tar")
+		//}
+		//
+		//
+		//sha:=githubClient.GetSha(ctx,appObj.Owner,appObj.Name)
+		//fmt.Print("REPO BODY:")
+		//fmt.Print(sha)
+		//
+		//err =deployClient.BuildImage(ctx,*appObj,sha)
+		//if err!=nil{
+		//	fmt.Println("error building imagen")
+		//}
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	default:
 		fmt.Println("not supported")

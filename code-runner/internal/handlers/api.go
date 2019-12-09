@@ -29,6 +29,7 @@ func NewApi() *mux.Router {
 		Scopes: []string{
 			"public_repo",
 			"delete_repo",
+			"workflow",
 			"read:packages",
 			"write:packages",
 			"delete:packages"},
