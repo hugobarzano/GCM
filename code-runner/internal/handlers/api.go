@@ -14,6 +14,7 @@ func NewApi() *mux.Router {
 	mux := mux.NewRouter()
 	mux.HandleFunc("/", index)
 	mux.Handle("/workspace", requireLogin(http.HandlerFunc(workspace)))
+	mux.HandleFunc("/token", getToken).Methods(http.MethodGet)
 	mux.HandleFunc("/logout", logout)
 	mux.HandleFunc("/createApp", createApp)
 	mux.HandleFunc("/remove/{app}", removeApp)
@@ -27,6 +28,7 @@ func NewApi() *mux.Router {
 		RedirectURL:  "http://localhost:8080/github/callback",
 		Endpoint:     githubOAuth2.Endpoint,
 		Scopes: []string{
+			"repo",
 			"public_repo",
 			"delete_repo",
 			"workflow",

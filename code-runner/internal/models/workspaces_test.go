@@ -5,7 +5,6 @@ import (
 	"code-runner/internal/mongo"
 	"fmt"
 	"github.com/golang/protobuf/protoc-gen-go/generator"
-	"go.mongodb.org/mongo-driver/bson"
 	"math/rand"
 	"testing"
 	"time"
@@ -44,7 +43,7 @@ func Test_CreateAppWithinWorkspace(t *testing.T) {
 	}
 	fmt.Println(workspaceCreate)
 
-	workspaceGet,err:=GetWorkspace( databaseClient, bson.M{"_id": tesOwner})
+	workspaceGet,err:=GetWorkspace( databaseClient, tesOwner)
 	fmt.Println(err)
 	fmt.Println(workspaceGet)
 

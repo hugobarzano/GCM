@@ -12,6 +12,7 @@ const (
 	Database             = "generative-cloud"
 	WorkspacesCollection = "workspaces"
 	SourceCode 			 = "https://github.com/hugobarzano/GCM"
+	DockerRegistry       = "docker.pkg.github.com"
 )
 
 

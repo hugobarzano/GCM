@@ -1,89 +1,190 @@
 package deploy
 
 import (
+	"code-runner/internal/constants"
 	"code-runner/internal/models"
-	"code-runner/internal/tools"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 	"golang.org/x/net/context"
 	"io"
+	"net"
 	"os"
+	"strconv"
+	"time"
 )
 
-type Client struct {
-	docker *client.Client
+type DockerApp struct {
+	App               *models.App
+	Client            *client.Client
+	AuthConfig        types.AuthConfig
+	AuthConfigEncoded string
+	Config            container.ContainerCreateCreatedBody
+
 }
 
-func GetDockerClient() *Client {
-	cli, err :=client.NewEnvClient()
-	if err != nil {
-		fmt.Printf("Error creating docker client: %s",err.Error())
-		return nil
+func registryAuthentication(user,password string) types.RequestPrivilegeFunc {
+	return func() (string, error) {
+		authConfig := types.AuthConfig{
+			Username: user,
+			Password: password,
+			ServerAddress: constants.DockerRegistry,
+		}
+		buf, err := json.Marshal(authConfig)
+		if err != nil {
+			return "", err
+		}
+		base64config:=base64.URLEncoding.EncodeToString(buf)
+		if err != nil {
+			return "", err
+		}
+		return base64config, nil
 	}
-	dockerClient:=&Client{
-		docker:cli,
-	}
-	return dockerClient
 }
 
-func (c *Client)BuildImage(ctx context.Context,app models.App,sha string) error{
-
-	repoPath:=tools.GetAppLocalPath(app)
-	fmt.Println(repoPath)
-	dockerBuildContext, err := os.Open(repoPath)
-	defer dockerBuildContext.Close()
-	if err!=nil{
-		return err
+func (appDocker *DockerApp) PrepareRegistry(password string) error {
+	appDocker.AuthConfig = types.AuthConfig{
+		Username: appDocker.App.Owner,
+		Password: password,
+		ServerAddress: constants.DockerRegistry,
 	}
-	dockerfilePath:=fmt.Sprintf("%v-%v-%v/Dockerfile",app.Owner,app.Name,sha)
-
-	opt := types.ImageBuildOptions{
-		Dockerfile:   dockerfilePath,
-		Tags: []string{app.Name},
-		SuppressOutput: false,
-		Remove:         true,
-		ForceRemove:    true,
-		PullParent:     true,
-		NoCache:        true,
-	}
-
-	response, err := c.docker.ImageBuild(ctx,
-		dockerBuildContext, opt)
+	resp, err := appDocker.Client.RegistryLogin(context.Background(), appDocker.AuthConfig)
 	if err != nil {
-		fmt.Printf("Error building, %v", err)
+		panic(err)
+	}
+	fmt.Println("Status:\t", resp.Status)
+	if resp.IdentityToken != "" {
+		appDocker.AuthConfig.IdentityToken = resp.IdentityToken
+	}
+	buf, err := json.Marshal(appDocker.AuthConfig)
+	appDocker.AuthConfigEncoded=base64.URLEncoding.EncodeToString(buf)
+	return err
+}
+
+func (appDocker *DockerApp) ImagePull(token string) error {
+
+	opts := types.ImagePullOptions{
+		RegistryAuth: appDocker.AuthConfigEncoded,
+		PrivilegeFunc: registryAuthentication(appDocker.App.Owner,token),
+	}
+
+	pkgAddr:=appDocker.App.GetPKGName()
+	img, err := appDocker.Client.ImagePull(
+		context.Background(),pkgAddr, opts)
+
+	_,_=io.Copy(os.Stdout, img)
+
+	if err != nil {
 		return err
 	}
-	fmt.Println("response")
-	fmt.Println(response)
-	_,err=io.Copy(os.Stdout, response.Body)
-	//if err!=nil{
-	//	fmt.Println("Error on copy stdout")
-	//	return err
-	//}
 	return nil
 }
 
-func (c *Client)RunContainerFromImage(ctx context.Context,image string)  {
-	imageName := "docker.io/library/"+image
+func (appDocker *DockerApp) ImageIsLoaded() bool {
+	result, err := appDocker.Client.ImageSearch(context.Background(), appDocker.App.GetPKGName(), types.ImageSearchOptions{Limit: 1})
 
-	out, err := c.docker.ImagePull(ctx, imageName, types.ImagePullOptions{})
 	if err != nil {
-		fmt.Println("Error pulling imagen")
-		fmt.Println(err)
-	}
-	_,err=io.Copy(os.Stdout, out)
-	if err!=nil{
-		fmt.Println("Error on copy stdout")
+		panic(err)
 	}
 
+	if len(result) != 0 {
+		return true
+	}
+	return false
+}
+
+func (appDocker *DockerApp) ContainerCreate2() error {
+	// Wait for image to be pulled
+	var err error
+	for !appDocker.ImageIsLoaded() {
+		appDocker.Config, err = appDocker.Client.ContainerCreate(
+			context.Background(),
+			&container.Config{Image: appDocker.App.GetPKGName()},
+			&container.HostConfig{},
+			&network.NetworkingConfig{},
+			"")
+		return err
+	}
+	return nil
+}
+
+func (appDocker *DockerApp) ContainerStart() error {
+	fmt.Printf("config")
+	fmt.Println(appDocker.Config)
+	return appDocker.Client.ContainerStart(context.Background(), appDocker.Config.ID, types.ContainerStartOptions{})
+}
+
+func (appDocker *DockerApp) ContainerStop() error {
+	fmt.Printf("config")
+	fmt.Println(appDocker.Config)
+	timeOut:=0 * time.Second
+	return 	appDocker.Client.ContainerStop(context.Background(),appDocker.Config.ID,&timeOut)
+}
+
+func (app *DockerApp) Start(token string) {
+
+	var err error
+	fmt.Println("INIT")
+	err = app.Initialize()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("PRE")
+	err = app.PrepareRegistry(token)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("PULL")
+	err = app.ImagePull(token)
+	if err != nil {
+		panic(err)
+	}
+
+
+	fmt.Println("CREATE CONTAINER")
+	err = app.ContainerCreate()
+	if err != nil {
+		panic(err)
+	}
+}
+
+
+func getAvailablePort() (int, error) {
+	addr, err := net.ResolveTCPAddr("tcp", "localhost:0")
+	if err != nil {
+		return 0, err
+	}
+
+	l, err := net.ListenTCP("tcp", addr)
+	if err != nil {
+		return 0, err
+	}
+	defer l.Close()
+	return l.Addr().(*net.TCPAddr).Port, nil
+}
+
+
+
+func (app *DockerApp) Initialize() error {
+	var err error
+	app.Client, err = client.NewEnvClient()
+	return err
+}
+
+
+func (appDocker *DockerApp) ContainerCreate() error {
+	availablePort,_:=getAvailablePort()
 	hostBinding := nat.PortBinding{
 		HostIP:   "0.0.0.0",
-		HostPort: "8001",
+		HostPort: strconv.Itoa(availablePort),
 	}
-
 	containerPort, err := nat.NewPort("tcp", "80")
 	if err != nil {
 		panic("Unable to get the port")
@@ -91,19 +192,65 @@ func (c *Client)RunContainerFromImage(ctx context.Context,image string)  {
 	portBinding := nat.PortMap{containerPort: []nat.PortBinding{hostBinding}}
 
 
-	containerObj, err := c.docker.ContainerCreate(ctx,
-		&container.Config{ Image: image},
+	fmt.Println(appDocker.App.GetPKGName())
+	containerObj, err := appDocker.Client.ContainerCreate(context.Background(),
+		&container.Config{ Image: appDocker.App.GetPKGName()},
 		&container.HostConfig{
 			PortBindings: portBinding},
-			nil, "")
+		nil, "")
+
 	if err != nil {
-		panic(err)
+		panic("Unable to Create container")
 	}
 
-	if err := c.docker.ContainerStart(ctx, containerObj.ID, types.ContainerStartOptions{}); err != nil {
-		panic(err)
-	}
+	err = appDocker.Client.ContainerStart(context.Background(),
+		containerObj.ID,
+		types.ContainerStartOptions{});
 
-	fmt.Println(containerObj.ID)
-	
+	if err != nil {
+		panic("Unable to Start container")
+	}
+	appDocker.Config=containerObj
+	return err
 }
+
+
+
+//func (c *Client)BuildImage(ctx context.Context,app models.App,sha string) error{
+//
+//	repoPath:=tools.GetAppLocalPath(app)
+//	fmt.Println(repoPath)
+//	dockerBuildContext, err := os.Open(repoPath)
+//	defer dockerBuildContext.Close()
+//	if err!=nil{
+//		return err
+//	}
+//	dockerfilePath:=fmt.Sprintf("%v-%v-%v/Dockerfile",app.Owner,app.Name,sha)
+//
+//	opt := types.ImageBuildOptions{
+//		Dockerfile:   dockerfilePath,
+//		Tags: []string{app.Name},
+//		SuppressOutput: false,
+//		Remove:         true,
+//		ForceRemove:    true,
+//		PullParent:     true,
+//		NoCache:        true,
+//	}
+//
+//	response, err := c.docker.ImageBuild(ctx,
+//		dockerBuildContext, opt)
+//	if err != nil {
+//		fmt.Printf("Error building, %v", err)
+//		return err
+//	}
+//	fmt.Println("response")
+//	fmt.Println(response)
+//	_,err=io.Copy(os.Stdout, response.Body)
+//	//if err!=nil{
+//	//	fmt.Println("Error on copy stdout")
+//	//	return err
+//	//}
+//	return nil
+//}
+
+

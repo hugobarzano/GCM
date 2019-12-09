@@ -1,0 +1,13 @@
+{{define "yield"}}
+<div class="container">
+    <div className="col-xs-8 col-xs-offset-2 jumbotron text-center">
+        <h1>Use this token to work with your app locally!</h1>
+        <p>Token: {{.Key}}</p>
+
+        <div id="ok">
+            <a class="btn btn-large btn-info"
+               href="/workspace">OK!</a>
+        </div>
+    </div>
+</div>
+{{end}}

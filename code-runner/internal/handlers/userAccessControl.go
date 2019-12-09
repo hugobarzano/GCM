@@ -65,6 +65,25 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func getToken(w http.ResponseWriter, req *http.Request) {
+
+	if req.Method == http.MethodGet {
+		session,_:=sessionStore.Get(req, constants.SessionName)
+		token:= struct {
+			Key string
+		}{
+			Key:session.Values[constants.SessionUserToken].(string),
+		}
+
+		if err := userAccessViews["token"].Render(w, token); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+	}
+	//http.Redirect(w, req, "/", http.StatusFound)
+}
+
 func logout(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodPost {
 		sessionStore.Destroy(w, constants.SessionName)

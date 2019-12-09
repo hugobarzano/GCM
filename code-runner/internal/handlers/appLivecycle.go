@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
+	"code-runner/internal/deploy"
 	"code-runner/internal/generator"
 	"code-runner/internal/models"
 	"code-runner/internal/repos"
@@ -182,6 +183,13 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Error commit")
 			fmt.Println(err)
 		}
+
+		dockerApp:=deploy.DockerApp{
+			App:appObj,
+		}
+
+		dockerApp.Start(accessToken)
+
 		//err=githubClient.GetRepoTar(ctx,*appObj)
 		//if err!= nil{
 		//	fmt.Println("error getting tar")
