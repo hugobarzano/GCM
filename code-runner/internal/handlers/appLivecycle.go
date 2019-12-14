@@ -42,13 +42,13 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 		Owner: user,
 	}
 
-	githubClient := repos.NewGithubClient(ctx, accessToken)
-	appRepo := githubClient.CreateRepo(
-		ctx,
-		app.Name,
-		app.Des)
+	gitApp := repos.GitApp{
+		App:app,
+	}
+	gitApp.Init(ctx,accessToken)
+	repo:=gitApp.CreateRepo(ctx)
 
-	app.Repository = appRepo.GetCloneURL()
+	app.Repository = repo.GetCloneURL()
 	workspace, err := models.GetWorkspace(databaseClient, user)
 	_, err = models.PushApp(databaseClient, workspace, app)
 
@@ -61,7 +61,7 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 
 	readme := generator.GenerateAppReadme(app)
 	fileOptions := repos.BuilFileOptions("Starting app...", user, readme)
-	_, err = githubClient.CommitFile(ctx, user, app.Name, "README.md", fileOptions)
+	_, err = gitApp.CommitFile(ctx, "README.md", fileOptions)
 	if err != nil {
 		http.Error(w,
 			fmt.Sprintf("CommitFile Error: %s", err.Error()),
@@ -89,16 +89,20 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
-		githubClient := repos.NewGithubClient(ctx, accessToken)
-		res, err := githubClient.DeleteRepo(ctx, user, app)
+		gitApp := repos.GitApp{
+			App: &models.App{
+				Name:app,
+				Owner: user,
+			},
+		}
 
+		gitApp.Init(ctx,accessToken)
+		_, err := gitApp.DeleteRepo(ctx)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error removing code repository:%s", err.Error()),
 				http.StatusInternalServerError)
 		}
-		fmt.Println(res)
-
 		workspace, _ := models.GetWorkspace(databaseClient, user)
 		_, err = models.PopApp(databaseClient, workspace, app)
 		if err != nil {
@@ -161,49 +165,32 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 		dockerfile := generator.GenerateApacheDockerfile(appObj)
 		fileOptions := repos.BuilFileOptions("Generating Dockerfile", user, dockerfile)
 		ctx := r.Context()
-		githubClient := repos.NewGithubClient(ctx, accessToken)
-		_, err = githubClient.CommitFile(ctx, user, appObj.Name, "Dockerfile", fileOptions)
 
+		appGit := repos.GitApp{
+			App:appObj,
+		}
+		appGit.Init(ctx,accessToken)
+		_,err=appGit.CommitFile(ctx, "Dockerfile", fileOptions)
 		ciFileData, err := ioutil.ReadFile("internal/resources/ci/imageBuilder.yml")
-
 		if err != nil {
 			fmt.Println("Error Reading")
 			fmt.Println(err)
 		}
 
-		fmt.Println(ciFileData)
-
 		ciFileOptions := repos.BuilFileOptions(
 			"Generating CI workflow action to build docker image",
 			user,
 			ciFileData)
-		_, err = githubClient.CommitFile(ctx, user, appObj.Name, ".github/workflows/ci.yml", ciFileOptions)
 
+		_,err=appGit.CommitFile(ctx,		".github/workflows/ci.yml", ciFileOptions)
 		if err != nil {
 			fmt.Println("Error commit")
 			fmt.Println(err)
 		}
-
 		dockerApp:=deploy.DockerApp{
 			App:appObj,
 		}
-
 		dockerApp.Start(accessToken)
-
-		//err=githubClient.GetRepoTar(ctx,*appObj)
-		//if err!= nil{
-		//	fmt.Println("error getting tar")
-		//}
-		//
-		//
-		//sha:=githubClient.GetSha(ctx,appObj.Owner,appObj.Name)
-		//fmt.Print("REPO BODY:")
-		//fmt.Print(sha)
-		//
-		//err =deployClient.BuildImage(ctx,*appObj,sha)
-		//if err!=nil{
-		//	fmt.Println("error building imagen")
-		//}
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	default:
 		fmt.Println("not supported")

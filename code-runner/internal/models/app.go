@@ -3,6 +3,7 @@ package models
 import (
 	"code-runner/internal/constants"
 	"fmt"
+	"os"
 )
 
 type App struct {
@@ -24,6 +25,11 @@ func (app *App) GetPKGName() string {
 	pkg:=app.GetImageName()
 	pkgAddr:=fmt.Sprintf("%v/%v/%v/%v",constants.DockerRegistry,app.Owner,app.Name,pkg)
 	return pkgAddr
+}
+
+func (app *App)GetLocalPath() string {
+	return fmt.Sprintf("%v%v/%v/%v.tar.gz",
+		os.TempDir(), app.Owner, app.Name, app.Name)
 }
 
 

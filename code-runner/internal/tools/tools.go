@@ -1,7 +1,6 @@
 package tools
 
 import (
-	"code-runner/internal/models"
 	"fmt"
 	"io"
 	"net/http"
@@ -38,9 +37,4 @@ func createDirIfNotExist(dir string) {
 			fmt.Printf("Error creating folder" + dir)
 		}
 	}
-}
-
-func GetAppLocalPath(app models.App) string {
-	return fmt.Sprintf("%v%v/%v/%v.tar.gz",
-		os.TempDir(), app.Owner, app.Name, app.Name)
 }

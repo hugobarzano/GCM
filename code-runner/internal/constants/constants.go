@@ -4,6 +4,7 @@ import "time"
 
 const (
 	SessionName          = "code-runner"
+	UserData             = "user-data"
 	SessionSecret        = "ed5173116fcb6eea062bf86d464fd697badffa9c"
 	SessionUserKey       = "githubID"
 	SessionUserName      = "githubNAME"
@@ -11,7 +12,7 @@ const (
 	HttpAddress          = "localhost:8080"
 	Database             = "generative-cloud"
 	WorkspacesCollection = "workspaces"
-	SourceCode 			 = "https://github.com/hugobarzano/GCM"
+	SourceCode           = "https://github.com/hugobarzano/GCM"
 	DockerRegistry       = "docker.pkg.github.com"
 )
 
