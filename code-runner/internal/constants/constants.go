@@ -12,6 +12,7 @@ const (
 	HttpAddress          = "localhost:8080"
 	Database             = "generative-cloud"
 	WorkspacesCollection = "workspaces"
+	AppsCollection = "apps"
 	SourceCode           = "https://github.com/hugobarzano/GCM"
 	DockerRegistry       = "docker.pkg.github.com"
 )

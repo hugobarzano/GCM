@@ -3,15 +3,10 @@ package main
 import (
 	"code-runner/internal/constants"
 	"code-runner/internal/handlers"
-	"code-runner/internal/mongo"
 	"log"
 	"net/http"
 	"time"
 )
-
-func init()  {
-	mongo.TestMongoConnection()
-}
 
 func main() {
 

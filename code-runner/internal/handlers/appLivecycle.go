@@ -6,6 +6,7 @@ import (
 	"code-runner/internal/generator"
 	"code-runner/internal/models"
 	"code-runner/internal/repos"
+	"code-runner/internal/store"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
@@ -47,14 +48,15 @@ func createApp(w http.ResponseWriter, req *http.Request) {
 	}
 	gitApp.Init(ctx,accessToken)
 	repo:=gitApp.CreateRepo(ctx)
-
+	if repo == nil{
+		fmt.Print("no repo")
+	}
 	app.Repository = repo.GetCloneURL()
-	workspace, err := models.GetWorkspace(databaseClient, user)
-	_, err = models.PushApp(databaseClient, workspace, app)
-
+	dao:=store.InitMongoStore(ctx)
+	app,err=dao.CreateApp(ctx,app)
 	if err != nil {
 		http.Error(w,
-			fmt.Sprintf("PushApp Error: %s", err.Error()),
+			fmt.Sprintf("Create App Error: %s", err.Error()),
 			http.StatusInternalServerError)
 		return
 	}
@@ -103,8 +105,8 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 				fmt.Sprintf("error removing code repository:%s", err.Error()),
 				http.StatusInternalServerError)
 		}
-		workspace, _ := models.GetWorkspace(databaseClient, user)
-		_, err = models.PopApp(databaseClient, workspace, app)
+		dao:=store.InitMongoStore(ctx)
+		err = dao.DeleteApp(ctx,user,app)
 		if err != nil {
 			fmt.Println("error removing app: " + err.Error())
 		}
@@ -118,15 +120,15 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 
 	switch method := r.Method; method {
 	case http.MethodGet:
-		fmt.Println("GET")
 		vars := mux.Vars(r)
 		app := vars["app"]
 		app = strings.Replace(app, "\"", "", -1)
-		fmt.Println(app)
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 
-		appObj, err := models.GetApp(databaseClient, user, app)
+		ctx:=r.Context()
+		dao:=store.InitMongoStore(ctx)
+		appObj, err := dao.GetApp(ctx, user, app)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("Error getting app %s", err.Error()),
@@ -150,13 +152,13 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		app := vars["app"]
 		app = strings.Replace(app, "\"", "", -1)
-		fmt.Println(app)
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
-		appObj, err := models.GetApp(databaseClient, user, app)
+		ctx:=r.Context()
+		dao:=store.InitMongoStore(ctx)
+		appObj, err :=dao.GetApp(ctx,user,app)
 		if err != nil {
-			fmt.Println("error getting app")
 			http.Error(w,
 				fmt.Sprintf("Error getting app %s", err.Error()),
 				http.StatusNotFound)
@@ -164,8 +166,6 @@ func generateApp(w http.ResponseWriter, r *http.Request) {
 		}
 		dockerfile := generator.GenerateApacheDockerfile(appObj)
 		fileOptions := repos.BuilFileOptions("Generating Dockerfile", user, dockerfile)
-		ctx := r.Context()
-
 		appGit := repos.GitApp{
 			App:appObj,
 		}

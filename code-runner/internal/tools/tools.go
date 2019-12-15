@@ -3,10 +3,18 @@ package tools
 import (
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 )
+
+var seededRand *rand.Rand = rand.New(
+	rand.NewSource(time.Now().UnixNano()))
+const charset = "abcdefghijklmnopqrstuvwxyz" +
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
 
 func DownloadFile(url, localPath string) error {
 
@@ -38,3 +46,16 @@ func createDirIfNotExist(dir string) {
 		}
 	}
 }
+
+func stringWithCharset(length int, charset string) string {
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[seededRand.Intn(len(charset))]
+	}
+	return string(b)
+}
+
+func GenerateRandomString(length int) string {
+	return stringWithCharset(length, charset)
+}
+

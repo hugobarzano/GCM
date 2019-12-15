@@ -3,6 +3,7 @@ package handlers
 import (
 	"code-runner/internal/constants"
 	"code-runner/internal/models"
+	"code-runner/internal/store"
 	"fmt"
 	"github.com/dghubble/gologin/v2/github"
 	oauth2Login "github.com/dghubble/gologin/v2/oauth2"
@@ -35,20 +36,16 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	user := session.Values[constants.SessionUserName].(string)
-
-	workspace, err := models.GetWorkspace(
-		databaseClient,user)
-
-	//if err !=nil{ //Preguntar a ivan como controlar error
-	//	http.Error(w, err.Error(), http.StatusInternalServerError)
-	//	return
-	//}
-
+	ctx:=req.Context()
+	dao:=store.InitMongoStore(ctx)
+	workspace, err :=dao.GetWorkspace(ctx,user)
+	if err !=nil{
+		fmt.Println("ERRRR:"+err.Error())
+	}
 	if workspace == nil {
 		fmt.Println("First login for: " + user)
-		workspace, err = models.CreateWorkspace(databaseClient, &models.Workspace{
+		workspace, err = dao.CreateWorkspace(ctx, &models.Workspace{
 			Owner: user,
-			Apps:  []models.App{},
 			Des: "Base workspace to app generation.",
 		})
 		if err != nil {
@@ -57,6 +54,7 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 		}
 	} else {
 		fmt.Println(user + "Already has a workspace")
+		fmt.Println(workspace)
 	}
 
 	if err := userAccessViews["workspace"].Render(w, workspace); err != nil {
@@ -108,7 +106,6 @@ func setupSession() http.Handler {
 	fn := func(w http.ResponseWriter, req *http.Request) {
 		ctx := req.Context()
 		githubUser, err := github.UserFromContext(ctx)
-		fmt.Print(githubUser)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -120,25 +117,10 @@ func setupSession() http.Handler {
 			return
 		}
 
-		//Repository creation with token
-		//ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: githubToken.AccessToken})
-		//tc := oauth2.NewClient(ctx, ts)
-		//client := googleGithub.NewClient(tc)
-		//
-		//r := &googleGithub.Repository{Name: googleGithub.String("generated-repo-33"),
-		//	Private: googleGithub.Bool(false), Description: googleGithub.String("des")}
-		//repo, _, err := client.Repositories.Create(ctx, "", r)
-		//if err != nil {
-		//	log.Fatal(err)
-		//}
-		//fmt.Printf("Successfully created new repo: %v\n", repo.GetName())
-
 		session := sessionStore.New(constants.SessionName)
 		session.Values[constants.SessionUserKey] = *githubUser.ID
 		session.Values[constants.SessionUserName] = *githubUser.Login
 		session.Values[constants.SessionUserToken] = githubToken.AccessToken
-
-		//session.Values["user"] = *githubUser
 
 		if err = session.Save(w); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
