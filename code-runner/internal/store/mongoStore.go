@@ -17,8 +17,6 @@ type MongoStore struct {
 	Client *mongo.Client
 }
 
-func (dao MongoStore) InitMongo(ctx context.Context, ws *models.Workspace) {}
-
 func InitMongoStore(ctx context.Context) *MongoStore {
 	clientOptions := options.Client().ApplyURI(config.GetConfig().MongoUri)
 	client, err := mongo.NewClient(clientOptions)
@@ -125,7 +123,7 @@ func (dao *MongoStore) GetApps(ctx context.Context, owner string) ([]models.App,
 }
 
 func (dao *MongoStore) UpdateApp(ctx context.Context, app *models.App) (*models.App, error) {
-	collection := dao.Client.Database(constants.Database).Collection(constants.WorkspacesCollection)
+	collection := dao.Client.Database(constants.Database).Collection(constants.AppsCollection)
 	var updated *models.App
 	query := bson.M{"_id": app.Name, "owner": app.Owner}
 	upsert := true

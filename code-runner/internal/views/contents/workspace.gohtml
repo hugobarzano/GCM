@@ -11,23 +11,27 @@
                 <a class="btn btn-large btn-info"
                    href="/token">Show Access Token</a>
             </div>
+            <div id="createApp">
+                <a class="btn btn-large btn-info"
+                   href="/createApp">New App</a>
+            </div>
+            <div class="row">
+                <input id="reload" type="button" value="Refresh" />
+            </div>
+
         </div>
     </div>
 
     <div class="list-group">
     {{range $element := .Apps}}
-        <li class="list-group-item enabled"><h3>{{$element.Name}}</h3>
+        <li class="list-group-item enabled">
+            <h3>App: {{$element.Name}}</h3>
+            <h6>Status {{$element.Status}}</h6>
             <br>
             <br>
             <p><h4>Description: </h4> {{$element.Des}}</p>
             <a href="{{$element.Repository}}">Source-Code</a>
-
-            <hr>
-            <hr>
-            <div id="generate">
-                <a class="btn btn-large btn-info"
-                   href="/generate/{{$element.Name}}">Generate</a>
-            </div>
+            <a href="{{$element.Url}}">{{$element.Url}}</a>
 
             <hr>
             <form action="/remove/{{$element.Name}}" method="post">
@@ -37,38 +41,4 @@
         </li>
     {{end}}
     </div>
-
-
-    <br><hr>
-    <h1>--</h1>
-    <h1>--</h1>
-    <div class="container">
-        <h2>Create App</h2>
-        <form class="form-horizontal" action="/createApp">
-            <div class="form-group">
-                <label class="control-label col-sm-2">
-                    Name:
-                </label>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" id="name" placeholder="Enter app name" name="name">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2">
-                    Description:
-                </label>
-                <div class="col-sm-2">
-                    <textarea name="description" rows="5" cols="50"></textarea>
-                    <br />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Create!</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
 {{end}}

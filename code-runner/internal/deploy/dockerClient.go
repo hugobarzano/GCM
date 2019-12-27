@@ -3,12 +3,12 @@ package deploy
 import (
 	"code-runner/internal/constants"
 	"code-runner/internal/models"
+	"code-runner/internal/store"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 	"golang.org/x/net/context"
@@ -47,13 +47,13 @@ func registryAuthentication(user,password string) types.RequestPrivilegeFunc {
 	}
 }
 
-func (appDocker *DockerApp) PrepareRegistry(password string) error {
+func (appDocker *DockerApp) PrepareRegistry(ctx context.Context,password string) error {
 	appDocker.AuthConfig = types.AuthConfig{
 		Username: appDocker.App.Owner,
 		Password: password,
 		ServerAddress: constants.DockerRegistry,
 	}
-	resp, err := appDocker.Client.RegistryLogin(context.Background(), appDocker.AuthConfig)
+	resp, err := appDocker.Client.RegistryLogin(ctx, appDocker.AuthConfig)
 	if err != nil {
 		panic(err)
 	}
@@ -66,7 +66,7 @@ func (appDocker *DockerApp) PrepareRegistry(password string) error {
 	return err
 }
 
-func (appDocker *DockerApp) ImagePull(token string) error {
+func (appDocker *DockerApp) ImagePull(ctx context.Context,token string) error {
 
 	opts := types.ImagePullOptions{
 		RegistryAuth: appDocker.AuthConfigEncoded,
@@ -74,44 +74,48 @@ func (appDocker *DockerApp) ImagePull(token string) error {
 	}
 
 	pkgAddr:=appDocker.App.GetPKGName()
-	img, err := appDocker.Client.ImagePull(
-		context.Background(),pkgAddr, opts)
 
+	img, err := appDocker.Client.ImagePull(ctx,pkgAddr, opts)
+	//var err error
+	//var img io.ReadCloser
+	for img==nil {
+		fmt.Printf("image not ready: %v",appDocker.App.Status)
+		img, err = appDocker.Client.ImagePull(ctx,pkgAddr, opts)
+	}
 	_,_=io.Copy(os.Stdout, img)
-
 	if err != nil {
+		return err
+	}
+	dao:=store.InitMongoStore(ctx)
+	appDocker.App.Status=models.READY
+	_,err=dao.UpdateApp(ctx,appDocker.App)
+	if err !=nil{
+		fmt.Printf("DB Error: %s", err.Error())
 		return err
 	}
 	return nil
 }
 
-func (appDocker *DockerApp) ImageIsLoaded() bool {
-	result, err := appDocker.Client.ImageSearch(context.Background(), appDocker.App.GetPKGName(), types.ImageSearchOptions{Limit: 1})
+
+func (appDocker *DockerApp) ImageIsLoaded(ctx context.Context) bool {
+	result, err := appDocker.Client.ImageSearch(
+		ctx,
+		appDocker.App.GetPKGName(),
+		types.ImageSearchOptions{Limit: 1})
 
 	if err != nil {
-		panic(err)
+		fmt.Printf("Error loading image: %v",err.Error())
 	}
 
 	if len(result) != 0 {
+		fmt.Printf("TRUE")
 		return true
 	}
+	fmt.Printf("FALSE")
 	return false
 }
 
-func (appDocker *DockerApp) ContainerCreate2() error {
-	// Wait for image to be pulled
-	var err error
-	for !appDocker.ImageIsLoaded() {
-		appDocker.Config, err = appDocker.Client.ContainerCreate(
-			context.Background(),
-			&container.Config{Image: appDocker.App.GetPKGName()},
-			&container.HostConfig{},
-			&network.NetworkingConfig{},
-			"")
-		return err
-	}
-	return nil
-}
+
 
 func (appDocker *DockerApp) ContainerStart() error {
 	fmt.Printf("config")
@@ -136,20 +140,20 @@ func (app *DockerApp) Start(token string) {
 	}
 
 	fmt.Println("PRE")
-	err = app.PrepareRegistry(token)
+	err = app.PrepareRegistry(context.Background(),token)
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("PULL")
-	err = app.ImagePull(token)
+	err = app.ImagePull(context.Background(),token)
 	if err != nil {
 		panic(err)
 	}
 
 
 	fmt.Println("CREATE CONTAINER")
-	err = app.ContainerCreate()
+	err = app.ContainerCreate(context.Background())
 	if err != nil {
 		panic(err)
 	}
@@ -179,20 +183,19 @@ func (app *DockerApp) Initialize() error {
 }
 
 
-func (appDocker *DockerApp) ContainerCreate() error {
+func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
 	availablePort,_:=getAvailablePort()
 	hostBinding := nat.PortBinding{
 		HostIP:   "0.0.0.0",
 		HostPort: strconv.Itoa(availablePort),
 	}
-	containerPort, err := nat.NewPort("tcp", "80")
+	containerPort, err := nat.NewPort("tcp", "27017")
 	if err != nil {
 		panic("Unable to get the port")
 	}
 	portBinding := nat.PortMap{containerPort: []nat.PortBinding{hostBinding}}
 
 
-	fmt.Println(appDocker.App.GetPKGName())
 	containerObj, err := appDocker.Client.ContainerCreate(context.Background(),
 		&container.Config{ Image: appDocker.App.GetPKGName()},
 		&container.HostConfig{
@@ -203,7 +206,7 @@ func (appDocker *DockerApp) ContainerCreate() error {
 		panic("Unable to Create container")
 	}
 
-	err = appDocker.Client.ContainerStart(context.Background(),
+	err = appDocker.Client.ContainerStart(ctx,
 		containerObj.ID,
 		types.ContainerStartOptions{});
 
@@ -211,6 +214,14 @@ func (appDocker *DockerApp) ContainerCreate() error {
 		panic("Unable to Start container")
 	}
 	appDocker.Config=containerObj
+	appDocker.App.Status=models.RUNNING
+	appDocker.App.Url="http://localhost:"+strconv.Itoa(availablePort)
+
+	dao:=store.InitMongoStore(ctx)
+	_,err=dao.UpdateApp(ctx,appDocker.App)
+	if err != nil {
+		panic("Unable to update DB container")
+	}
 	return err
 }
 
@@ -253,4 +264,33 @@ func (appDocker *DockerApp) ContainerCreate() error {
 //	return nil
 //}
 
+/*func (appDocker *DockerApp) ContainerCreate2() error {
+	// Wait for image to be pulled
+	var err error
+	for !appDocker.ImageIsLoaded() {
+		appDocker.Config, err = appDocker.Client.ContainerCreate(
+			context.Background(),
+			&container.Config{Image: appDocker.App.GetPKGName()},
+			&container.HostConfig{},
+			&network.NetworkingConfig{},
+			"")
+		return err
+	}
+	return nil
+}*/
+
+
+//func (appDocker *DockerApp)IsImageReady(ctx context.Context,token string)  {
+//
+//	for !appDocker.ImageIsLoaded(ctx) {
+//		fmt.Printf("image not ready: %v",appDocker.App.Status)
+//	}
+//
+//	dao:=store.InitMongoStore(ctx)
+//	appDocker.App.Status=models.READY
+//	_,err:=dao.UpdateApp(ctx,appDocker.App)
+//	if err !=nil{
+//		fmt.Printf("DB Error: %s", err.Error())
+//	}
+//}
 

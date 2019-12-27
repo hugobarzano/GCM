@@ -12,7 +12,6 @@ func TestGenerateDockerfile(t *testing.T) {
 		Repository:"https://github.repo.com",
 		Des:"some description",
 		Owner: "testOwner",
-		Spec: "TBD",
 		Url: "TBE",
 	}
 	properties:=[]dockerfileEntry{

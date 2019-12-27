@@ -18,7 +18,7 @@ const (
 type App struct {
 	Name       string    `bson:"_id"  json:"name"`
 	Repository string    `bson:"repo" json:"repo"`
-	Spec       string    `bson:"spec" json:"spec"`
+	Spec       map[string]string    `bson:"spec" json:"spec"`
 	Des        string    `bson:"des" json:"des,omitempty"`
 	Url        string    `bson:"url"  json:"url"`
 	Owner      string    `bson:"owner"  json:"owner"`

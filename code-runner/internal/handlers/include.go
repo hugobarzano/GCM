@@ -23,4 +23,10 @@ var (
 			"base",
 			contentsDir+"/token.gohtml"),
 	}
+
+	appsViews = map[string]*views.View{
+		"createApp": views.NewView(
+			"base",
+			contentsDir+"/createApp.gohtml"),
+	}
 )

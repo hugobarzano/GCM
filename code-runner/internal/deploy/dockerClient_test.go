@@ -11,17 +11,15 @@ func TestPull(t *testing.T) {
 
 	//ctx:=context.Background()
 	app:= &models.App{
-		Name:"cat",
-		Owner:"hugobarzano",
+		Name:"gg",
+		Owner:"cesarcorp",
 	}
 
 	dockerApp:= DockerApp{
 		App:app,
 	}
 
-
-
-	dockerApp.Start("")
+	dockerApp.Start("9f347fda6140d0bee7970ca05b9414a4de63f9d7")
 
 	time.Sleep(time.Second*5)
 	err:=dockerApp.ContainerStop()
