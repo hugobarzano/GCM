@@ -14,6 +14,7 @@ const (
 	BUILDING AppStatus = "building"
 	READY    AppStatus = "readytorun"
 	RUNNING  AppStatus = "running"
+	STOPPED  AppStatus = "stopped"
 )
 
 type App struct {

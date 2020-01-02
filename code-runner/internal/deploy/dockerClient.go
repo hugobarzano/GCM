@@ -6,6 +6,7 @@ import (
 	"code-runner/internal/store"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -78,9 +79,15 @@ func (appDocker *DockerApp) ImagePull(ctx context.Context,token string) error {
 	img, err := appDocker.Client.ImagePull(ctx,pkgAddr, opts)
 	//var err error
 	//var img io.ReadCloser
-	for img==nil {
-		fmt.Printf("image not ready: %v",appDocker.App.Status)
+	timeout:=time.Duration(12*time.Minute)
+	start := time.Now()
+	for img==nil  {
+		fmt.Printf("\nimage not ready: %v",appDocker.App.Status)
 		img, err = appDocker.Client.ImagePull(ctx,pkgAddr, opts)
+		if time.Since(start)>=timeout{
+			return errors.New("Error pulling image after "+timeout.String())
+		}
+
 	}
 	_,_=io.Copy(os.Stdout, img)
 	if err != nil {
@@ -97,26 +104,6 @@ func (appDocker *DockerApp) ImagePull(ctx context.Context,token string) error {
 }
 
 
-func (appDocker *DockerApp) ImageIsLoaded(ctx context.Context) bool {
-	result, err := appDocker.Client.ImageSearch(
-		ctx,
-		appDocker.App.GetPKGName(),
-		types.ImageSearchOptions{Limit: 1})
-
-	if err != nil {
-		fmt.Printf("Error loading image: %v",err.Error())
-	}
-
-	if len(result) != 0 {
-		fmt.Printf("TRUE")
-		return true
-	}
-	fmt.Printf("FALSE")
-	return false
-}
-
-
-
 func (appDocker *DockerApp) ContainerStart() error {
 	fmt.Printf("config")
 	fmt.Println(appDocker.Config)
@@ -124,38 +111,33 @@ func (appDocker *DockerApp) ContainerStart() error {
 }
 
 func (appDocker *DockerApp) ContainerStop() error {
-	fmt.Printf("config")
-	fmt.Println(appDocker.Config)
+
 	timeOut:=0 * time.Second
-	return 	appDocker.Client.ContainerStop(context.Background(),appDocker.Config.ID,&timeOut)
+	fmt.Println("DOCKER ID: "+appDocker.App.Spec["dockerId"])
+	return 	appDocker.Client.ContainerStop(context.Background(),appDocker.App.Spec["dockerId"],&timeOut)
 }
 
 func (app *DockerApp) Start(token string) {
 
 	var err error
-	fmt.Println("INIT")
 	err = app.Initialize()
 	if err != nil {
-		panic(err)
+		fmt.Println("Initialize error: "+err.Error())
 	}
 
-	fmt.Println("PRE")
 	err = app.PrepareRegistry(context.Background(),token)
 	if err != nil {
-		panic(err)
+		fmt.Println("PrepareRegistry error: "+err.Error())
 	}
 
-	fmt.Println("PULL")
 	err = app.ImagePull(context.Background(),token)
 	if err != nil {
-		panic(err)
+		fmt.Println("ImagePull error: "+err.Error())
 	}
 
-
-	fmt.Println("CREATE CONTAINER")
 	err = app.ContainerCreate(context.Background())
 	if err != nil {
-		panic(err)
+		fmt.Println("ContainerCreate error: "+err.Error())
 	}
 }
 
@@ -203,7 +185,8 @@ func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
 		nil, "")
 
 	if err != nil {
-		panic("Unable to Create container")
+		//panic("Unable to Create container")
+		return err
 	}
 
 	err = appDocker.Client.ContainerStart(ctx,
@@ -211,16 +194,19 @@ func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
 		types.ContainerStartOptions{});
 
 	if err != nil {
-		panic("Unable to Start container")
+		//panic("Unable to Start container")
+		return err
 	}
 	appDocker.Config=containerObj
+	appDocker.App.Spec["dockerId"]=containerObj.ID
 	appDocker.App.Status=models.RUNNING
 	appDocker.App.SetDeployURL(strconv.Itoa(availablePort))
 
 	dao:=store.InitMongoStore(ctx)
 	_,err=dao.UpdateApp(ctx,appDocker.App)
 	if err != nil {
-		panic("Unable to update DB container")
+		//panic("Unable to update DB container")
+		return err
 	}
 	return err
 }

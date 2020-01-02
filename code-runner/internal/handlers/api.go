@@ -16,13 +16,10 @@ func NewApi() *mux.Router {
 	mux.Handle("/workspace", requireLogin(http.HandlerFunc(workspace)))
 	mux.HandleFunc("/token", getToken).Methods(http.MethodGet)
 	mux.HandleFunc("/logout", logout)
-	//mux.HandleFunc("/createApp", createApp)
 	mux.HandleFunc("/createApp", createApp)
 	mux.HandleFunc("/remove/{app}", removeApp)
-	//mux.HandleFunc("/generate/{app}", generateApp).
-	//	Methods(http.MethodGet, http.MethodPost)
-	//mux.HandleFunc("/test", test)
-
+	mux.HandleFunc("/stop/{app}", stopApp)
+	mux.HandleFunc("/run/{app}", runApp)
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,
 		ClientSecret: config.GetConfig().GithubClientSecret,
