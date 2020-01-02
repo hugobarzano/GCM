@@ -14,7 +14,7 @@ func GenerateAppReadme(app *models.App)[]byte{
 }
 
 
-func (app *GenApp) initReadme(){
+func (app *GenApp) generateReadme(){
 	readmeDoc:="# "+app.App.Name+"\n\n" + "## Description\n"+app.App.Des+"\n"
 	readmeDoc=readmeDoc+constants.GeneratedBanner
 	app.Readme=[]byte(readmeDoc)

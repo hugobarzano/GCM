@@ -24,7 +24,8 @@ func GenerateApacheDockerfile(app *models.App) 	[]byte {
 	properties:=[]dockerfileEntry{
 		{"FROM","httpd:2.4"},
 		{"MAINTAINER", app.Owner},
-		//{"COPY","./html/ /usr/local/apache2/htdocs/"},
+		{"COPY","html/ /usr/local/apache2/htdocs/"},
+		{"EXPOSE", app.Spec["port"]},
 	}
 	dockerfile:=generateDockerfile(app,properties)
 	return []byte(dockerfile)
