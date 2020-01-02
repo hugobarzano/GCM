@@ -167,4 +167,4 @@ func Test_StatusApp(t *testing.T) {
 	updated,err=store.UpdateApp(ctx,app)
 	assert.NilError(t,err)
 	assert.Equal(t,updated.Status,models.RUNNING)
-}
+	}

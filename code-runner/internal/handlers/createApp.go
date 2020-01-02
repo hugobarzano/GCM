@@ -59,6 +59,7 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 		}
 
 		go genApp.InitializeCode(user,accessToken)
+
 		dockerApp:=deploy.DockerApp{
 			App:appObj,
 		}

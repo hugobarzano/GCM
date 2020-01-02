@@ -1,6 +1,7 @@
 package models
 
 import (
+	"code-runner/internal/config"
 	"code-runner/internal/constants"
 	"fmt"
 	"os"
@@ -39,4 +40,21 @@ func (app *App) GetPKGName() string {
 func (app *App) GetLocalPath() string {
 	return fmt.Sprintf("%v%v/%v/%v.tar.gz",
 		os.TempDir(), app.Owner, app.Name, app.Name)
+}
+
+func (app *App) SetDeployURL(port string) {
+
+	var appUrl string
+	switch app.Spec["nature"] {
+	case "staticApp":
+		appUrl=fmt.Sprintf("http://%v:%v",
+			config.GetConfig().DeployAddress, port)
+	case "mongodb":
+		appUrl=fmt.Sprintf("mongodb://%v:%v",
+			config.GetConfig().DeployAddress, port)
+	default:
+		appUrl=fmt.Sprintf("%v:%v",
+			config.GetConfig().DeployAddress, port)
+	}
+	app.Url=appUrl
 }

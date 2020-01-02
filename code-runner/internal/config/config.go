@@ -21,6 +21,7 @@ type Config struct {
 	GithubClientID     string `json:"githubClientID"`
 	GithubClientSecret string `json:"githubClientSecret"`
 	MongoUri           string `usage:"Standard MongoDB Hostname"`
+	DeployAddress      string  `json:"deployAddress"`
 }
 
 func GetConfig() *Config {
@@ -39,6 +40,7 @@ func read() *Config {
 		GithubClientID:     "hhh",
 		GithubClientSecret: "ggg",
 		MongoUri:           "mongodb://localhost:27017",
+		DeployAddress:      "localhost",
 	}
 
 	goconfig.Read(c)

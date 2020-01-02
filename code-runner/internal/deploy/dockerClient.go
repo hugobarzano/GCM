@@ -189,7 +189,7 @@ func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
 		HostIP:   "0.0.0.0",
 		HostPort: strconv.Itoa(availablePort),
 	}
-	containerPort, err := nat.NewPort("tcp", "27017")
+	containerPort, err := nat.NewPort("tcp", appDocker.App.Spec["port"])
 	if err != nil {
 		panic("Unable to get the port")
 	}
@@ -215,7 +215,7 @@ func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
 	}
 	appDocker.Config=containerObj
 	appDocker.App.Status=models.RUNNING
-	appDocker.App.Url="http://localhost:"+strconv.Itoa(availablePort)
+	appDocker.App.SetDeployURL(strconv.Itoa(availablePort))
 
 	dao:=store.InitMongoStore(ctx)
 	_,err=dao.UpdateApp(ctx,appDocker.App)

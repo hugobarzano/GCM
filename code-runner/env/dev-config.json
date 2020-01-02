@@ -2,5 +2,6 @@
   "debug": true,
   "githubClientID": "a8c004320dbe5098c522",
   "githubClientSecret": "c1a7c40a3011dce4738e4101d6c8de422c363d5e",
-  "MongoUri": "mongodb://localhost:27017/gcm"
+  "mongoUri": "mongodb://localhost:27017/gcm",
+  "deployAddress": "localhost"
 }
