@@ -3,5 +3,6 @@
   "githubClientID": "a8c004320dbe5098c522",
   "githubClientSecret": "c1a7c40a3011dce4738e4101d6c8de422c363d5e",
   "mongoUri": "mongodb://localhost:27017/gcm",
-  "deployAddress": "localhost"
+  "_mongoUri": "mongodb://localhost:57258",
+  "deployAddress": "35.233.23.148"
 }

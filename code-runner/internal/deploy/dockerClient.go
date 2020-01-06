@@ -161,6 +161,7 @@ func getAvailablePort() (int, error) {
 func (app *DockerApp) Initialize() error {
 	var err error
 	app.Client, err = client.NewEnvClient()
+	//client.NewClient("tcp://34.76.225.159:2376","17.03.2-ce",)
 	return err
 }
 
