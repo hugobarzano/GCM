@@ -1,8 +1,10 @@
 {
   "debug": true,
-  "githubClientID": "a8c004320dbe5098c522",
-  "githubClientSecret": "c1a7c40a3011dce4738e4101d6c8de422c363d5e",
+  "githubClientID": "7353c56e4aa5d8c43df4",
+  "githubClientSecret": "f9d92ad2fcac406160eeefb9328bdd06fda632d7",
   "mongoUri": "mongodb://localhost:27017/gcm",
-  "_mongoUri": "mongodb://localhost:57258",
-  "deployAddress": "35.233.23.148"
+  "deployAddress": "localhost",
+  "apiAddress": "0.0.0.0",
+  "apiPort": "80",
+  "apiDns": "http://localhost"
 }

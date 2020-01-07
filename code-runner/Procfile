@@ -1,0 +1,1 @@
+web: bin/code-runner --config env/heroku-config.json

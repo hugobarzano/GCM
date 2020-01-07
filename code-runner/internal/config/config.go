@@ -22,6 +22,9 @@ type Config struct {
 	GithubClientSecret string `json:"githubClientSecret"`
 	MongoUri           string `usage:"Standard MongoDB Hostname"`
 	DeployAddress      string  `json:"deployAddress"`
+	ApiAddress        string  `json:"apiAddress"`
+	ApiPort           string  `json:"apiPort"`
+	ApiDns 			  string  `json:"apiDns"`
 }
 
 func GetConfig() *Config {
@@ -41,6 +44,8 @@ func read() *Config {
 		GithubClientSecret: "ggg",
 		MongoUri:           "mongodb://localhost:27017",
 		DeployAddress:      "localhost",
+		ApiAddress:        "0.0.0.0",
+		ApiPort:           "8081",
 	}
 
 	goconfig.Read(c)

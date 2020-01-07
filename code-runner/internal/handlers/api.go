@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"code-runner/internal/config"
+	"fmt"
 	"github.com/dghubble/gologin/v2"
 	"github.com/dghubble/gologin/v2/github"
 	"github.com/gorilla/mux"
@@ -23,7 +24,7 @@ func NewApi() *mux.Router {
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,
 		ClientSecret: config.GetConfig().GithubClientSecret,
-		RedirectURL:  "http://localhost:8080/github/callback",
+		RedirectURL:  	fmt.Sprintf("%v/%v",config.GetConfig().ApiDns,"github/callback"),
 		Endpoint:     githubOAuth2.Endpoint,
 		Scopes: []string{
 			"repo",

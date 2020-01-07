@@ -9,7 +9,6 @@ const (
 	SessionUserKey       = "githubID"
 	SessionUserName      = "githubNAME"
 	SessionUserToken     = "githubTOKEN"
-	HttpAddress          = "localhost:8080"
 	Database             = "generative-cloud"
 	WorkspacesCollection = "workspaces"
 	AppsCollection = "apps"
