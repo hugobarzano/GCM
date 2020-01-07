@@ -15,6 +15,7 @@ type GenApp struct {
 	Dockerfile []byte
 	CI []byte
 	Data map[string][]byte
+	Local map[string][]byte
 }
 
 func (app *GenApp) InitializeCode(user string, token string) {
@@ -22,7 +23,6 @@ func (app *GenApp) InitializeCode(user string, token string) {
 	ctx:=context.Background()
 	app.InitGit(ctx,token)
 	app.generateReadme()
-
 	if err:=app.pushReadme(ctx,user); err!=nil{
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
@@ -35,6 +35,12 @@ func (app *GenApp) InitializeCode(user string, token string) {
 	if err:=app.pushDockerfile(ctx,user);err!=nil{
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
+
+	app.generateLocalUtils()
+	if err:=app.pushLocalUtilsCode(ctx,user);err!=nil{
+		fmt.Printf("PushFile Error: %s", err.Error())
+	}
+
 	app.generateCI()
 	if err:=app.pushCI(ctx,user);err!=nil{
 		fmt.Printf("PushFile Error: %s", err.Error())

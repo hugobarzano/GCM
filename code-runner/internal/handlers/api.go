@@ -11,6 +11,13 @@ import (
 	"net/http"
 )
 
+func test(w http.ResponseWriter, req *http.Request) {
+
+	if err := userAccessViews["test"].Render(w, nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
 func NewApi() *mux.Router {
 	mux := mux.NewRouter()
 	mux.HandleFunc("/", index)
@@ -21,6 +28,7 @@ func NewApi() *mux.Router {
 	mux.HandleFunc("/remove/{app}", removeApp)
 	mux.HandleFunc("/stop/{app}", stopApp)
 	mux.HandleFunc("/run/{app}", runApp)
+	mux.HandleFunc("/test", test)
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,
 		ClientSecret: config.GetConfig().GithubClientSecret,
