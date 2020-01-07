@@ -1,37 +1,37 @@
 {{define "yield"}}
-    <div class="container">
-        <div className="col-xs-8 col-xs-offset-2 jumbotron text-center">
-            <h1>Generative Cloud Services</h1>
-            <p>You are logged in as {{.Owner}}!</p>
-            <form action="/logout" method="post">
-                <input type="submit" value="Logout">
-            </form>
-
-            <div id="getToken">
-                <a class="btn btn-large btn-info"
-                   href="/token">Show Access Token</a>
-            </div>
-            <div id="createApp">
-                <a class="btn btn-large btn-info"
-                   href="/createApp">New App</a>
-            </div>
-            <div class="row">
-                <input id="reload" type="button" value="Refresh" />
-            </div>
-
-        </div>
-    </div>
-
+    <br>
+    <ul>
+        <li><a href="/createApp">Create App</a></li>
+        <li><a href="/token">Show Access Token</a></li>
+        <li style="float:right">
+            <a class="active">
+                <form action="/logout" method="post" class="active">
+                    <input type="submit" class="active" value="Logout">
+                </form>
+            </a>
+        </li>
+        <li style="float:right">
+            <a class="active">
+                <form action="" method="post" class="active">
+                    <input id="reload" class="active" type="button" value="Refresh" />
+                </form>
+            </a>
+        </li>
+    </ul>
+    <br>
     <div class="list-group">
+        <ul>
     {{range $element := .Apps}}
         <li class="list-group-item enabled">
+
             <h3>App: {{$element.Name}}</h3>
             <h6>Status {{$element.Status}}</h6>
             <br>
             <br>
-            <p><h4>Description: </h4> {{$element.Des}}</p>
-            <a href="{{$element.Repository}}">Source-Code</a>
-            <a href="{{$element.Url}}">{{$element.Url}}</a>
+            <p><h4>Description: </h4> <p style="line-:">{{$element.Des}}</p></p>
+            <a class="options" href="{{$element.Repository}}">Source-Code</a>
+            <a class="options" href="{{$element.Url}}">{{$element.Url}}</a>
+
 
             <hr>
             <form action="/stop/{{$element.Name}}" method="post">
@@ -45,5 +45,6 @@
             </form>
         </li>
     {{end}}
+        </ul>
     </div>
 {{end}}

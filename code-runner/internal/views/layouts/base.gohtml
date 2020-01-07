@@ -6,6 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Generative Cloud Services</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover:not(.active) {
+        background-color: #4CAF50;
+      }
+
+      .options {
+        display: block;
+        background-color: #728392;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      .text {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        text-anchor: middle;
+        width: auto;
+      }
+
+      .active {
+        background-color: #4CAF50;
+      }
+    </style>
   </head>
 
   <body>
@@ -26,6 +73,13 @@
         });
       });
     </script>
-  </body>
-</html>
+    <!--
+     <script>
+       $(document).ready(function(){
+         setInterval(location.reload(true), 3000);
+       });
+     </script>
+      -->
+     </body>
+   </html>
 {{end}}
