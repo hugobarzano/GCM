@@ -4,6 +4,7 @@ import (
 	"code-runner/internal/constants"
 	"code-runner/internal/models"
 	"code-runner/internal/store"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -15,6 +16,7 @@ import (
 	"golang.org/x/net/context"
 	"io"
 	"net"
+	"net/http"
 	"os"
 	"strconv"
 	"time"
@@ -79,7 +81,7 @@ func (appDocker *DockerApp) ImagePull(ctx context.Context,token string) error {
 	img, err := appDocker.Client.ImagePull(ctx,pkgAddr, opts)
 	//var err error
 	//var img io.ReadCloser
-	timeout:=time.Duration(12*time.Minute)
+	timeout:=time.Duration(5*time.Minute)
 	start := time.Now()
 	for img==nil  {
 		fmt.Printf("\nimage not ready: %v",appDocker.App.Status)
@@ -164,6 +166,45 @@ func (app *DockerApp) Initialize() error {
 	//client.NewClient("tcp://34.76.225.159:2376","17.03.2-ce",)
 	return err
 }
+
+func createHTTPClient() *http.Client {
+	return &http.Client{
+		Transport:buildTransport() ,
+	}
+}
+
+func buildTransport() *http.Transport {
+	transport := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			//nolint: gosec
+			InsecureSkipVerify: false,
+		},
+		DialContext: (&net.Dialer{
+			Timeout:       30 * time.Second,
+			KeepAlive:     30 * time.Second,
+			DualStack:     true,
+			FallbackDelay: 1 * time.Second,
+		}).DialContext,
+		DisableCompression:    true,
+		MaxIdleConns:          10000,
+		MaxIdleConnsPerHost:   10000,
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ExpectContinueTimeout: 3 * time.Second,
+	}
+	//transport.TLSClientConfig.RootCAs
+	return transport
+}
+
+//func (app *DockerApp) InitializeTLS() error {
+//	var err error
+//	app.Client, err = client.NewEnvClient()
+//	host:="tcp://"+config.GetConfig().DeployAddress
+//	version:="19.03.5"
+//	//app.Client, err = client.NewClient(host,version,)
+//	//client.NewClient("tcp://34.76.225.159:2376","17.03.2-ce",)
+//	return err
+//}
 
 
 func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {

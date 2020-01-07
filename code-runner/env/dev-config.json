@@ -3,7 +3,7 @@
   "githubClientID": "7353c56e4aa5d8c43df4",
   "githubClientSecret": "f9d92ad2fcac406160eeefb9328bdd06fda632d7",
   "mongoUri": "mongodb://localhost:27017/gcm",
-  "deployAddress": "localhost",
+  "deployAddress": "35.233.23.148",
   "apiAddress": "0.0.0.0",
   "apiPort": "80",
   "apiDns": "http://localhost"

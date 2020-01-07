@@ -19,17 +19,22 @@ func (app *GenApp) genMakefile() []byte {
 	makefile:=` 
 user=
 token=
-init:
+setup:
 	chmod +x bin/*
 build:
+	chmod +x bin/_buildImage.sh
 	bin/_buildImage.sh
 test:
+	chmod +x bin/_test.sh
 	bin/_test.sh
 run:
+	chmod +x bin/_run.sh
 	bin/_run.sh
 push:
+	chmod +x bin/_pushImage.sh
 	bin/_pushImage.sh '$(user)' '$(token)'
 pull:
+	chmod +x bin/_pullImage.sh
 	bin/_pullImage.sh '$(user)' '$(token)'
 `
 	return []byte(makefile)
@@ -70,7 +75,7 @@ echo "$2" | docker login docker.pkg.github.com -u $1 --password-stdin
 REPO=$(basename `+cmd+`)
 echo REPO=$REPO
 IMAGE_NAME=$(echo "$REPO" | sed -e 's/\//./')
-IMAGE_ID="docker.pkg.github.com/$1/$REPO/$IMAGE_NAME"
+IMAGE_ID="docker.pkg.github.com/$1/$REPO/$1.$IMAGE_NAME"
 VERSION="latest"
 echo IMAGE_ID:VERSION=$IMAGE_ID:$VERSION
 docker tag image "$IMAGE_ID:$VERSION"
