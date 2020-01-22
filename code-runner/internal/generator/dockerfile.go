@@ -24,6 +24,8 @@ func GenerateApacheDockerfile(app *models.App) 	[]byte {
 	properties:=[]dockerfileEntry{
 		{"FROM","httpd:2.4"},
 		{"MAINTAINER", app.Owner},
+		{"RUN","sed 's/^Listen 80/Listen "+app.Spec["port"]+"/g' /usr/local/apache2/conf/httpd.conf > httpd.new"},
+		{"RUN","mv httpd.new /usr/local/apache2/conf/httpd.conf"},
 		{"COPY","html/ /usr/local/apache2/htdocs/"},
 		{"EXPOSE", app.Spec["port"]},
 	}

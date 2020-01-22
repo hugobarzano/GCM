@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
+	"code-runner/internal/deploy"
 	"code-runner/internal/generator"
-	"code-runner/internal/models"
 	"code-runner/internal/store"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -28,21 +28,45 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
+
+		dao:=store.InitMongoStore(ctx)
+		appObj, err := dao.GetApp(ctx, user, app)
+		if err != nil {
+			http.Error(w,
+				fmt.Sprintf("error getting app:%s", err.Error()),
+				http.StatusInternalServerError)
+		}
+
+		dockerApp := deploy.DockerApp{
+			App: appObj,
+		}
+
+		err = dockerApp.Initialize()
+		if err != nil {
+			http.Error(w,
+				fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
+				http.StatusInternalServerError)
+		}
+
+		err = dockerApp.ContainerStop()
+		if err != nil {
+			http.Error(w,
+				fmt.Sprintf("error stoping app container:%s", err.Error()),
+				http.StatusInternalServerError)
+		}
+
 		genApp := generator.GenApp{
-			App: &models.App{
-				Name:app,
-				Owner: user,
-			},
+			App: appObj,
 		}
 
 		genApp.InitGit(ctx,accessToken)
-		_, err := genApp.DeleteRepo(ctx)
+		_, err = genApp.DeleteRepo(ctx)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error removing code repository:%s", err.Error()),
 				http.StatusInternalServerError)
 		}
-		dao:=store.InitMongoStore(ctx)
+
 		err = dao.DeleteApp(ctx,user,app)
 		if err != nil {
 			fmt.Println("error removing app: " + err.Error())
