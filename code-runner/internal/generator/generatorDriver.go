@@ -12,7 +12,7 @@ func (app *GenApp)generateSourceCode()  {
 	case "staticApp":
 		app.generateStaticAppCode()
 	case "mongodb":
-		fmt.Println("TBD config generation.")
+		app.generateMongoService()
 	default:
 		fmt.Printf("NOT SUPPORTED")
 	}

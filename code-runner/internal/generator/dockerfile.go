@@ -37,7 +37,9 @@ func GenerateMongoDockerfile(app *models.App) 	[]byte {
 	properties:=[]dockerfileEntry{
 		{"FROM","mongo:3.6"},
 		{"MAINTAINER", app.Owner},
-		{"CMD", "mongod --bind_ip 0.0.0.0"},
+		{"COPY","./config/mongod.conf /etc/mongod.conf"},
+		{"EXPOSE", app.Spec["port"]},
+		{"ENTRYPOINT", "[\"mongod\", \"-f\", \"/etc/mongod.conf\"]"},
 	}
 	dockerfile:=generateDockerfile(app,properties)
 	return []byte(dockerfile)
