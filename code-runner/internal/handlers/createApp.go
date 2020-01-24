@@ -59,11 +59,6 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 
 		go genApp.InitializeCode(user,accessToken)
 
-		//dockerApp:=deploy.DockerApp{
-		//	App:appObj,
-		//}
-		//go dockerApp.Start(accessToken)
-
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	default:
 		fmt.Println("not supported")

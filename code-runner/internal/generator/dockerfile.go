@@ -45,6 +45,18 @@ func GenerateMongoDockerfile(app *models.App) 	[]byte {
 	return []byte(dockerfile)
 }
 
+func GenerateMysqlDockerfile(app *models.App) 	[]byte {
+	properties:=[]dockerfileEntry{
+		{"FROM","mysql:8.0"},
+		{"MAINTAINER", app.Owner},
+		{"ENV", "MYSQL_ALLOW_EMPTY_PASSWORD=1"},
+		{"COPY","./config/mysql.cnf /etc/mysql/conf.d/mysql.cnf"},
+		{"EXPOSE", app.Spec["port"]},
+	}
+	dockerfile:=generateDockerfile(app,properties)
+	return []byte(dockerfile)
+}
+
 func (app *GenApp)generateDockerfile(){
 
 	switch nature := app.App.Spec["nature"]; nature {
@@ -52,6 +64,8 @@ func (app *GenApp)generateDockerfile(){
 		app.Dockerfile=GenerateApacheDockerfile(app.App)
 	case "mongodb":
 		app.Dockerfile=GenerateMongoDockerfile(app.App)
+	case "mysql":
+		app.Dockerfile=GenerateMysqlDockerfile(app.App)
 	case "TBD":
 		fmt.Println("TBD.")
 	default:

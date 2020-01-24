@@ -23,9 +23,13 @@ func getAppFromRequest(req *http.Request) (*models.App,error) {
 		return nil,errors.New("port is mandatory")
 	}
 
+	appNature:=req.FormValue("nature")
+	if appNature==""{
+		return nil,errors.New("nature is mandatory")
+	}
 	appSpec:= make(map[string]string)
 	appSpec["port"]=appPort
-	appSpec["nature"]=req.FormValue("nature")
+	appSpec["nature"]=appNature
 
 	app := &models.App{
 		Name: strings.Replace(

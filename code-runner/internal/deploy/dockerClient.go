@@ -4,7 +4,6 @@ import (
 	"code-runner/internal/constants"
 	"code-runner/internal/models"
 	"code-runner/internal/store"
-	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -16,7 +15,6 @@ import (
 	"golang.org/x/net/context"
 	"io"
 	"net"
-	"net/http"
 	"os"
 	"strconv"
 	"time"
@@ -163,48 +161,8 @@ func getAvailablePort() (int, error) {
 func (app *DockerApp) Initialize() error {
 	var err error
 	app.Client, err = client.NewEnvClient()
-	//client.NewClient("tcp://34.76.225.159:2376","17.03.2-ce",)
 	return err
 }
-
-func createHTTPClient() *http.Client {
-	return &http.Client{
-		Transport:buildTransport() ,
-	}
-}
-
-func buildTransport() *http.Transport {
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			//nolint: gosec
-			InsecureSkipVerify: false,
-		},
-		DialContext: (&net.Dialer{
-			Timeout:       30 * time.Second,
-			KeepAlive:     30 * time.Second,
-			DualStack:     true,
-			FallbackDelay: 1 * time.Second,
-		}).DialContext,
-		DisableCompression:    true,
-		MaxIdleConns:          10000,
-		MaxIdleConnsPerHost:   10000,
-		IdleConnTimeout:       90 * time.Second,
-		TLSHandshakeTimeout:   10 * time.Second,
-		ExpectContinueTimeout: 3 * time.Second,
-	}
-	//transport.TLSClientConfig.RootCAs
-	return transport
-}
-
-//func (app *DockerApp) InitializeTLS() error {
-//	var err error
-//	app.Client, err = client.NewEnvClient()
-//	host:="tcp://"+config.GetConfig().DeployAddress
-//	version:="19.03.5"
-//	//app.Client, err = client.NewClient(host,version,)
-//	//client.NewClient("tcp://34.76.225.159:2376","17.03.2-ce",)
-//	return err
-//}
 
 
 func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
@@ -252,73 +210,3 @@ func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
 	}
 	return err
 }
-
-
-
-//func (c *Client)BuildImage(ctx context.Context,app models.App,sha string) error{
-//
-//	repoPath:=tools.GetAppLocalPath(app)
-//	fmt.Println(repoPath)
-//	dockerBuildContext, err := os.Open(repoPath)
-//	defer dockerBuildContext.Close()
-//	if err!=nil{
-//		return err
-//	}
-//	dockerfilePath:=fmt.Sprintf("%v-%v-%v/Dockerfile",app.Owner,app.Name,sha)
-//
-//	opt := types.ImageBuildOptions{
-//		Dockerfile:   dockerfilePath,
-//		Tags: []string{app.Name},
-//		SuppressOutput: false,
-//		Remove:         true,
-//		ForceRemove:    true,
-//		PullParent:     true,
-//		NoCache:        true,
-//	}
-//
-//	response, err := c.docker.ImageBuild(ctx,
-//		dockerBuildContext, opt)
-//	if err != nil {
-//		fmt.Printf("Error building, %v", err)
-//		return err
-//	}
-//	fmt.Println("response")
-//	fmt.Println(response)
-//	_,err=io.Copy(os.Stdout, response.Body)
-//	//if err!=nil{
-//	//	fmt.Println("Error on copy stdout")
-//	//	return err
-//	//}
-//	return nil
-//}
-
-/*func (appDocker *DockerApp) ContainerCreate2() error {
-	// Wait for image to be pulled
-	var err error
-	for !appDocker.ImageIsLoaded() {
-		appDocker.Config, err = appDocker.Client.ContainerCreate(
-			context.Background(),
-			&container.Config{Image: appDocker.App.GetPKGName()},
-			&container.HostConfig{},
-			&network.NetworkingConfig{},
-			"")
-		return err
-	}
-	return nil
-}*/
-
-
-//func (appDocker *DockerApp)IsImageReady(ctx context.Context,token string)  {
-//
-//	for !appDocker.ImageIsLoaded(ctx) {
-//		fmt.Printf("image not ready: %v",appDocker.App.Status)
-//	}
-//
-//	dao:=store.InitMongoStore(ctx)
-//	appDocker.App.Status=models.READY
-//	_,err:=dao.UpdateApp(ctx,appDocker.App)
-//	if err !=nil{
-//		fmt.Printf("DB Error: %s", err.Error())
-//	}
-//}
-

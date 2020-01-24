@@ -13,6 +13,8 @@ func (app *GenApp)generateSourceCode()  {
 		app.generateStaticAppCode()
 	case "mongodb":
 		app.generateMongoService()
+	case "mysql":
+		app.generateMysqlService()
 	default:
 		fmt.Printf("NOT SUPPORTED")
 	}

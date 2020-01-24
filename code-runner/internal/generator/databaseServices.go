@@ -1,11 +1,31 @@
 package generator
 
+func (app *GenApp) generateMysqlService() {
+	app.Data = make(map[string][]byte)
+	app.Data["config/mysql.cnf"] = app.genMysqlConf()
+}
+
+func (app *GenApp) genMysqlConf() []byte {
+	index := `
+[client]
+port=`+app.App.Spec["port"]+`
+socket=/tmp/mysql.sock
+
+[mysqld]
+port=`+app.App.Spec["port"]+`
+socket=/tmp/mysql.sock
+key_buffer_size=16M
+max_allowed_packet=128M
+
+[mysqldump]
+quick `
+	return []byte(index)
+}
 
 func (app *GenApp) generateMongoService() {
 	app.Data = make(map[string][]byte)
 	app.Data["config/mongod.conf"] = app.genMongoConf()
 }
-
 
 func (app *GenApp) genMongoConf() []byte {
 	index :=
@@ -31,7 +51,7 @@ func (app *GenApp) genMongoConf() []byte {
 
 # network interfaces
 net:
-  port: `+app.App.Spec["port"]+`
+  port: ` + app.App.Spec["port"] + `
   bindIp: 0.0.0.0
 
 # how the process runs
