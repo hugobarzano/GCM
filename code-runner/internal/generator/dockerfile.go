@@ -57,6 +57,18 @@ func GenerateMysqlDockerfile(app *models.App) 	[]byte {
 	return []byte(dockerfile)
 }
 
+func GenerateRedisDockerfile(app *models.App) 	[]byte {
+	properties:=[]dockerfileEntry{
+		{"FROM","redis:6.0-rc"},
+		{"MAINTAINER", app.Owner},
+		{"COPY","./config/redis.conf /usr/local/etc/redis/redis.conf"},
+		{"EXPOSE", app.Spec["port"]},
+		{"ENTRYPOINT", "[\"redis-server\", \"/usr/local/etc/redis/redis.conf\"]"},
+	}
+	dockerfile:=generateDockerfile(app,properties)
+	return []byte(dockerfile)
+}
+
 func (app *GenApp)generateDockerfile(){
 
 	switch nature := app.App.Spec["nature"]; nature {
@@ -66,6 +78,8 @@ func (app *GenApp)generateDockerfile(){
 		app.Dockerfile=GenerateMongoDockerfile(app.App)
 	case "mysql":
 		app.Dockerfile=GenerateMysqlDockerfile(app.App)
+	case "redis":
+		app.Dockerfile=GenerateRedisDockerfile(app.App)
 	case "TBD":
 		fmt.Println("TBD.")
 	default:

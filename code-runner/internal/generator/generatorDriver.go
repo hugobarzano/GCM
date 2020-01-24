@@ -15,6 +15,8 @@ func (app *GenApp)generateSourceCode()  {
 		app.generateMongoService()
 	case "mysql":
 		app.generateMysqlService()
+	case "redis":
+		app.generateRedisService()
 	default:
 		fmt.Printf("NOT SUPPORTED")
 	}
