@@ -17,6 +17,8 @@ func (app *GenApp)generateSourceCode()  {
 		app.generateMysqlService()
 	case "redis":
 		app.generateRedisService()
+	case "jenkins":
+		app.generateJenkinsService()
 	default:
 		fmt.Printf("NOT SUPPORTED")
 	}

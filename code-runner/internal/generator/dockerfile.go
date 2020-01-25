@@ -69,6 +69,23 @@ func GenerateRedisDockerfile(app *models.App) 	[]byte {
 	return []byte(dockerfile)
 }
 
+func GenerateJenkinsDockerfile(app *models.App) 	[]byte {
+	properties:=[]dockerfileEntry{
+		{"FROM","jenkins/jenkins:lts-alpine"},
+		{"MAINTAINER", app.Owner},
+		{"ENV","JENKINS_OPTS=\"--httpListenAddress=0.0.0.0 --httpPort="+app.Spec["port"]+"\""},
+		{"ENV","JENKINS_SLAVE_AGENT_PORT=6661"},
+		{"ENV","JAVA_OPTS=\"-Djenkins.install.runSetupWizard=false\""},
+		{"COPY", "config/plugins.txt /usr/share/jenkins/ref/plugins.txt"},
+		{"COPY", "config/init.groovy /usr/share/jenkins/ref/init.groovy.d/initJenkins.groovy"},
+		{"RUN", "/usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt"},
+		{"EXPOSE", app.Spec["port"]},
+	}
+	dockerfile:=generateDockerfile(app,properties)
+	return []byte(dockerfile)
+}
+
+
 func (app *GenApp)generateDockerfile(){
 
 	switch nature := app.App.Spec["nature"]; nature {
@@ -80,6 +97,8 @@ func (app *GenApp)generateDockerfile(){
 		app.Dockerfile=GenerateMysqlDockerfile(app.App)
 	case "redis":
 		app.Dockerfile=GenerateRedisDockerfile(app.App)
+	case "jenkins":
+		app.Dockerfile=GenerateJenkinsDockerfile(app.App)
 	case "TBD":
 		fmt.Println("TBD.")
 	default:
