@@ -19,6 +19,8 @@ func (app *GenApp)generateSourceCode()  {
 		app.generateRedisService()
 	case "jenkins":
 		app.generateJenkinsService()
+	case "node":
+		app.generateNodeCode()
 	default:
 		fmt.Printf("NOT SUPPORTED")
 	}

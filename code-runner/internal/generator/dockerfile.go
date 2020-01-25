@@ -86,6 +86,22 @@ func GenerateJenkinsDockerfile(app *models.App) 	[]byte {
 }
 
 
+func GenerateNodeDockerfile(app *models.App) 	[]byte {
+	properties:=[]dockerfileEntry{
+		{"FROM","node:10"},
+		{"MAINTAINER", app.Owner},
+		{"WORKDIR","/usr/src/app"},
+		{"COPY", "package.json ./"},
+		{"COPY", "server.js ./"},
+		{"RUN", "npm install"},
+		{"EXPOSE", app.Spec["port"]},
+		{"ENTRYPOINT", "[\"node\", \"server.js\"]"},
+
+	}
+	dockerfile:=generateDockerfile(app,properties)
+	return []byte(dockerfile)
+}
+
 func (app *GenApp)generateDockerfile(){
 
 	switch nature := app.App.Spec["nature"]; nature {
@@ -99,6 +115,8 @@ func (app *GenApp)generateDockerfile(){
 		app.Dockerfile=GenerateRedisDockerfile(app.App)
 	case "jenkins":
 		app.Dockerfile=GenerateJenkinsDockerfile(app.App)
+	case "node":
+		app.Dockerfile=GenerateNodeDockerfile(app.App)
 	case "TBD":
 		fmt.Println("TBD.")
 	default:
