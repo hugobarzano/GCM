@@ -51,9 +51,12 @@ docker build . --file Dockerfile --tag $REPO
 }
 
 func (app *GenApp) genRun() []byte {
+	cmd:= "`git rev-parse --show-toplevel`"
+	port:=app.App.Spec["port"]+":"+app.App.Spec["port"]
 	script:=
 		`#!/usr/bin/env bash
-echo "TBD RUN APP"
+REPO=$(basename `+cmd+`)
+docker run -p `+port+ ` $REPO
 `
 	return []byte(script)
 }
@@ -93,7 +96,7 @@ func (app *GenApp) genPullImage() []byte {
 echo "$2" | docker login docker.pkg.github.com -u $1 --password-stdin
 REPO=$(basename `+cmd+`)
 IMAGE_NAME=$(echo "$REPO" | sed -e 's/\//./')
-IMAGE_ID="docker.pkg.github.com/$1/$REPO/$IMAGE_NAME"
+IMAGE_ID="docker.pkg.github.com/$1/$REPO/$1.$IMAGE_NAME"
 VERSION="latest"
 echo IMAGE_ID:VERSION=$IMAGE_ID:$VERSION
 docker pull $IMAGE_ID:$VERSION
