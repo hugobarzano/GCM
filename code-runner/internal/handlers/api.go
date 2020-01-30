@@ -22,6 +22,7 @@ func NewApi() *mux.Router {
 	mux := mux.NewRouter()
 	mux.HandleFunc("/", index)
 	mux.Handle("/workspace", requireLogin(http.HandlerFunc(workspace)))
+	mux.Handle("/updateWs", http.HandlerFunc(updateWorkspace))
 	mux.HandleFunc("/token", getToken).Methods(http.MethodGet)
 	mux.HandleFunc("/logout", logout)
 	mux.HandleFunc("/createApp", createApp)

@@ -9,27 +9,19 @@ import (
 var (
 	sessionStore    = sessions.NewCookieStore([]byte(constants.SessionSecret), nil)
 	contentsDir     = "internal/views/contents"
+	jsDir     		= "internal/views/js"
 	userAccessViews = map[string]*views.View{
 		"index": views.NewView(
-			"base",
-			contentsDir+"/index.gohtml"),
+			"base", contentsDir+"/index.gohtml",jsDir+"/noJs.gohtml"),
 		"workspace": views.NewView(
-			"base",
-			contentsDir+"/workspace.gohtml"),
-		"generate": views.NewView(
-			"base",
-			contentsDir+"/generate.gohtml"),
+			"base", contentsDir+"/workspace.gohtml",jsDir+"/workspaceJs.gohtml"),
 		"token": views.NewView(
-			"base",
-			contentsDir+"/token.gohtml"),
-		"test": views.NewView(
-			"base",
-			contentsDir+"/test.gohtml"),
+			"base", contentsDir+"/token.gohtml",jsDir+"/noJs.gohtml"),
+		"updateWs": views.NewView(
+			"emptyBase", contentsDir+"/updateWs.gohtml"),
 	}
-
 	appsViews = map[string]*views.View{
 		"createApp": views.NewView(
-			"base",
-			contentsDir+"/createApp.gohtml"),
+			"base", contentsDir+"/createApp.gohtml",jsDir+"/noJs.gohtml"),
 	}
 )

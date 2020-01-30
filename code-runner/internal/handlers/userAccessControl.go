@@ -2,9 +2,6 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
-	"code-runner/internal/models"
-	"code-runner/internal/store"
-	"fmt"
 	"github.com/dghubble/gologin/v2/github"
 	oauth2Login "github.com/dghubble/gologin/v2/oauth2"
 	"net/http"
@@ -23,41 +20,6 @@ func index(w http.ResponseWriter, req *http.Request) {
 	}
 
 	if err := userAccessViews["index"].Render(w, nil); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}
-
-func workspace(w http.ResponseWriter, req *http.Request) {
-
-	session, err := sessionStore.Get(req, constants.SessionName)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	user := session.Values[constants.SessionUserName].(string)
-	ctx:=req.Context()
-	dao:=store.InitMongoStore(ctx)
-	workspace, err :=dao.GetWorkspace(ctx,user)
-	if err !=nil{
-		fmt.Println("ERRRR:"+err.Error())
-	}
-	if workspace == nil {
-		fmt.Println("First login for: " + user)
-		workspace, err = dao.CreateWorkspace(ctx, &models.Workspace{
-			Owner: user,
-			Des: "Base workspace to app generation.",
-		})
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-	} else {
-		fmt.Println(user + "Already has a workspace")
-		fmt.Println(workspace)
-	}
-
-	if err := userAccessViews["workspace"].Render(w, workspace); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

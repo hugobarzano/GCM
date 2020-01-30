@@ -1,0 +1,19 @@
+{{define "js"}}
+    <script>
+        $(document).ready(function() {
+            setInterval(function(){
+                $.ajax({
+                    url: "/updateWs",
+                    type: "get",
+                    data: {owner: "{{ .Owner}}"},
+                    cache: false,
+                    success: function (response) {
+                        console.log(response);
+                        $('#apps').html(response)
+                    },
+                    error: function (xhr) {
+                    }
+                });}, 5000);
+        });
+    </script>
+{{end}}
