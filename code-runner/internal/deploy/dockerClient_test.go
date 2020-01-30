@@ -2,10 +2,33 @@ package deploy
 
 import (
 	"code-runner/internal/models"
+	"context"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
 )
+
+func TestDockerApp_GetContainerLog(t *testing.T) {
+
+	ctx:=context.Background()
+	spec:=make(map[string]string)
+	spec["dockerId"]="6c4547a2b9b7"
+	app:= &models.App{
+		Name:"gg",
+		Owner:"cesarcorp",
+		Spec:spec,
+	}
+
+	dockerApp:= DockerApp{
+		App:app,
+	}
+
+	err:=dockerApp.Initialize()
+	assert.Equal(t,nil,err)
+	err=dockerApp.GetContainerLog(ctx)
+	assert.Equal(t,nil,err)
+}
 
 func TestPull(t *testing.T) {
 
@@ -49,7 +72,7 @@ func TestPull(t *testing.T) {
 //	}
 //	authStr := base64.URLEncoding.EncodeToString(encodedJSON)
 //
-//	out, err := cli.ImagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", types.ImagePullOptions{RegistryAuth: authStr})
+//	out, err := cli.imagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", types.ImagePullOptions{RegistryAuth: authStr})
 //	if err != nil {
 //		panic(err)
 //	}
@@ -79,7 +102,7 @@ func TestPull(t *testing.T) {
 //	fmt.Println(body)
 //
 //
-//	resp, err := deployClient.docker.ImagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", opt)
+//	resp, err := deployClient.docker.imagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", opt)
 //
 //
 //	if err != nil{

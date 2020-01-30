@@ -14,6 +14,7 @@ import (
 	"github.com/docker/go-connections/nat"
 	"golang.org/x/net/context"
 	"io"
+	"log"
 	"net"
 	"os"
 	"strconv"
@@ -48,7 +49,7 @@ func registryAuthentication(user,password string) types.RequestPrivilegeFunc {
 	}
 }
 
-func (appDocker *DockerApp) PrepareRegistry(ctx context.Context,password string) error {
+func (appDocker *DockerApp) prepareRegistry(ctx context.Context,password string) error {
 	appDocker.AuthConfig = types.AuthConfig{
 		Username: appDocker.App.Owner,
 		Password: password,
@@ -67,7 +68,7 @@ func (appDocker *DockerApp) PrepareRegistry(ctx context.Context,password string)
 	return err
 }
 
-func (appDocker *DockerApp) ImagePull(ctx context.Context,token string) error {
+func (appDocker *DockerApp) imagePull(ctx context.Context,token string) error {
 
 	opts := types.ImagePullOptions{
 		RegistryAuth: appDocker.AuthConfigEncoded,
@@ -125,19 +126,19 @@ func (app *DockerApp) Start(token string) {
 		fmt.Println("Initialize error: "+err.Error())
 	}
 
-	err = app.PrepareRegistry(context.Background(),token)
+	err = app.prepareRegistry(context.Background(),token)
 	if err != nil {
-		fmt.Println("PrepareRegistry error: "+err.Error())
+		fmt.Println("prepareRegistry error: "+err.Error())
 	}
 
-	err = app.ImagePull(context.Background(),token)
+	err = app.imagePull(context.Background(),token)
 	if err != nil {
-		fmt.Println("ImagePull error: "+err.Error())
+		fmt.Println("imagePull error: "+err.Error())
 	}
 
-	err = app.ContainerCreate(context.Background())
+	err = app.containerCreate(context.Background())
 	if err != nil {
-		fmt.Println("ContainerCreate error: "+err.Error())
+		fmt.Println("containerCreate error: "+err.Error())
 	}
 }
 
@@ -165,7 +166,7 @@ func (app *DockerApp) Initialize() error {
 }
 
 
-func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
+func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
 	availablePort,_:=getAvailablePort()
 	hostBinding := nat.PortBinding{
 		HostIP:   "0.0.0.0",
@@ -209,4 +210,17 @@ func (appDocker *DockerApp) ContainerCreate(ctx context.Context) error {
 		return err
 	}
 	return err
+}
+
+func (appDocker *DockerApp)GetContainerLog(ctx context.Context) error {
+	reader, err := appDocker.Client.ContainerLogs(ctx, appDocker.App.Spec["dockerId"], types.ContainerLogsOptions{ShowStdout: true} )
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = io.Copy(os.Stdout, reader)
+	if err != nil && err != io.EOF {
+		log.Fatal(err)
+	}
+	return nil
 }
