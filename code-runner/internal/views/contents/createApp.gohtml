@@ -24,20 +24,28 @@
                     Name:
                 </label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="name" placeholder="Enter app name" name="name">
+                    <input type="text" class="form-control" id="name" placeholder="Enter app name" name="name" value="{{ .App.Name }}">
+                    {{ with .Errors.Name }}
+                        <p class="text-danger">{{ . }}</p>
+                    {{ end }}
                 </div>
+
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">
                     Description:
                 </label>
                 <div class="col-sm-2">
-                    <textarea name="description" rows="5" cols="50"></textarea>
-                    <br />
+                    <textarea name="description" placeholder="Describe your app..." rows="5" cols="50">{{ .App.Des }}</textarea>
+                    <br/>
+                    {{ with .Errors.Des }}
+                        <p class="text-danger">{{ . }}</p>
+                    {{ end }}
                 </div>
             </div>
             <div class="form-group">
                 <label for="natureForm" class="control-label col-sm-2">Nature</label>
+                <div class="col-sm-2">
                 <select class="form-control" id="natureForm" name="nature">
                     <option>staticApp</option>
                     <option>mongodb</option>
@@ -45,15 +53,22 @@
                     <option>redis</option>
                     <option>jenkins</option>
                     <option>node</option>
-                    <option>TBDd</option>
+                    <option>TBD</option>
                 </select>
+                {{ with .Errors.Nature }}
+                    <p class="text-danger">{{ . }}</p>
+                {{ end }}
+                </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">
                     Port:
                 </label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="port" placeholder="80 e.g." name="port">
+                    <input type="text" class="form-control" id="port" placeholder="80 e.g." name="port" value="{{ .App.Spec.port }}">
+                    {{ with .Errors.Port }}
+                        <p class="text-danger">{{ . }}</p>
+                    {{ end }}
                 </div>
             </div>
             </div>

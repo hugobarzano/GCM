@@ -12,14 +12,14 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 
 	switch method := r.Method; method {
 	case http.MethodGet:
-		if err := appsViews["createApp"].Render(w, ""); err != nil {
+		if err := appsViews["createApp"].Render(w, nil); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 	case http.MethodPost:
 
 		ctx:=r.Context()
-		appObj,err:=getAppFromRequest(r)
+		reqApp,err:=getAppFromRequest(r)
 
 		if err!=nil{
 			http.Error(w,
@@ -28,13 +28,18 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		if ok:=reqApp.validateRequest();!ok{
+			_=appsViews["createApp"].Render(w, reqApp)
+			return
+		}
+
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
-		appObj.Owner=user
+		reqApp.App.Owner=user
 
 		genApp := generator.GenApp{
-			App:appObj,
+			App:reqApp.App,
 		}
 
 		genApp.InitGit(ctx,accessToken)
@@ -47,9 +52,9 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		appObj.Repository = repo.GetCloneURL()
+		reqApp.App.Repository = repo.GetCloneURL()
 		dao:=store.InitMongoStore(ctx)
-		_,err=dao.CreateApp(ctx,appObj)
+		_,err=dao.CreateApp(ctx,reqApp.App)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("DB Error: %s", err.Error()),
