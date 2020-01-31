@@ -1,0 +1,44 @@
+{{define "yield"}}
+
+    <br>
+    <ul>
+
+        <li style="float:right">
+            <a>
+                <button class="active" id="return">Back to workspace!</button>
+            </a>
+        </li>
+        <li style="float:right">
+            <a>
+                <button class="active" id="viewLog">View App Logs</button>
+            </a>
+        </li>
+    </ul>
+    <br>
+    <div id="logs">
+    <table class="tg">
+        <tr>
+            <th class="tg-koh6"><span style="font-weight:bold">{{.Name}}</span></th>
+            <th class="tg-0pky">{{.Des}}</th>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Status</td>
+            <td class="tg-0pky">{{.Status}}</td>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Source-Code</td>
+            <td class="tg-0pky"><a href="{{.Repository}}">{{.Repository}}</a></td>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Deploy</td>
+            <td class="tg-0pky"><a href="{{.Url}}">{{.Url}}</a></td>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Spec</td>
+            <td class="tg-0pky">{{.Spec}}</td>
+        </tr>
+    </table>
+        <pre><output id="logBody"></output></pre>
+    </div>
+
+{{end}}

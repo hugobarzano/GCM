@@ -10,15 +10,6 @@
                 </form>
             </a>
         </li>
-        <!--
-        <li style="float:right">
-            <a class="active">
-                <form action="" method="post" class="active">
-                    <input id="tbd" class="active" type="button" value="TBD" />
-                </form>
-            </a>
-        </li>
-        -->
     </ul>
     <br>
     <div class="list-group" id ="apps">
@@ -34,7 +25,6 @@
             <a class="options" href="{{$element.Repository}}">Source-Code</a>
             <a class="options" href="{{$element.Url}}">{{$element.Url}}</a>
 
-
             <hr>
             <form action="/stop/{{$element.Name}}" method="post">
                 <input type="submit" value="Stop App">
@@ -44,6 +34,9 @@
             </form>
             <form action="/remove/{{$element.Name}}" method="post">
                 <input type="submit" value="Delete App">
+            </form>
+            <form action="/view/{{$element.Name}}" method="post">
+                <input type="submit" value="View App">
             </form>
         </li>
     {{end}}

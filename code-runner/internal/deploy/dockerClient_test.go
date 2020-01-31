@@ -2,10 +2,50 @@ package deploy
 
 import (
 	"code-runner/internal/models"
+	"context"
 	"fmt"
+	"github.com/stretchr/testify/assert"
+	"io"
+	"strings"
 	"testing"
 	"time"
 )
+
+func  TestReader(t *testing.T)  {
+
+		reader := strings.NewReader("Clear is better than clever")
+		p := make([]byte, 4)
+		for {
+			n, err := reader.Read(p)
+			if err == io.EOF {
+				break
+			}
+			fmt.Println(string(p[:n]))
+		}
+
+
+}
+
+func TestDockerApp_GetContainerLog(t *testing.T) {
+
+	ctx:=context.Background()
+	spec:=make(map[string]string)
+	spec["dockerId"]="b5fb30dc3a21"
+	app:= &models.App{
+		Name:"gg",
+		Owner:"cesarcorp",
+		Spec:spec,
+	}
+
+	dockerApp:= DockerApp{
+		App:app,
+	}
+
+	err:=dockerApp.Initialize()
+	assert.Equal(t,nil,err)
+	err=dockerApp.GetContainerLog(ctx)
+	assert.Equal(t,nil,err)
+}
 
 func TestPull(t *testing.T) {
 
@@ -49,7 +89,7 @@ func TestPull(t *testing.T) {
 //	}
 //	authStr := base64.URLEncoding.EncodeToString(encodedJSON)
 //
-//	out, err := cli.ImagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", types.ImagePullOptions{RegistryAuth: authStr})
+//	out, err := cli.imagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", types.ImagePullOptions{RegistryAuth: authStr})
 //	if err != nil {
 //		panic(err)
 //	}
@@ -79,7 +119,7 @@ func TestPull(t *testing.T) {
 //	fmt.Println(body)
 //
 //
-//	resp, err := deployClient.docker.ImagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", opt)
+//	resp, err := deployClient.docker.imagePull(ctx, "docker.pkg.github.com/hugobarzano/cat/hugobarzano.cat:latest", opt)
 //
 //
 //	if err != nil{
