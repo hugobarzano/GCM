@@ -1,11 +1,13 @@
 package handlers
 
 import (
+	"bufio"
 	"code-runner/internal/constants"
 	"code-runner/internal/deploy"
 	"code-runner/internal/store"
 	"fmt"
 	"github.com/gorilla/mux"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -66,6 +68,7 @@ func viewAppLogs(w http.ResponseWriter, r *http.Request) {
 		http.Error(w,
 			fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
 			http.StatusInternalServerError)
+		return
 	}
 
 	log:= struct {
@@ -77,6 +80,51 @@ func viewAppLogs(w http.ResponseWriter, r *http.Request) {
 	if err := appsViews["viewAppLog"].Render(w, log); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+}
+
+
+func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
+	ctx:=r.Context()
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	dockerId := r.FormValue("dockerId")
+	if dockerId == "" {
+		http.Error(w, "Missing dockerId", http.StatusInternalServerError)
+		return
+	}
+	con, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Print("upgrade:", err)
+		return
+	}
+	defer con.Close()
+
+	appDocker:=deploy.DockerApp{
+		App:nil,
+	}
+	err=appDocker.Initialize()
+	if err != nil {
+		http.Error(w,
+			fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
+			http.StatusInternalServerError)
+		return
+	}
+	out:=appDocker.GetContainerLogById2(ctx,dockerId)
+	for {
+		scanner := bufio.NewScanner(out)
+		scanner.Split(bufio.ScanLines)
+		for scanner.Scan() {
+			fmt.Println(scanner.Text())
+			err = con.WriteMessage(1, []byte(scanner.Text()))
+			if err != nil {
+				log.Println("write:", err)
+				break
+			}
+		}
+		break
 	}
 }
 

@@ -4,6 +4,7 @@ import (
 	"code-runner/internal/constants"
 	"code-runner/internal/views"
 	"github.com/dghubble/sessions"
+	"github.com/gorilla/websocket"
 )
 
 var (
@@ -27,5 +28,10 @@ var (
 			"base", contentsDir+"/viewApp.gohtml",jsDir+"/viewJs.gohtml"),
 		"viewAppLog": views.NewView(
 			"emptyBase", contentsDir+"/viewAppLogs.gohtml",jsDir+"/noJs.gohtml"),
+	}
+
+ 	upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
 	}
 )

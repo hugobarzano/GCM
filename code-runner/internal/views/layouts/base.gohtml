@@ -52,6 +52,52 @@
       .active {
         background-color: #4CAF50;
       }
+
+      #logBody {
+        background-color: black;
+        background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);
+        height: 40vh;
+        margin: 0;
+        overflow: hidden;
+        padding: 2rem;
+        color: white;
+        font: 1.3rem Inconsolata, monospace;
+        text-shadow: 0 0 5px #C8C8C8;
+        overflow-y: auto;
+      }
+      #logBody::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 40vh;
+        pointer-events: none;
+      }
+
+      ::selection {
+        background: #0080FF;
+        text-shadow: none;
+      }
+
+      pre {
+        margin: 0;
+      }
+
+      .tg  {border-collapse:collapse;border-spacing:0;}
+      .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+      .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+      .tg .tg-koh6{font-size:36px;border-color:inherit;text-align:left;vertical-align:top}
+      .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+      .tg .tg-eqm3{font-size:20px;border-color:inherit;text-align:left;vertical-align:top}
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
     </style>
   </head>
 

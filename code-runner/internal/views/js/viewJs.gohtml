@@ -1,31 +1,43 @@
 {{define "js"}}
     <script>
-        $(document).ready(function() {
-            setInterval(function(){
-                $.ajax({
-                    url: "/logs",
-                    type: "get",
-                    data: {dockerId: "{{ .Spec.dockerId}}"},
-                    cache: false,
-                    success: function (response) {
-                        console.log("RESPONSE")
-                        console.log(response);
-                        var logHistory=document.getElementById("logs").innerHTML
-                        console.log("HISTORY")
+        window.addEventListener("load", function(evt) {
+            var output = document.getElementById("logBody");
+            var ws;
+            var print = function(message) {
+                var d = document.createElement("div");
+                d.innerHTML = message;
+                output.appendChild(d);
+            };
+            document.getElementById("viewLog").onclick = function(evt) {
+                if (ws) {
+                    return false;
+                }
+                ws = new WebSocket("ws://"+window.location.hostname+"/logsSocket?dockerId={{ .Spec.dockerId}}");
+                ws.onopen = function(evt) {
+                    print("Opening connection...");
+                }
+                ws.onclose = function(evt) {
+                    print("Closing connection...");
+                    ws = null;
+                }
+                ws.onmessage = function(evt) {
+                    print("LOG: " + evt.data);
+                }
+                ws.onerror = function(evt) {
+                    print("ERROR: app not running");
+                }
+                return false;
+            };
 
-                        console.log(logHistory)
-                        if (logHistory.includes(response.body)){
-                            console.log("yes")
-                        }else{
-                            console.log("no")
-                            $("#logs").append("<b>"+response+"</b>");
-
-                        }
-                        //$('#logs').html(response)
-                    },
-                    error: function (xhr) {
-                    }
-                });}, 5000);
+            document.getElementById("return").onclick = function(evt) {
+                location.href ="/workspace"
+                if (!ws) {
+                    return false;
+                }
+                ws.close();
+                return false;
+            };
         });
     </script>
+
 {{end}}

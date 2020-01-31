@@ -31,7 +31,7 @@ func NewApi() *mux.Router {
 	mux.HandleFunc("/run/{app}", runApp)
 	mux.HandleFunc("/view/{app}", viewApp)
 	mux.Handle("/logs", http.HandlerFunc(viewAppLogs))
-	mux.HandleFunc("/test", test)
+	mux.HandleFunc("/logsSocket", viewAppLogSocket)
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,
 		ClientSecret: config.GetConfig().GithubClientSecret,

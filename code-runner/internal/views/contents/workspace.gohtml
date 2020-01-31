@@ -10,15 +10,6 @@
                 </form>
             </a>
         </li>
-        <!--
-        <li style="float:right">
-            <a class="active">
-                <form action="" method="post" class="active">
-                    <input id="tbd" class="active" type="button" value="TBD" />
-                </form>
-            </a>
-        </li>
-        -->
     </ul>
     <br>
     <div class="list-group" id ="apps">
@@ -33,7 +24,6 @@
             <p><h4>Description: </h4> <p style="line-:">{{$element.Des}}</p></p>
             <a class="options" href="{{$element.Repository}}">Source-Code</a>
             <a class="options" href="{{$element.Url}}">{{$element.Url}}</a>
-
 
             <hr>
             <form action="/stop/{{$element.Name}}" method="post">

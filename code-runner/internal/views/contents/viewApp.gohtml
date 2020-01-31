@@ -2,29 +2,43 @@
 
     <br>
     <ul>
+
         <li style="float:right">
-            <a class="active" href="/workspace">
-                <input class="active" type="button" value="OK!" />
+            <a>
+                <button class="active" id="return">Back to workspace!</button>
             </a>
         </li>
-
+        <li style="float:right">
+            <a>
+                <button class="active" id="viewLog">View App Logs</button>
+            </a>
+        </li>
     </ul>
     <br>
-
-    <div id="app">
-        <h3>App: {{.Name}}</h3>
-        <h6>Status {{.Status}}</h6>
-        <br>
-        <br>
-        <p><h4>Description: </h4> <p style="line-:">{{.Des}}</p></p>
-        <a class="options" href="{{.Repository}}">Source-Code</a>
-        <a class="options" href="{{.Url}}">{{.Url}}</a>
-        <p><h4>Spec: </h4> <p style="line-:">{{.Spec.port}}</p></p>
-        <p><h4>Spec: </h4> <p style="line-:">{{.Spec.nature}}</p></p>
-    </div>
-
     <div id="logs">
-        Loading...
+    <table class="tg">
+        <tr>
+            <th class="tg-koh6"><span style="font-weight:bold">{{.Name}}</span></th>
+            <th class="tg-0pky">{{.Des}}</th>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Status</td>
+            <td class="tg-0pky">{{.Status}}</td>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Source-Code</td>
+            <td class="tg-0pky"><a href="{{.Repository}}">{{.Repository}}</a></td>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Deploy</td>
+            <td class="tg-0pky"><a href="{{.Url}}">{{.Url}}</a></td>
+        </tr>
+        <tr>
+            <td class="tg-eqm3">Spec</td>
+            <td class="tg-0pky">{{.Spec}}</td>
+        </tr>
+    </table>
+        <pre><output id="logBody"></output></pre>
     </div>
 
 {{end}}

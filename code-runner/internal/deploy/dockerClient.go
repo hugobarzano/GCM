@@ -255,3 +255,20 @@ func (appDocker *DockerApp)GetContainerLogById(ctx context.Context,id string) st
 
 	return logs
 }
+
+
+func (appDocker *DockerApp)GetContainerLogById2(ctx context.Context,id string) io.ReadCloser {
+	reader, err := appDocker.Client.ContainerLogs(ctx, id,
+		types.ContainerLogsOptions{
+			ShowStdout: true,
+			ShowStderr: true,
+			Details:	false,
+			Follow:     true,
+			Timestamps: false,
+			Tail:       "1",
+		} )
+	if err != nil {
+		log.Fatal(err)
+	}
+	return reader
+}
