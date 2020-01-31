@@ -1,6 +1,7 @@
 package deploy
 
 import (
+	"bytes"
 	"code-runner/internal/constants"
 	"code-runner/internal/models"
 	"code-runner/internal/store"
@@ -213,7 +214,13 @@ func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
 }
 
 func (appDocker *DockerApp)GetContainerLog(ctx context.Context) error {
-	reader, err := appDocker.Client.ContainerLogs(ctx, appDocker.App.Spec["dockerId"], types.ContainerLogsOptions{ShowStdout: true} )
+	reader, err := appDocker.Client.ContainerLogs(ctx, appDocker.App.Spec["dockerId"],
+		types.ContainerLogsOptions{
+			ShowStdout: true,
+			Details:true,
+			Follow:     true,
+			Tail:       "1",
+	} )
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -223,4 +230,33 @@ func (appDocker *DockerApp)GetContainerLog(ctx context.Context) error {
 		log.Fatal(err)
 	}
 	return nil
+}
+
+func (appDocker *DockerApp)GetContainerLogById(ctx context.Context,id string) string {
+	reader, err := appDocker.Client.ContainerLogs(ctx, id,
+		types.ContainerLogsOptions{
+			ShowStdout: true,
+			ShowStderr: true,
+			Details:true,
+			Follow:     false,
+			Tail:       "10",
+		} )
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	buf := new(bytes.Buffer)
+	_,err=buf.ReadFrom(reader)
+	if err != nil {
+		log.Fatal(err)
+	}
+	logs:=buf.String()
+
+	return logs
+
+	//_, err = io.Copy(os.Stdout, reader)
+	//if err != nil && err != io.EOF {
+	//	log.Fatal(err)
+	//}
+	//return nil
 }

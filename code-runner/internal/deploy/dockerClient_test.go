@@ -5,15 +5,32 @@ import (
 	"context"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"io"
+	"strings"
 	"testing"
 	"time"
 )
+
+func  TestReader(t *testing.T)  {
+
+		reader := strings.NewReader("Clear is better than clever")
+		p := make([]byte, 4)
+		for {
+			n, err := reader.Read(p)
+			if err == io.EOF {
+				break
+			}
+			fmt.Println(string(p[:n]))
+		}
+
+
+}
 
 func TestDockerApp_GetContainerLog(t *testing.T) {
 
 	ctx:=context.Background()
 	spec:=make(map[string]string)
-	spec["dockerId"]="6c4547a2b9b7"
+	spec["dockerId"]="b5fb30dc3a21"
 	app:= &models.App{
 		Name:"gg",
 		Owner:"cesarcorp",

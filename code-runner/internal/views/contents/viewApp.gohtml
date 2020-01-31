@@ -1,0 +1,20 @@
+{{define "yield"}}
+
+    <br>
+    <ul>
+        <li style="float:right">
+            <a class="active" href="/workspace">
+                <input class="active" type="button" value="OK!" />
+            </a>
+        </li>
+
+    </ul>
+    <br>
+
+    <div id="app">
+        <p>
+            {{ .Data }}
+        </p>
+    </div>
+
+{{end}}
