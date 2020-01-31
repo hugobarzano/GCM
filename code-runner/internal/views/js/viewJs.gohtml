@@ -1,0 +1,31 @@
+{{define "js"}}
+    <script>
+        $(document).ready(function() {
+            setInterval(function(){
+                $.ajax({
+                    url: "/logs",
+                    type: "get",
+                    data: {dockerId: "{{ .Spec.dockerId}}"},
+                    cache: false,
+                    success: function (response) {
+                        console.log("RESPONSE")
+                        console.log(response);
+                        var logHistory=document.getElementById("logs").innerHTML
+                        console.log("HISTORY")
+
+                        console.log(logHistory)
+                        if (logHistory.includes(response.body)){
+                            console.log("yes")
+                        }else{
+                            console.log("no")
+                            $("#logs").append("<b>"+response+"</b>");
+
+                        }
+                        //$('#logs').html(response)
+                    },
+                    error: function (xhr) {
+                    }
+                });}, 5000);
+        });
+    </script>
+{{end}}

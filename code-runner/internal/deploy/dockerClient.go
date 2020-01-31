@@ -237,9 +237,10 @@ func (appDocker *DockerApp)GetContainerLogById(ctx context.Context,id string) st
 		types.ContainerLogsOptions{
 			ShowStdout: true,
 			ShowStderr: true,
-			Details:true,
+			Details:	false,
 			Follow:     false,
-			Tail:       "10",
+			Timestamps: false,
+			Tail:       "1",
 		} )
 	if err != nil {
 		log.Fatal(err)
@@ -253,10 +254,4 @@ func (appDocker *DockerApp)GetContainerLogById(ctx context.Context,id string) st
 	logs:=buf.String()
 
 	return logs
-
-	//_, err = io.Copy(os.Stdout, reader)
-	//if err != nil && err != io.EOF {
-	//	log.Fatal(err)
-	//}
-	//return nil
 }

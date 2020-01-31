@@ -12,9 +12,19 @@
     <br>
 
     <div id="app">
-        <p>
-            {{ .Data }}
-        </p>
+        <h3>App: {{.Name}}</h3>
+        <h6>Status {{.Status}}</h6>
+        <br>
+        <br>
+        <p><h4>Description: </h4> <p style="line-:">{{.Des}}</p></p>
+        <a class="options" href="{{.Repository}}">Source-Code</a>
+        <a class="options" href="{{.Url}}">{{.Url}}</a>
+        <p><h4>Spec: </h4> <p style="line-:">{{.Spec.port}}</p></p>
+        <p><h4>Spec: </h4> <p style="line-:">{{.Spec.nature}}</p></p>
+    </div>
+
+    <div id="logs">
+        Loading...
     </div>
 
 {{end}}

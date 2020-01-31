@@ -24,6 +24,8 @@ var (
 		"createApp": views.NewView(
 			"base", contentsDir+"/createApp.gohtml",jsDir+"/noJs.gohtml"),
 		"viewApp": views.NewView(
-			"base", contentsDir+"/viewApp.gohtml",jsDir+"/noJs.gohtml"),
+			"base", contentsDir+"/viewApp.gohtml",jsDir+"/viewJs.gohtml"),
+		"viewAppLog": views.NewView(
+			"emptyBase", contentsDir+"/viewAppLogs.gohtml",jsDir+"/noJs.gohtml"),
 	}
 )

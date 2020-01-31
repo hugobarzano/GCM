@@ -45,7 +45,6 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 
 func updateWorkspace(w http.ResponseWriter, req *http.Request) {
 
-	//user := session.Values[constants.SessionUserName].(string)
 	if err := req.ParseForm(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
