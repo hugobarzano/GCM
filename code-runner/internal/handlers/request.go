@@ -53,7 +53,7 @@ func (appRequest *requestApp) validateRequest() bool {
 		appRequest.Errors["Name"] = "Name must contains only alphanumeric chars."
 	}
 
-	re = regexp.MustCompile("^[a-zA-Z0-9@_.,]*$")
+	re = regexp.MustCompile("^[a-zA-Z0-9@_.,\\s\\w]*$")
 	if ok := re.Match([]byte(appRequest.App.Des)); !ok{
 		appRequest.Errors["Des"] = "Description must contains only alphanumeric chars, \"@\",\"_\",\".\" and \",\""
 	}
