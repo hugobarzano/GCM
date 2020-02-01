@@ -12,7 +12,13 @@
                 if (ws) {
                     return false;
                 }
-                ws = new WebSocket("wss://"+window.location.hostname+"/logsSocket?dockerId={{ .Spec.dockerId}}");
+                var wss = "wss://";
+                if (document.location.protocol === "http:") {
+                    wss = "ws://";
+                }
+                var addr = wss+window.location.hostname+"/logsSocket?dockerId={{ .Spec.dockerId}}"
+                console.log("WebSocket: "+addr)
+                ws = new WebSocket(addr);
                 ws.onopen = function(evt) {
                     print("Opening connection...");
                 }
