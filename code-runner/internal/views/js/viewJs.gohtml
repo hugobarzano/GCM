@@ -44,6 +44,24 @@
                 return false;
             };
         });
+
+
+
+        $(document).ready(function() {
+            setInterval(function(){
+                $.ajax({
+                    url: "/getApp",
+                    type: "get",
+                    data: {app: "{{ .Name}}"},
+                    cache: false,
+                    success: function (response) {
+                        console.log(response);
+                        $('#appData').html(response)
+                    },
+                    error: function (xhr) {
+                    }
+                });}, 5000);
+        });
     </script>
 
 {{end}}

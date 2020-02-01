@@ -18,16 +18,16 @@ var (
 			"base", contentsDir+"/workspace.gohtml",jsDir+"/workspaceJs.gohtml"),
 		"token": views.NewView(
 			"base", contentsDir+"/token.gohtml",jsDir+"/noJs.gohtml"),
-		"updateWs": views.NewView(
-			"emptyBase", contentsDir+"/updateWs.gohtml"),
+		"getWs": views.NewView(
+			"emptyBase", contentsDir+"/getWs.gohtml"),
 	}
 	appsViews = map[string]*views.View{
 		"createApp": views.NewView(
 			"base", contentsDir+"/createApp.gohtml",jsDir+"/noJs.gohtml"),
 		"viewApp": views.NewView(
 			"base", contentsDir+"/viewApp.gohtml",jsDir+"/viewJs.gohtml"),
-		"viewAppLog": views.NewView(
-			"emptyBase", contentsDir+"/viewAppLogs.gohtml",jsDir+"/noJs.gohtml"),
+		"getApp": views.NewView(
+			"emptyBase", contentsDir+"/getApp.gohtml"),
 	}
 
  	upgrader = websocket.Upgrader{

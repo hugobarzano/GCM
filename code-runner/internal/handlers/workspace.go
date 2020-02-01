@@ -43,7 +43,7 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func updateWorkspace(w http.ResponseWriter, req *http.Request) {
+func getWorkspace(w http.ResponseWriter, req *http.Request) {
 
 	if err := req.ParseForm(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -62,7 +62,7 @@ func updateWorkspace(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	if err := userAccessViews["updateWs"].Render(w, workspace); err != nil {
+	if err := userAccessViews["getWs"].Render(w, workspace); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

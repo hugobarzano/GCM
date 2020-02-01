@@ -3,7 +3,7 @@
         $(document).ready(function() {
             setInterval(function(){
                 $.ajax({
-                    url: "/updateWs",
+                    url: "/getWs",
                     type: "get",
                     data: {owner: "{{ .Owner}}"},
                     cache: false,

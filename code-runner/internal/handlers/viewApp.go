@@ -41,44 +41,7 @@ func viewApp(w http.ResponseWriter, r *http.Request) {
 
 		if err := appsViews["viewApp"].Render(w, appObj); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
 		}
-		return
-	}
-}
-
-func viewAppLogs(w http.ResponseWriter, r *http.Request) {
-
-	ctx:=r.Context()
-	if err := r.ParseForm(); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	dockerId := r.FormValue("dockerId")
-	if dockerId == "" {
-		http.Error(w, "Missing dockerId", http.StatusInternalServerError)
-		return
-	}
-
-	appDocker:=deploy.DockerApp{
-		App:nil,
-	}
-	err:=appDocker.Initialize()
-	if err != nil {
-		http.Error(w,
-			fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
-			http.StatusInternalServerError)
-		return
-	}
-
-	log:= struct {
-		Line string
-	}{
-		Line:appDocker.GetContainerLogById(ctx,dockerId),
-	}
-
-	if err := appsViews["viewAppLog"].Render(w, log); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
@@ -126,5 +89,37 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 		}
 		break
 	}
+}
+
+
+func getApp(w http.ResponseWriter, r *http.Request) {
+
+		ctx := r.Context()
+		if err := r.ParseForm(); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		appName := r.FormValue("app")
+		if appName == "" {
+			http.Error(w, "Missing app Name field", http.StatusInternalServerError)
+			return
+		}
+
+		session, _ := sessionStore.Get(r, constants.SessionName)
+		user := session.Values[constants.SessionUserName].(string)
+
+		dao := store.InitMongoStore(ctx)
+		appObj, err := dao.GetApp(ctx, user, appName)
+		if err != nil {
+			http.Error(w,
+				fmt.Sprintf("error getting app:%s", err.Error()),
+				http.StatusInternalServerError)
+		}
+
+		if err := appsViews["getApp"].Render(w, appObj); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+
 }
 

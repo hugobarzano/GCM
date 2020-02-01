@@ -22,7 +22,7 @@ func NewApi() *mux.Router {
 	mux := mux.NewRouter()
 	mux.HandleFunc("/", index)
 	mux.Handle("/workspace", requireLogin(http.HandlerFunc(workspace)))
-	mux.Handle("/updateWs", http.HandlerFunc(updateWorkspace))
+	mux.Handle("/getWs", http.HandlerFunc(getWorkspace))
 	mux.HandleFunc("/token", getToken).Methods(http.MethodGet)
 	mux.HandleFunc("/logout", logout)
 	mux.HandleFunc("/createApp", createApp)
@@ -30,7 +30,7 @@ func NewApi() *mux.Router {
 	mux.HandleFunc("/stop/{app}", stopApp)
 	mux.HandleFunc("/run/{app}", runApp)
 	mux.HandleFunc("/view/{app}", viewApp)
-	mux.Handle("/logs", http.HandlerFunc(viewAppLogs))
+	mux.Handle("/getApp", http.HandlerFunc(getApp))
 	mux.HandleFunc("/logsSocket", viewAppLogSocket)
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,

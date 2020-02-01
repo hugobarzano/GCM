@@ -1,21 +1,4 @@
 {{define "yield"}}
-
-    <br>
-    <ul>
-
-        <li style="float:right">
-            <a>
-                <button class="active" id="return">Back to workspace!</button>
-            </a>
-        </li>
-        <li style="float:right">
-            <a>
-                <button class="active" id="viewLog">View App Logs</button>
-            </a>
-        </li>
-    </ul>
-    <br>
-    <div id="logs">
     <table class="tg" id="appData">
         <tr>
             <th class="tg-koh6"><span style="font-weight:bold">{{.Name}}</span></th>
@@ -38,7 +21,4 @@
             <td class="tg-0pky">{{.Spec}}</td>
         </tr>
     </table>
-        <pre><output id="logBody"></output></pre>
-    </div>
-
 {{end}}
