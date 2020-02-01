@@ -56,6 +56,6 @@ func (app *GenApp) InitializeCode(user string, token string) {
 	dockerApp:=deploy.DockerApp{
 		App:app.App,
 	}
-	go dockerApp.Start(token)
+	go dockerApp.ContainerStart(token)
 }
 

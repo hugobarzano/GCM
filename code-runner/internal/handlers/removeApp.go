@@ -48,11 +48,14 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 				http.StatusInternalServerError)
 		}
 
-		err = dockerApp.ContainerStop()
+		err = dockerApp.ContainerStop(ctx)
 		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error stoping app container:%s", err.Error()),
-				http.StatusInternalServerError)
+			fmt.Printf("error stoping app container:%s", err.Error())
+		}
+
+		err = dockerApp.ContainerRemove(ctx)
+		if err != nil {
+			fmt.Printf("error removing app container:%s", err.Error())
 		}
 
 		genApp := generator.GenApp{

@@ -28,21 +28,20 @@ type DockerApp struct {
 	AuthConfig        types.AuthConfig
 	AuthConfigEncoded string
 	Config            container.ContainerCreateCreatedBody
-
 }
 
-func registryAuthentication(user,password string) types.RequestPrivilegeFunc {
+func registryAuthentication(user, password string) types.RequestPrivilegeFunc {
 	return func() (string, error) {
 		authConfig := types.AuthConfig{
-			Username: user,
-			Password: password,
+			Username:      user,
+			Password:      password,
 			ServerAddress: constants.DockerRegistry,
 		}
 		buf, err := json.Marshal(authConfig)
 		if err != nil {
 			return "", err
 		}
-		base64config:=base64.URLEncoding.EncodeToString(buf)
+		base64config := base64.URLEncoding.EncodeToString(buf)
 		if err != nil {
 			return "", err
 		}
@@ -50,10 +49,10 @@ func registryAuthentication(user,password string) types.RequestPrivilegeFunc {
 	}
 }
 
-func (appDocker *DockerApp) prepareRegistry(ctx context.Context,password string) error {
+func (appDocker *DockerApp) prepareRegistry(ctx context.Context, password string) error {
 	appDocker.AuthConfig = types.AuthConfig{
-		Username: appDocker.App.Owner,
-		Password: password,
+		Username:      appDocker.App.Owner,
+		Password:      password,
 		ServerAddress: constants.DockerRegistry,
 	}
 	resp, err := appDocker.Client.RegistryLogin(ctx, appDocker.AuthConfig)
@@ -65,40 +64,39 @@ func (appDocker *DockerApp) prepareRegistry(ctx context.Context,password string)
 		appDocker.AuthConfig.IdentityToken = resp.IdentityToken
 	}
 	buf, err := json.Marshal(appDocker.AuthConfig)
-	appDocker.AuthConfigEncoded=base64.URLEncoding.EncodeToString(buf)
+	appDocker.AuthConfigEncoded = base64.URLEncoding.EncodeToString(buf)
 	return err
 }
 
-func (appDocker *DockerApp) imagePull(ctx context.Context,token string) error {
+func (appDocker *DockerApp) imagePull(ctx context.Context, token string) error {
 
 	opts := types.ImagePullOptions{
-		RegistryAuth: appDocker.AuthConfigEncoded,
-		PrivilegeFunc: registryAuthentication(appDocker.App.Owner,token),
+		RegistryAuth:  appDocker.AuthConfigEncoded,
+		PrivilegeFunc: registryAuthentication(appDocker.App.Owner, token),
 	}
 
-	pkgAddr:=appDocker.App.GetPKGName()
+	pkgAddr := appDocker.App.GetPKGName()
 
-	img, err := appDocker.Client.ImagePull(ctx,pkgAddr, opts)
-	//var err error
-	//var img io.ReadCloser
-	timeout:=time.Duration(5*time.Minute)
+	img, err := appDocker.Client.ImagePull(ctx, pkgAddr, opts)
+	timeout := time.Duration(5 * time.Minute)
 	start := time.Now()
-	for img==nil  {
-		fmt.Printf("\nimage not ready: %v",appDocker.App.Status)
-		img, err = appDocker.Client.ImagePull(ctx,pkgAddr, opts)
-		if time.Since(start)>=timeout{
-			return errors.New("Error pulling image after "+timeout.String())
+	for img == nil {
+		fmt.Printf("image: %v not ready. Status: %v\n", appDocker.App.GetPKGName(),appDocker.App.Status)
+		img, err = appDocker.Client.ImagePull(ctx, pkgAddr, opts)
+		time.Sleep(time.Second*5)
+		if time.Since(start) >= timeout {
+			return errors.New("Error pulling image after " + timeout.String())
 		}
 
 	}
-	_,_=io.Copy(os.Stdout, img)
+	_, _ = io.Copy(os.Stdout, img)
 	if err != nil {
 		return err
 	}
-	dao:=store.InitMongoStore(ctx)
-	appDocker.App.Status=models.READY
-	_,err=dao.UpdateApp(ctx,appDocker.App)
-	if err !=nil{
+	dao := store.InitMongoStore(ctx)
+	appDocker.App.Status = models.READY
+	_, err = dao.UpdateApp(ctx, appDocker.App)
+	if err != nil {
 		fmt.Printf("DB Error: %s", err.Error())
 		return err
 	}
@@ -106,59 +104,72 @@ func (appDocker *DockerApp) imagePull(ctx context.Context,token string) error {
 }
 
 
-func (appDocker *DockerApp) ContainerStart() error {
-	fmt.Printf("config")
-	fmt.Println(appDocker.Config)
-	return appDocker.Client.ContainerStart(context.Background(), appDocker.Config.ID, types.ContainerStartOptions{})
+func (appDocker *DockerApp) ContainerStop(ctx context.Context) error {
+
+	timeOut := 0 * time.Second
+	fmt.Println("DOCKER ID: " + appDocker.App.Spec["dockerId"])
+	err:=appDocker.Client.ContainerStop(ctx, appDocker.App.Spec["dockerId"], &timeOut)
+	return err
 }
 
-func (appDocker *DockerApp) ContainerStop() error {
+func (appDocker *DockerApp) ContainerRemove(ctx context.Context) error {
 
-	timeOut:=0 * time.Second
-	fmt.Println("DOCKER ID: "+appDocker.App.Spec["dockerId"])
-	return 	appDocker.Client.ContainerStop(context.Background(),appDocker.App.Spec["dockerId"],&timeOut)
+	err:=appDocker.Client.ContainerRemove(ctx,appDocker.App.Spec["dockerId"],types.ContainerRemoveOptions{
+		Force:true,
+		RemoveLinks:false,
+		RemoveVolumes:true,
+	})
+	return err
 }
 
-func (app *DockerApp) Start(token string) {
+func (appDocker *DockerApp) ImageRemove(ctx context.Context) error {
+
+	del,err:=appDocker.Client.ImageRemove(ctx,appDocker.App.GetPKGName(),types.ImageRemoveOptions{
+		Force:true,
+	})
+
+	fmt.Print(del)
+	fmt.Printf(err.Error())
+	return err
+}
+
+func (app *DockerApp) ContainerStart(token string) {
 
 	var err error
 	err = app.Initialize()
 	if err != nil {
-		fmt.Println("Initialize error: "+err.Error())
+		fmt.Println("Initialize error: " + err.Error())
 	}
 
-	err = app.prepareRegistry(context.Background(),token)
+	err = app.prepareRegistry(context.Background(), token)
 	if err != nil {
-		fmt.Println("prepareRegistry error: "+err.Error())
+		fmt.Println("prepareRegistry error: " + err.Error())
 	}
 
-	err = app.imagePull(context.Background(),token)
+	err = app.imagePull(context.Background(), token)
 	if err != nil {
-		fmt.Println("imagePull error: "+err.Error())
+		fmt.Println("imagePull error: " + err.Error())
 	}
 
 	err = app.containerCreate(context.Background())
 	if err != nil {
-		fmt.Println("containerCreate error: "+err.Error())
+		fmt.Println("containerCreate error: " + err.Error())
 	}
 }
 
-
-func getAvailablePort() (int, error) {
+func getAvailablePort() string {
 	addr, err := net.ResolveTCPAddr("tcp", "localhost:0")
 	if err != nil {
-		return 0, err
+		return "0"
 	}
 
 	l, err := net.ListenTCP("tcp", addr)
 	if err != nil {
-		return 0, err
+		return "0"
 	}
 	defer l.Close()
-	return l.Addr().(*net.TCPAddr).Port, nil
+	return strconv.Itoa(l.Addr().(*net.TCPAddr).Port)
 }
-
-
 
 func (app *DockerApp) Initialize() error {
 	var err error
@@ -166,61 +177,98 @@ func (app *DockerApp) Initialize() error {
 	return err
 }
 
-
-func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
-	availablePort,_:=getAvailablePort()
+func (appDocker *DockerApp) getPortBinding(tcpPort string) (nat.PortMap, error) {
 	hostBinding := nat.PortBinding{
 		HostIP:   "0.0.0.0",
-		HostPort: strconv.Itoa(availablePort),
+		HostPort: tcpPort,
 	}
 	containerPort, err := nat.NewPort("tcp", appDocker.App.Spec["port"])
 	if err != nil {
-		panic("Unable to get the port")
+		fmt.Print("Unable to get Container port: " + err.Error())
+		return nil, err
 	}
-	portBinding := nat.PortMap{containerPort: []nat.PortBinding{hostBinding}}
 
+	portBinding := nat.PortMap{
+		containerPort: []nat.PortBinding{
+			hostBinding,
+		},
+	}
+	return portBinding, nil
 
-	containerObj, err := appDocker.Client.ContainerCreate(context.Background(),
-		&container.Config{ Image: appDocker.App.GetPKGName()},
+}
+
+func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
+
+	ctx=context.Background()
+	availablePort:=appDocker.App.Spec["port"]
+	portBinding, err := appDocker.getPortBinding(availablePort)
+	if err != nil {
+		return err
+	}
+
+	containerObj, err := appDocker.Client.ContainerCreate(ctx,
+		&container.Config{Image: appDocker.App.GetPKGName()},
 		&container.HostConfig{
 			PortBindings: portBinding},
 		nil, "")
 
 	if err != nil {
-		//panic("Unable to Create container")
 		return err
 	}
 
 	err = appDocker.Client.ContainerStart(ctx,
 		containerObj.ID,
-		types.ContainerStartOptions{});
+		types.ContainerStartOptions{})
 
 	if err != nil {
-		//panic("Unable to Start container")
-		return err
-	}
-	appDocker.Config=containerObj
-	appDocker.App.Spec["dockerId"]=containerObj.ID
-	appDocker.App.Status=models.RUNNING
-	appDocker.App.SetDeployURL(strconv.Itoa(availablePort))
+		fmt.Println("Unable to start with client port")
+		err:=appDocker.Client.ContainerRemove(ctx,containerObj.ID,types.ContainerRemoveOptions{
+			Force:true,
+		})
+		if err != nil {
+			return err
+		}
 
-	dao:=store.InitMongoStore(ctx)
-	_,err=dao.UpdateApp(ctx,appDocker.App)
-	if err != nil {
-		//panic("Unable to update DB container")
-		return err
+		availablePort = getAvailablePort()
+		portBinding, err = appDocker.getPortBinding(availablePort)
+		if err != nil {
+			return err
+		}
+
+		containerObj, err = appDocker.Client.ContainerCreate(ctx,
+			&container.Config{Image: appDocker.App.GetPKGName()},
+			&container.HostConfig{
+				PortBindings: portBinding},
+			nil, "")
+
+		err = appDocker.Client.ContainerStart(ctx,
+			containerObj.ID,
+			types.ContainerStartOptions{})
+
+		if err != nil {
+			fmt.Println("Unable to start with available port")
+			return err
+		}
 	}
+
+	appDocker.Config = containerObj
+	appDocker.App.Spec["dockerId"] = containerObj.ID
+	appDocker.App.Status = models.RUNNING
+	appDocker.App.SetDeployURL(availablePort)
+	dao := store.InitMongoStore(ctx)
+	_, err = dao.UpdateApp(ctx, appDocker.App)
+
 	return err
 }
 
-func (appDocker *DockerApp)GetContainerLog(ctx context.Context) error {
+func (appDocker *DockerApp) GetContainerLog(ctx context.Context) error {
 	reader, err := appDocker.Client.ContainerLogs(ctx, appDocker.App.Spec["dockerId"],
 		types.ContainerLogsOptions{
 			ShowStdout: true,
-			Details:true,
+			Details:    true,
 			Follow:     true,
 			Tail:       "1",
-	} )
+		})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -232,41 +280,40 @@ func (appDocker *DockerApp)GetContainerLog(ctx context.Context) error {
 	return nil
 }
 
-func (appDocker *DockerApp)GetContainerLogById(ctx context.Context,id string) string {
+func (appDocker *DockerApp) GetContainerLogById(ctx context.Context, id string) string {
 	reader, err := appDocker.Client.ContainerLogs(ctx, id,
 		types.ContainerLogsOptions{
 			ShowStdout: true,
 			ShowStderr: true,
-			Details:	false,
+			Details:    false,
 			Follow:     false,
 			Timestamps: false,
 			Tail:       "1",
-		} )
+		})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	buf := new(bytes.Buffer)
-	_,err=buf.ReadFrom(reader)
+	_, err = buf.ReadFrom(reader)
 	if err != nil {
 		log.Fatal(err)
 	}
-	logs:=buf.String()
+	logs := buf.String()
 
 	return logs
 }
 
-
-func (appDocker *DockerApp)GetContainerLogById2(ctx context.Context,id string) io.ReadCloser {
+func (appDocker *DockerApp) GetContainerLogById2(ctx context.Context, id string) io.ReadCloser {
 	reader, err := appDocker.Client.ContainerLogs(ctx, id,
 		types.ContainerLogsOptions{
 			ShowStdout: true,
 			ShowStderr: true,
-			Details:	false,
+			Details:    false,
 			Follow:     true,
 			Timestamps: false,
 			Tail:       "1",
-		} )
+		})
 	if err != nil {
 		log.Fatal(err)
 	}

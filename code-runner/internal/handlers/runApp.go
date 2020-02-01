@@ -40,10 +40,22 @@ func runApp(w http.ResponseWriter, r *http.Request) {
 			App: appObj,
 		}
 
-		dockerApp.Start(accessToken)
+		err = dockerApp.Initialize()
+		if err != nil {
+			fmt.Println("Initialize error: " + err.Error())
+		}
+
+		err = dockerApp.ContainerStop(ctx)
+		if err != nil {
+			fmt.Println("ContainerStop error: " + err.Error())
+		}
+		err=dockerApp.ContainerRemove(ctx)
+		if err != nil {
+			fmt.Println("ContainerRemove error: " + err.Error())
+		}
+		dockerApp.ContainerStart(accessToken)
 
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	}
-	http.NotFound(w, r)
 	return
 }

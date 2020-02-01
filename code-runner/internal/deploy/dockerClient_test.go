@@ -59,7 +59,7 @@ func TestPull(t *testing.T) {
 		App:app,
 	}
 
-	dockerApp.Start("9f347fda6140d0bee7970ca05b9414a4de63f9d7")
+	dockerApp.ContainerStart("9f347fda6140d0bee7970ca05b9414a4de63f9d7")
 
 	time.Sleep(time.Second*5)
 	err:=dockerApp.ContainerStop()

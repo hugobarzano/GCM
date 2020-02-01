@@ -47,12 +47,12 @@ func stopApp(w http.ResponseWriter, r *http.Request) {
 				http.StatusInternalServerError)
 		}
 
-		err = dockerApp.ContainerStop()
+		err = dockerApp.ContainerStop(ctx)
 		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error stoping app container:%s", err.Error()),
-				http.StatusInternalServerError)
+				fmt.Printf("error stoping app container:%s", err.Error())
 		}
+
+		go dockerApp.ContainerRemove(ctx)
 
 		appObj.Status = models.STOPPED
 		appObj.Url = ""
@@ -66,6 +66,5 @@ func stopApp(w http.ResponseWriter, r *http.Request) {
 		}
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	}
-	http.NotFound(w, r)
 	return
 }
