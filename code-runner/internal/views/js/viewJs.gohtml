@@ -12,7 +12,7 @@
                 if (ws) {
                     return false;
                 }
-                ws = new WebSocket("ws://"+window.location.hostname+"/logsSocket?dockerId={{ .Spec.dockerId}}");
+                ws = new WebSocket("wss://"+window.location.hostname+"/logsSocket?dockerId={{ .Spec.dockerId}}");
                 ws.onopen = function(evt) {
                     print("Opening connection...");
                 }
