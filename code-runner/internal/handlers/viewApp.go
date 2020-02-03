@@ -46,18 +46,40 @@ func viewApp(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 	ctx:=r.Context()
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	dockerId := r.FormValue("dockerId")
-	if dockerId == "" {
-		http.Error(w, "Missing dockerId", http.StatusInternalServerError)
+
+	owner := r.FormValue("owner")
+	if owner == "" {
+		http.Error(w, "Missing owner field", http.StatusInternalServerError)
 		return
 	}
+	appName := r.FormValue("app")
+	if appName == "" {
+		http.Error(w, "Missing app name", http.StatusInternalServerError)
+		return
+	}
+
+	dao := store.InitMongoStore(ctx)
+	appObj, err := dao.GetApp(ctx, owner, appName)
+	if err != nil {
+		http.Error(w,
+			fmt.Sprintf("error getting app:%s", err.Error()),
+			http.StatusNotFound)
+		return
+	}
+
+	if !appObj.IsRunning(){
+		http.Error(w,
+			fmt.Sprintf("app not running:%s",appObj.Status),
+			http.StatusTooEarly)
+		return
+	}
+
 	con, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Print("upgrade:", err)
@@ -66,7 +88,7 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 	defer con.Close()
 
 	appDocker:=deploy.DockerApp{
-		App:nil,
+		App:appObj,
 	}
 	err=appDocker.Initialize()
 	if err != nil {
@@ -75,12 +97,12 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 			http.StatusInternalServerError)
 		return
 	}
-	out:=appDocker.GetContainerLogById2(ctx,dockerId)
+	logStream:=appDocker.GetContainerLogReader(ctx)
 	for {
-		scanner := bufio.NewScanner(out)
+		scanner := bufio.NewScanner(logStream)
 		scanner.Split(bufio.ScanLines)
 		for scanner.Scan() {
-			fmt.Println(scanner.Text())
+			//fmt.Println(scanner.Text())
 			err = con.WriteMessage(1, []byte(scanner.Text()))
 			if err != nil {
 				log.Println("write:", err)
