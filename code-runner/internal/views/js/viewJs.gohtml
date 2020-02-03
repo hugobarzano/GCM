@@ -16,7 +16,7 @@
                 if (document.location.protocol === "http:") {
                     wss = "ws://";
                 }
-                var addr = wss+window.location.hostname+"/logsSocket?dockerId={{ .Spec.dockerId}}"
+                var addr = wss+window.location.hostname+"/logsSocket?owner={{ .Owner}}&app={{ .Name}}"
                 console.log("WebSocket: "+addr)
                 ws = new WebSocket(addr);
                 ws.onopen = function(evt) {

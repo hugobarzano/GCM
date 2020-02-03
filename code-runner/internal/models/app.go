@@ -27,6 +27,10 @@ type App struct {
 	Status     AppStatus `bson:"status"  json:"status"`
 }
 
+func (app *App) IsRunning() bool {
+	return app.Status==RUNNING
+}
+
 func (app *App) GetImageName() string {
 	imageName := fmt.Sprintf("%v.%v:latest", app.Owner, app.Name)
 	return imageName
