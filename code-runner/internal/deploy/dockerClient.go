@@ -282,9 +282,9 @@ func (appDocker *DockerApp) GetContainerLogById2(ctx context.Context, id string)
 		types.ContainerLogsOptions{
 			ShowStdout: true,
 			ShowStderr: true,
-			Details:    false,
+			Details:    true,
 			Follow:     true,
-			Timestamps: false,
+			Timestamps: true,
 			Tail:       "1",
 		})
 	if err != nil {
