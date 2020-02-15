@@ -7,6 +7,9 @@
                 var d = document.createElement("div");
                 d.innerHTML = message;
                 output.appendChild(d);
+                //$("#logBody").animate({ scrollTop: $('#logBody').prop("scrollHeight")}, 1000);
+                $('#logBody').scrollTop($('#logBody')[0].scrollHeight);
+
             };
             document.getElementById("viewLog").onclick = function(evt) {
                 if (ws) {
