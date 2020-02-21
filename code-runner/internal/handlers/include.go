@@ -17,7 +17,7 @@ var (
 		"workspace": views.NewView(
 			"base", contentsDir+"/workspace.gohtml",jsDir+"/workspaceJs.gohtml"),
 		"token": views.NewView(
-			"base", contentsDir+"/token.gohtml",jsDir+"/noJs.gohtml"),
+			"base", contentsDir+"/token.gohtml",jsDir+"/tokenJs.gohtml"),
 		"getWs": views.NewView(
 			"emptyBase", contentsDir+"/getWs.gohtml"),
 	}
