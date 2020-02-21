@@ -12,7 +12,7 @@ type AppStatus string
 const (
 	INIT     AppStatus = "generating"
 	BUILDING AppStatus = "building"
-	READY    AppStatus = "readytorun"
+	READY    AppStatus = "ready"
 	RUNNING  AppStatus = "running"
 	STOPPED  AppStatus = "stopped"
 )

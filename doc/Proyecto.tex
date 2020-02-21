@@ -81,6 +81,47 @@ pdfproducer = {pdflatex}
 
 \setlength{\headheight}{1.5\headheight}
 
+
+\usepackage{bera}% optional: just to have a nice mono-spaced font
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 %Definimos los tipos teorema, ejemplo y definición podremos usar estos tipos
 %simplemente poniendo \begin{teorema} \end{teorema} ...
@@ -201,12 +242,43 @@ El objetivo de este proyecto es el de conseguir un sistema generativo y automati
 
 \chapter{Descripción del Problema}
 
+\section{El Problema}
+
+El auge de las tecnologías de la información a nivel empresarial, social, etico...blacbla
+
+
+La cloud esta formada por un conjunto de tecnologías que habilitan al consumidor una sería de servicios de información para ser consumidos vía Internet. Cada vez son mas y mas las empresas y entidades confían en este tipo de servicios para realizar sus actividades económicas. La diversidad de soluciones demandadas ha creado un ecosistema en el que interactuan diversos sistemas y diversas tecnologías. Debido a esto la demanda de personal cualificado o desarrolladores también se ha incrementado. 
+
+Hoy en día la sociedad esta rodeada de 
+
+
 Diversidad de aplicaciones cloud. Nuevas tecnologías entorno variado y cambiante. Demanda de nuevas tecnologías.
 Capacitación para desarrolladores. Diversidad de aplicaciones, mismo tratamiento, simplificar proceso de aprendizaje y desarrollo software. FullStack. 
 
+
+\section{Generadores de aplicaciones}
+\section{Despliegue de código}
  
 
 \chapter{Descripción de la Solución}
+
+
+Con el objetivo de generalizar y definir aplicación software se han decidido usar las partes:
+
+Repositorio
+Readme
+Makefile
+Licencia
+src codigo fuente
+config configuración
+
+
+\begin{enumerate}
+\item \textbf{ Code Generation }  Etapa inicial donde se sintetiza el proceso de desarrollo software, es decir se produce el código necesario para la solución especificada por el desarrollador. 
+\item \textbf{ Artefact Generation }  El objetivo de esta etapa es aprovechar el código fuente generado en la etapa Code Generation para producir un artefacto auto-contenido junto con la configuración necesaria para su ejecución en un entorno virtual. 
+\item \textbf{ Deploy Generation } En esta etapa se aprovecha el producto de la etapa Artefact Generation para disponibilizar la solución en Internet. 
+\end{enumerate}
+
 
 Programación generativa: generar, automatizar  y despliegue accesible a Internet.
 
@@ -224,6 +296,76 @@ pull
 push
 
 Lo que permite al desarrollador integrar fácilmente nuevos cambios. 
+
+Definir eel permino produción dentro del marco de este sistema, consiste en la siguiente serie de etapas:
+
+
+
+\section{Análisis}
+
+Como se ha visto, el termino producción en el termino de este sistema considera 
+
+\subsection{Requisitos de Información }
+Los requisitos de información se caracterizan por reunir la información relevante para la solución, que debe gestionar y almacenar el sistema software.\\
+
+\textbf{RI-1. Workspace:} Representación del espacio de trabajo del usuario. Contiene el conjunto de las aplicaciones que el usuario ha creado usando el sistema. Concepto similar al del Escritorio o "Desktop" de un sistema operativo. 
+Contenido: nombre de usuario o propietario del workspace, referencia al conjunto de aplicaciones generadas.
+
+
+\textbf{RI-2. App:} Representación de cada uno de las aplicaciones generadas por el sistema. 
+Contenido:
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+    "_id" : "appName",
+    "repo" : "https://github.com/user/appName.git",
+    "spec" : {
+        "dockerId" : "appNameDockerId",
+        "port" : "4343",
+        "nature" : "staticApp"
+    },
+    "des" : "",
+    "url" : "http://deploy.domain:4343",
+    "owner" : "user>s",
+    "status" : "running"
+}
+\end{lstlisting}
+
+\textbf{RI-3. Información de Usuario:} Información sensible del usuario o desarrollador que va a usar el sistema. Credenciales al sistema de gestión de repositorios para el código fuente, en este caso relativa al perfil de github. 
+Contenido: nombre de usuario, correo electrónico, organización. \\
+
+
+\subsection{Requisitos Funcionales }
+Como se define en la ingeniería de requisitos, los requisitos funcionales establecen el comportamientos del sistema.\\
+
+\textbf{RF-1. Gestión de aplicaciones:} El sistema ha de gestionar el ciclo de vida de las aplicaciones creadas.\\
+   
+
+	RF-1.1. El sistema permitirá crear aplicaciones.
+
+	RF-1.2. El sistema permitirá eliminar aplicaciones.
+
+	RF-1.3. El sistema permitirá ejecutar aplicaciones.
+
+	RF-1.4. El sistema permitirá detener aplicaciones.
+
+	RF-1.5. El sistema permitirá visualizar información de las aplicaciones.\\
+	
+\textbf{RF-2. Gestión de credenciales:} El sistema proporcionará las credenciales necesarias para trabajar con las aplicaciones .\\
+   
+
+	RF-2.1. El sistema permitirá 
+
+
+\subsection{Requisitos No Funcionales }
+Los requisitos no funcionales, se refieren a todos los requisitos que no describen información a guardar, ni funciones a realizar por el sistema, sino características de funcionamiento.\\
+
+
+\textbf{RNF-1} Se necesitará acceso a Internet para utilizar las funcionalidades del sistema.\\
+\textbf{RNF-2} Se necesitará una cuenta en github para utilizar las funcionalidades del sistema.\\
+
+
+\subsection{Casos de Uso}
+Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema.
 
 
 
