@@ -234,7 +234,23 @@ pdfproducer = {pdflatex}
 La motivación de este proyecto es la de mejorar el proceso de desarrollo de aplicaciones web y servicios cloud, ayudando al desarrollador a comprender y adquirir conocimientos relativos a las tecnologías de la información.  En el proceso de desarrollo de software informático no existe un proceso universal que indique las pautas a seguir para la correcta producción software. Comúnmente, este proceso ha de amoldarse a la naturaleza del software que se desea desarrollar, a la tecnología con la que ha de desarrollarse y como no a los recursos humanos o desarrolladores que van a construir dicho software. La motivación de este proyecto es la de dotar a los desarroladores de un sistema que los abstraiga de estas etapas, premiando la rápida producción y disponibilidad del software deseado. 
 
 \section{Objetivos}
-El objetivo de este proyecto es el de conseguir un sistema generativo y automatizado de aplicaciones que asista a los desarrolladores en el proceso de producción software, minimizando los tiempos y costes en el desarrollo y optimizando el software resultante mediante el uso de buenas prácticas. El principal objetivo que cubre este sistema es el lema "From appSpec to Cloud" es decir, dada una especificación de aplicación a alto nivel, materializar dicha especificación en código fuente junto con lo necesario para que sea accesible por Internet. 
+
+El objetivo de este proyecto es el de sintetizar el proceso de desarrollo y operación de software en un conjunto automatizado de etapas. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación. La generalización ocurre al manejar los distintos sistemas de información:
+
+\begin{enumerate}
+\item \textbf{ Aplicaciones web estáticas }  
+\item \textbf{ Aplicaciones web dinámicas}
+\item \textbf{ Interfaces web }  
+\item \textbf{ Api/Rest }  
+\item \textbf{ Servicios }  
+\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }  
+\end{enumerate}
+
+como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código y/o configuración necesaria para materializar dicha especificación en un producto software, construir un artefacto auto-contenido que permita la ejecución del software generado, ejecutar dicho artefacto sobre la infraestructura virtual necesaria para que la aplicación especificada sea accesible por Internet y que de esta forma el usuario de este proyecto sea capaz de consumir la aplicación generada.  
+ 
+El objetivo de este proyecto es el de dotar a los usuarios o desarrolladores de un  sistema  generativo y automatizado de aplicaciones que mejore el proceso de desarrollo software y facilite el aprendizaje de nuevas tecnologías. El principal objetivo del proyecto es acuñar el lema "From Spec to Cloud" es decir, dada una especificación de aplicación de alto nivel, materializarla en un sistema de información disponible en la nube. 
+
+ 
 
 \textbf{OBJ-1.} 
 
@@ -289,7 +305,10 @@ La aplicación software es el elemento de negocio de este sistema.  Para materia
 Generar: Aplicaciones completas, independientemente de la tecnología, utilidad o fin. Las aplicaciones generadas por el sistema
 son auto-contenidas y automatizadas, es decir mantienen una semántica común 
 
-build
+
+
+
+d
 test
 run
 pull
@@ -312,7 +331,7 @@ Los requisitos de información se caracterizan por reunir la información releva
 Contenido: nombre de usuario o propietario del workspace, referencia al conjunto de aplicaciones generadas.
 
 
-\textbf{RI-2. App:} Representación de cada uno de las aplicaciones generadas por el sistema. 
+\textbf{RI-2. App:} Representación de cada una de las aplicaciones generadas por el sistema. 
 Contenido:
 \begin{lstlisting}[language=json,firstnumber=1]
 {
@@ -337,11 +356,11 @@ Contenido: nombre de usuario, correo electrónico, organización. \\
 \subsection{Requisitos Funcionales }
 Como se define en la ingeniería de requisitos, los requisitos funcionales establecen el comportamientos del sistema.\\
 
-\textbf{RF-1. Gestión de aplicaciones:} El sistema ha de gestionar el ciclo de vida de las aplicaciones creadas.\\
+\textbf{RF-1. Generación de aplicaciones:} El sistema ha de generar  aplicaciones dada una especificación.\\
    
 
-	RF-1.1. El sistema permitirá crear aplicaciones.
-
+	\textbf{RF-1.1.} El sistema generará aplicaciones de diversa naturaleza, tecnología o dominio 
+	\textbf{RF-1.2.}  El sistema creará el repositorio de código necesario para albergar las aplicaciones generadas
 	RF-1.2. El sistema permitirá eliminar aplicaciones.
 
 	RF-1.3. El sistema permitirá ejecutar aplicaciones.
@@ -349,7 +368,56 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 	RF-1.4. El sistema permitirá detener aplicaciones.
 
 	RF-1.5. El sistema permitirá visualizar información de las aplicaciones.\\
+
+
+
+\textbf{RF-1. Gestión de aplicaciones:} El sistema ha de gestionar el ciclo de vida de las aplicaciones generadas.\\
+   
+
+	\textbf{RF-1.1.} El sistema permitirá crear aplicaciones.
 	
+	\quad \textbf{RF-1.1.1.}El sistema generará aplicaciones de diversa naturaleza, tecnología o dominio.
+	
+	\quad \textbf{RF-1.1.2.}El sistema creará y  guardará en repositorios de código las aplicaciones generadas.
+	
+	\quad \textbf{RF-1.1.3.}El sistema construirá los artefactos necesarios para ejecutar las aplicaciones generadas.
+	
+	\quad \textbf{RF-1.1.4.} El sistema ejecutará los artefactos construidos para disponibilizar vía Internet las aplicaciones creadas. \\
+
+
+
+	\textbf{RF-1.2.} El sistema permitirá eliminar aplicaciones.
+	
+	\quad \textbf{RF-1.2.1.}El sistema detendrá los artefactos en ejecución de aplicaciones eliminadas. 
+	
+	\quad \textbf{RF-1.2.2.}El sistema eliminará los artefactos construidos de aplicaciones eliminadas. 
+	
+	\quad \textbf{RF-1.2.3.}El sistema eliminará los repositorios de código de aplicaciones eliminadas. \\
+	
+
+	
+	\textbf{RF-1.3.} El sistema permitirá ejecutar aplicaciones.
+	
+	\quad \textbf{RF-1.3.1.} El sistema será capaz de hacer a las aplicaciones accesibles vía Internet.  
+	
+	\quad \textbf{RF-1.3.2.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones puedan ser ejecutas en local y ser accesibles vía l\textbf{ocalhost}  \\
+	
+
+	\textbf{RF-1.4.} El sistema permitirá detener aplicaciones.
+	
+		\quad \textbf{RF-1.4.1.} El sistema será capaz de detener las aplicaciones que sean accesibles vía Internet. 
+		
+			\quad \textbf{RF-1.4.2.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones puedan ejecutas en local sean detenidas. \\
+			
+	
+	\textbf{RF-1.5.} El sistema permitirá visualizar información de las aplicaciones.\\
+	
+		\quad \textbf{RF-1.5.1.} El sistema permitirá consultar  información de utilidad relativa a las aplicaciones,  como por ejemplo, especificación, URL del repositorio donde se alberga el código fuente, URL oo IP donde la aplicación puede ser consumida vía Internet, etc...
+	
+			\quad \textbf{RF-1.5.2.} El sistema permitirá consultar información de DEBUG de las aplicaciones accesibles vía Internet, es decir, permitirá consultar LOGs de aplicaciones en ejecución. 
+			
+	\textbf{RF-1.6.} El sistema permitirá visualizar información del estado del ciclo de vida de las aplicaciones. El ciclo de vida de las aplicaciones del sistema se representará con el siguiente flujo de estados:\\
+			
 \textbf{RF-2. Gestión de credenciales:} El sistema proporcionará las credenciales necesarias para trabajar con las aplicaciones .\\
    
 
