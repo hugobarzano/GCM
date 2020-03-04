@@ -318,6 +318,7 @@ Lo que permite al desarrollador integrar fácilmente nuevos cambios.
 
 Definir eel permino produción dentro del marco de este sistema, consiste en la siguiente serie de etapas:
 
+\section{Planificación}
 
 
 \section{Análisis}
@@ -436,8 +437,77 @@ Los requisitos no funcionales, se refieren a todos los requisitos que no describ
 Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema.
 
 
+\section{Desarrollo}
 
-\chapter{ Medición y Evaluación}
+En el proceso de desarrollo del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y esca-labilidad del software resultante. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.20]{imagenes/mvc.png}
+\caption{ Modelo-Vista-Controlador\cite{mvc2}  }  
+\end{figure} 
+
+Los componentes\cite{mvc3}\cite{mvc4} del Modelo-Vista-Controlador se pueden definir en:
+
+\begin{enumerate}
+\item \textbf{Modelo:} Representa la información , gestionando los accesos a ella, la base de datos  o capa de persistencia es un componente del modelo. 
+
+\item \textbf{Vista:} Representa el modelo en un formato adecuado para interactuar con él mediante la interfaz de usuario.  
+
+\item \textbf{Controlador:} Responde a eventos invocando peticiones al modelo cuando se hace alguna solicitud de la información (por ejemplo, editar un documento o un registro en una base de datos). El controlador interactúa con su vista asociada para realizar cambios en la forma de representar el modelo. 
+\end{enumerate}
+
+
+Como parte del desarrollo del proyecto también se ha utilizado la metodología de ingeniería del software conocida como desarrollo basado en test o TDD. Dicha metodología consiste en escribir los test necesarios para cubrir las funcionalidades del sistema y a partir de ellos, escribir el código necesario para que dichas pruebas sean superadas, cumpliendo así la funcionalidad que se esta poniendo a prueba.  En las siguientes subsecciones se detallarán las partes que forman el sistema así como las tecnologías utilizadas para su desarrollo. 
+
+\subsection{Back-End}
+
+El Back-End o servidor se refiere a la parte trasera del sistema, donde ocurre toda la lógica y funcionalidad pero que es transparente para el usuario final que consume el sistema. Para facilitar la comprensión de las partes que forman  el back-end el proyecto se van a desglosar en las siguientes subsecciones.
+
+\subsubsection{Servidor}
+
+El servidor es la entidad principal del Back-End, contiene la lógica del sistema y es el responsable de la comunicación entre el resto de partes del back-end y de servir o renderizar las vistas al cliente.
+El servidor ha sido desarrollado utilizando Golang\cite{go} como lenguaje de programación. Inicialmente se pensó en utilizar Javascript bajo el framework NodeJS, ya que dicho marco de trabajo funciona de manera asíncrona, lo que facilita muchas de las operaciones en segundo plano que este sistema ha de realizar, ademas NodeJS facilita la integración del servidor con diversas tecnologías cliente basadas también en Javascript. Una de las principales deficiencias  observadas en el uso de Javascript para el desarrollo del servidor de este proyecto es el menejo de templates o plantillas. 
+En la etapa de generación de código la templatización de los modelos de datos necesarios para producir aplicaciones es vital, no solo en su implementación si no también en la eficiencia de estas operaciones y es aquí donde Golang destaca, ya que permite serializar estructuras de datos complejas y utilizar dicha representación para crear contenido. Otra ventaja que proporciona utilizar Golang en este proyecto es el uso de Go-Routinas, es decir, la capacidad de ejecutar funcionalidad en segundo plano de una manera sencilla y controlada junto con la generalizacióon de la implementación mediante interfaces hacen que Golang sea el lenguaje de programación adeacuado para el desarrollo de este proyecto.  Es interesante destacar que Golang ha sido diseñado para optimizar el uso concurrente de las aplicaciones creadas con él, lo que mejora considerablemente los tiempos de respuesta y la experiencia de usuario. 
+
+\subsubsection{Persistencia de Datos}
+
+La parte imprescindible para la capa de acceso a datos es el sistema gestor de bases de datos, encargado de almacenar los modelos del sistema. Como propuesta inicial para el desarrollo del sistema, se pensó en utilizar un esquema relacional utilizando sistemas gestores de bases de datos relacionales como MySQL o PostgreSQL  por la facilidad de diseño entidad-relación. 
+
+La principal desventaja de modelar el problema mediante entidad-relación es la perdida en la flexibilidad de los modelos de datos ya que este esquema tradicional obliga a que todas las filas de una tabla representativa de un modelo tengan los mismos campos para mantener la entidad referencial y debido a la diversidad de aplicaciones que este sistema es capaz de manejar se requiere que el modelo de datos sea flexible. Debido a esto, se ha decido utilizar MongoDB\cite{mg} como sistema gestor de bases de datos no-relaciones también denominadas bases de datos documentales, con el objetivo de conseguir un esquema interno flexible y eficiente. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.30]{imagenes/mongo.jpg}
+\caption{ Arquitectura MongoDB\cite{mongoA}  }  
+\end{figure} 
+
+MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON. Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
+
+En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando las entradas de la base de datos dependen de la naturaleza de las aplicaciones que el usuario final quiera generar.  
+
+
+\subsubsection{Repositorios de Código}
+
+
+\subsubsection{Infraestructura Virtual}
+
+
+\subsection{Front-end}
+
+El Front-End, capa de presentación o capa de cliente es la encargada de maquetar la estructura semántica del contenido, codificar el diseño en hojas de estilo y controlar la interacción con el usuario. En este proyecto la programación en el lado cliente juega un papel importante a la hora de mejorar la experiencia del usuario del sistema, manteniendo información actualizada del estado en el que se encuentran las aplicaciones producidas por el sistema. Para ello, se aprovecha el motor de plantillas proporcionado por el servidor GO junto con JQuery y Ajax para realizar llamadas asíncronas al servidor y actualizar los dinámicamente los datos que percibe el cliente.
+
+\subsubsection{Tecnología Cliente}
+
+
+JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a la web. Jquery funciona en múltiples navegadores y es compatible con CSS3.  
+
+Ajax\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador. 
+
+
+Socket 
+
+\chapter{ Implementación y Pruebas}
 
 \chapter{Conclusiones}
 
@@ -452,6 +522,48 @@ Los diagramas de casos de uso, son diagramas UML que representan gráficamente a
 \textit{ pag 8. Visión por computador: imágenes digitales y aplicaciones. Gonzalo Pajares Martinsanz y Jesús Manuel de la Cruz García}
 
 
+
+
+
+
+\bibitem[]{mvc} \textsc{MVC},
+\textit{MVC: Patrón de arquitectura de software }
+\url{http://librosweb.es/libro/jobeet_1_4/capitulo_4/la_arquitectura_mvc.html}
+
+\bibitem[]{mvc2} \textsc{MVC},
+\textit{MVC: Diagrama}
+\url{https://yalantis.com/media/content/ckeditor/2014/05/mvc_role_diagram.png}
+
+\bibitem[]{mvc3} \textsc{MVC},
+\textit{MVC: Componentes}
+\url{http://martinfowler.com/eaaDev/uiArchs.html}
+
+\bibitem[]{mvc4} \textsc{MVC},
+\textit{MVC Wikipedia}
+\url{https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93controlador}
+
+
+\bibitem[]{go} \textsc{Golang},
+\textit{Golang}
+\url{https://golang.org}
+
+\bibitem[31]{mg} \textsc{mongo},
+\textit{MongoDB}
+\url{https://www.mongodb.com/}
+
+\bibitem[32]{mongoA} \textsc{MongoDB},
+\textit{Arquitectura MongoDB}
+\url{http://image.slidesharecdn.com/enterprisearchitectsview2014-oct-141029130130-conversion-gate01/95/an-enterprise-architects-view-of-mongodb-16-638.jpg?cb=1414587854}
+
+
+\bibitem[34]{jq} \textsc{JQuery},
+\textit{JQuery Oficial}
+\url{https://jquery.com/}
+
+
+\bibitem[35]{aj} \textsc{Ajax},
+\textit{Ajax: Libros Web}
+\url{https://librosweb.es/libro/ajax/}
 
 
 \end{thebibliography}
