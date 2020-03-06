@@ -357,84 +357,93 @@ Contenido: nombre de usuario, correo electrónico, organización. \\
 \subsection{Requisitos Funcionales }
 Como se define en la ingeniería de requisitos, los requisitos funcionales establecen el comportamientos del sistema.\\
 
-\textbf{RF-1. Generación de aplicaciones:} El sistema ha de generar  aplicaciones dada una especificación.\\
+
+
+\subsubsection { \textbf{ RF-1. Gestión de aplicaciones.}} El sistema ha de gestionar el ciclo de vida de las aplicaciones generadas.\\
    
-
-	\textbf{RF-1.1.} El sistema generará aplicaciones de diversa naturaleza, tecnología o dominio 
-	\textbf{RF-1.2.}  El sistema creará el repositorio de código necesario para albergar las aplicaciones generadas
-	RF-1.2. El sistema permitirá eliminar aplicaciones.
-
-	RF-1.3. El sistema permitirá ejecutar aplicaciones.
-
-	RF-1.4. El sistema permitirá detener aplicaciones.
-
-	RF-1.5. El sistema permitirá visualizar información de las aplicaciones.\\
+\textbf{RF-1.1.} El sistema permitirá crear aplicaciones.
+\begin{itemize}
+ \item 	\textbf{RF-1.1.1.}El sistema generará aplicaciones de diversa naturaleza, tecnología o dominio. Añadir referencia a especificación de aplicaciones. 
+ \item 	\textbf{RF-1.1.2.}El sistema creará y  guardará en repositorios de código las aplicaciones generadas.
+  \item \textbf{RF-1.1.3.}El sistema construirá los artefactos necesarios para ejecutar las aplicaciones generadas.
+   \item  \textbf{RF-1.1.4.} El sistema ejecutará los artefactos construidos para disponibilizar vía Internet las aplicaciones creadas. \\
+\end{itemize}
 
 
+\textbf{RF-1.2.} El sistema permitirá eliminar aplicaciones.
+\begin{itemize}
+ \item 	\textbf{RF-1.2.1.}El sistema detendrá los artefactos en ejecución de aplicaciones eliminadas. 
+  \item 	\textbf{RF-1.2.2.}El sistema eliminará los artefactos construidos de aplicaciones eliminadas. 
+   \item  \textbf{RF-1.2.3.}El sistema eliminará los repositorios de código de aplicaciones eliminadas.	\\
+\end{itemize}
 
-\textbf{RF-1. Gestión de aplicaciones:} El sistema ha de gestionar el ciclo de vida de las aplicaciones generadas.\\
+	
+\textbf{RF-1.3.} El sistema permitirá ejecutar aplicaciones.
+\begin{itemize}
+ \item \textbf{RF-1.3.1.} El sistema será capaz de hacer a las aplicaciones accesibles vía Internet.  
+ \item  \textbf{RF-1.3.2.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones puedan ser ejecutas en local y ser accesibles vía \textbf{localhost}  \\
+\end{itemize}
+
+	
+\textbf{RF-1.4.} El sistema permitirá detener aplicaciones.
+
+\begin{itemize}
+ \item  \textbf{RF-1.4.1.} El sistema será capaz de detener las aplicaciones que sean accesibles vía Internet. 
+  \item  \textbf{RF-1.4.2.} El sistema deberá liberar los recursos virtuales correspondientes a la aplicación detenida.  
+  \item  \textbf{RF-1.4.3.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones ejecutadas en \textbf{localhost}  sean detenidas de manera controlada. \\
+\end{itemize}
+	
+\textbf{RF-1.5.} El sistema permitirá visualizar información de las aplicaciones.
+
+\begin{itemize}
+\item \textbf{RF-1.5.1.} El sistema permitirá consultar  información de utilidad relativa a las aplicaciones,  como por ejemplo, especificación, URL del repositorio donde se alberga el código fuente, URL o IP donde la aplicación puede ser consumida vía Internet. 
+\item \textbf{RF-1.5.2.} El sistema permitirá inspeccionar aplicaciones. El sistema permitirá a los usuario consultar información de DEBUG de las aplicaciones accesibles vía Internet, es decir, permitirá consultar LOGs de aplicaciones en ejecución. 
+\item \textbf{RF-1.5.3.} El sistema permitirá visualizar información del estado del ciclo de vida de las aplicaciones. El ciclo de vida de las aplicaciones del sistema se representará con el siguiente flujo de estados:\\
+\end{itemize}
+	
+
+\subsubsection { \textbf{ RF-2. Gestión de credenciales.}} El sistema proporcionará los mecanismos necesarios para que los usuarios se autentiquen en el sistema. \\
+	
+			
+\textbf{RF-2.1.} El sistema  soportará la autenticacción de usuarios mediante nombre de usuario y contraseña. Típicamente estas credenciales corresponderán al sistema de gestión de repositorios de código. 
+
+\textbf{RF-2.2.} El sistema  realizará todas las operaciones que requieran authenticación mediante TOKEN.  
+
+\textbf{RF-2.3.} El sistema  proporcionará a los usuarios el TOKEN necesario para trabajar localmente con las aplicaciones. 
    
-
-	\textbf{RF-1.1.} El sistema permitirá crear aplicaciones.
-	
-	\quad \textbf{RF-1.1.1.}El sistema generará aplicaciones de diversa naturaleza, tecnología o dominio.
-	
-	\quad \textbf{RF-1.1.2.}El sistema creará y  guardará en repositorios de código las aplicaciones generadas.
-	
-	\quad \textbf{RF-1.1.3.}El sistema construirá los artefactos necesarios para ejecutar las aplicaciones generadas.
-	
-	\quad \textbf{RF-1.1.4.} El sistema ejecutará los artefactos construidos para disponibilizar vía Internet las aplicaciones creadas. \\
-
-
-
-	\textbf{RF-1.2.} El sistema permitirá eliminar aplicaciones.
-	
-	\quad \textbf{RF-1.2.1.}El sistema detendrá los artefactos en ejecución de aplicaciones eliminadas. 
-	
-	\quad \textbf{RF-1.2.2.}El sistema eliminará los artefactos construidos de aplicaciones eliminadas. 
-	
-	\quad \textbf{RF-1.2.3.}El sistema eliminará los repositorios de código de aplicaciones eliminadas. \\
-	
-
-	
-	\textbf{RF-1.3.} El sistema permitirá ejecutar aplicaciones.
-	
-	\quad \textbf{RF-1.3.1.} El sistema será capaz de hacer a las aplicaciones accesibles vía Internet.  
-	
-	\quad \textbf{RF-1.3.2.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones puedan ser ejecutas en local y ser accesibles vía l\textbf{ocalhost}  \\
-	
-
-	\textbf{RF-1.4.} El sistema permitirá detener aplicaciones.
-	
-		\quad \textbf{RF-1.4.1.} El sistema será capaz de detener las aplicaciones que sean accesibles vía Internet. 
-		
-			\quad \textbf{RF-1.4.2.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones puedan ejecutas en local sean detenidas. \\
-			
-	
-	\textbf{RF-1.5.} El sistema permitirá visualizar información de las aplicaciones.\\
-	
-		\quad \textbf{RF-1.5.1.} El sistema permitirá consultar  información de utilidad relativa a las aplicaciones,  como por ejemplo, especificación, URL del repositorio donde se alberga el código fuente, URL oo IP donde la aplicación puede ser consumida vía Internet, etc...
-	
-			\quad \textbf{RF-1.5.2.} El sistema permitirá consultar información de DEBUG de las aplicaciones accesibles vía Internet, es decir, permitirá consultar LOGs de aplicaciones en ejecución. 
-			
-	\textbf{RF-1.6.} El sistema permitirá visualizar información del estado del ciclo de vida de las aplicaciones. El ciclo de vida de las aplicaciones del sistema se representará con el siguiente flujo de estados:\\
-			
-\textbf{RF-2. Gestión de credenciales:} El sistema proporcionará las credenciales necesarias para trabajar con las aplicaciones .\\
-   
-
-	RF-2.1. El sistema permitirá 
-
 
 \subsection{Requisitos No Funcionales }
 Los requisitos no funcionales, se refieren a todos los requisitos que no describen información a guardar, ni funciones a realizar por el sistema, sino características de funcionamiento.\\
 
 
 \textbf{RNF-1} Se necesitará acceso a Internet para utilizar las funcionalidades del sistema.\\
-\textbf{RNF-2} Se necesitará una cuenta en github para utilizar las funcionalidades del sistema.\\
 
+\textbf{RNF-2} Se necesitará una cuenta en Github para utilizar las funcionalidades del sistema.\\
 
+\textbf{RNF-3} Se prestará especial atención en la gestión de credenciales de los usuarios.\\
+
+\textbf{RNF-4} Se prestará especial atención en la seguridad del  las aplicaciones expuestas a Internet.
 \subsection{Casos de Uso}
 Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema.
+
+
+\begin{figure}[H]  
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso1.jpg}
+\caption{ Casos de uso - Gestión Aplicaciones I\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso2.jpg}
+\caption{ Casos de uso - Gestión Aplicaciones II\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso3.jpg}
+\caption{ Casos de uso - Gestión Credenciales\cite{diagrama}  }  
+\end{figure}
 
 
 \section{Desarrollo}
@@ -462,7 +471,7 @@ Como parte del desarrollo del proyecto también se ha utilizado la metodología 
 
 \subsection{Back-End}
 
-El Back-End o servidor se refiere a la parte trasera del sistema, donde ocurre toda la lógica y funcionalidad pero que es transparente para el usuario final que consume el sistema. Para facilitar la comprensión de las partes que forman  el back-end el proyecto se van a desglosar en las siguientes subsecciones.
+El Back-End o servidor se refiere a la parte trasera del sistema, donde ocurre toda la lógica y funcionalidad pero que es transparente para el usuario final que consume el sistema. Para facilitar la comprensión de las partes que forman  el back-end del proyecto se van a desglosar en las siguientes subsecciones.
 
 \subsubsection{Servidor}
 
@@ -487,15 +496,51 @@ MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de d
 En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando las entradas de la base de datos dependen de la naturaleza de las aplicaciones que el usuario final quiera generar.  
 
 
-\subsubsection{Repositorios de Código}
+\subsubsection{Repositorio de Código}
+
+Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros ( README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros producidos por el sistema son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github\cite{github}. 
+
+GitHub\cite{github} es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja el código en repositorios y brinda herramientas muy útiles para trabajar de forma colaborativa. Github\cite{github2} ofrece varias herramientas:
+
+\begin{enumerate}
+\item Una wiki para el mantenimiento de las distintas versiones de las aplicaciones. 
+\item Un sistema de seguimiento de problemas que permiten a los miembros de un equipo de desarrollo detallar problemas software.
+\item Una herramienta de revisión de código, donde se pueden añadir anotaciones en cualquier punto de un fichero y debatir sobre determinados cambios realizados en un commit específico. 
+\item Un visor de ramas donde se pueden comparar los progresos realizados en las distintas ramas de un repositorio. 
+\end{enumerate}   
 
 
-\subsubsection{Infraestructura Virtual}
+Este proyecto aprovecha principalmente las siguientes funcionalidades ofertadas por Github:
+
+\begin{enumerate}
+\item \textbf{ Autenticación.} El usuario final que utilice este sistema para generar aplicaciones necesita una cuenta de github, ya que la autenticación mediante user/pass corresponde con el user/pass de su cuenta de github. Esto permite al sistema crear repositorios y pushear código a dichos repositorios bajo el perfil del usuario registrado. El proceso de autenticación contra Github proporciona una accesToken el cual es aprovechado por los usuarios del sistema para trabajar localmente con las aplicaciones generadas por el sistema. 
+
+\item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions\cite{github3}  que permiten automatizar, customizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generatión este sistema produce un fichero  en el path  <repositorio>/.github/workflows/ci.yml donde se generaliza el proceso de compilación, testing y empaquetado del la aplicación contenida en el repositorio, independientemente de la naturaleza de la aplicacióno, dando lugar a un artefacto auto-contenido listo para ser desplegado sobre un entorno virtual. Los artefactos generados son Imágenes Docker las cuales se veran en mas detalle en la siguiente sub-sección.  
+
+\item \textbf{Gestión de Artefactos} Github proporciona los denominados GitHub-Packages\cite{github4} que permiten publicar y consumir paquetes o artefactos resultado de la compilación y empaquetado de las aplicaciones software albergadas en un repositorio de código. GitHub-Packages es capaz de gestionar paquetes de diversa naturaleza, siendo las imágenes docker las utilizadas en este proyecto. 
+\end{enumerate}   
+
+\subsubsection{Infraestructura Virtual de las Aplicaciones}
+
+La infraestructura virtual de las aplicaciones  representa al entorno de computación en la nube que cuenta con los recursos necesarios para ejecutar o desplegar las aplicaciones generadas por el proyecto, permitiendo a los usuarios utilizar las aplicaciones generadas vía Internet.
+Con el objetivo de generalizar la gestión de aplicaciones  se ha decidido utilizar Docker como tecnología de virtualización ligera.  
+
+Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de Linux, para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.35]{imagenes/docker.png}
+\caption{ Virtualización Docker\cite{dkw}}
+\end{figure}
+
+La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores contienen lo mismo pero comparten el núcleo con otros contenedores corriendo como un proceso asilado en el espacio de usuario del sistema operativo anfitrión. No están vinculados con ninguna infraestructura especifica. 
+
+Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se incluye un fichero Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración continua definido en (incluir referencia a ci.yml)  para producir el una imagen docke como artefacto resultante. Este artefacto es utilizadoo para ccrear un contenedor docker en un entorno virtual acesible a internet, habilitando el puerto necesario para garantizar que el trafico es redireccionado al contenedor adecuado. 
 
 
 \subsection{Front-end}
 
-El Front-End, capa de presentación o capa de cliente es la encargada de maquetar la estructura semántica del contenido, codificar el diseño en hojas de estilo y controlar la interacción con el usuario. En este proyecto la programación en el lado cliente juega un papel importante a la hora de mejorar la experiencia del usuario del sistema, manteniendo información actualizada del estado en el que se encuentran las aplicaciones producidas por el sistema. Para ello, se aprovecha el motor de plantillas proporcionado por el servidor GO junto con JQuery y Ajax para realizar llamadas asíncronas al servidor y actualizar los dinámicamente los datos que percibe el cliente.
+El Front-End, capa de presentación o capa de cliente es la encargada de controlar la interacción con el usuario. En este proyecto la programación en el lado cliente para mantener  información actualizada del estado en el que se encuentran las aplicaciones producidas por el sistema. Para ello, se aprovecha el motor de plantillas proporcionado por el servidor GO junto con JQuery y Ajax para realizar llamadas asíncronas al servidor y actualizar dinámicamente los datos que percibe el cliente.
 
 \subsubsection{Tecnología Cliente}
 
@@ -507,6 +552,8 @@ Ajax\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de téc
 
 Socket 
 
+\subsection{Infraestructura Virtual}
+
 \chapter{ Implementación y Pruebas}
 
 \chapter{Conclusiones}
@@ -515,14 +562,6 @@ Socket
 
 
 \begin{thebibliography}{aaaa}
-
-
-
-\bibitem[1]{pt1} \textsc{Tema 1},
-\textit{ pag 8. Visión por computador: imágenes digitales y aplicaciones. Gonzalo Pajares Martinsanz y Jesús Manuel de la Cruz García}
-
-
-
 
 
 
@@ -547,21 +586,48 @@ Socket
 \textit{Golang}
 \url{https://golang.org}
 
-\bibitem[31]{mg} \textsc{mongo},
+\bibitem[]{mg} \textsc{mongo},
 \textit{MongoDB}
 \url{https://www.mongodb.com/}
 
-\bibitem[32]{mongoA} \textsc{MongoDB},
+\bibitem[]{mongoA} \textsc{MongoDB},
 \textit{Arquitectura MongoDB}
 \url{http://image.slidesharecdn.com/enterprisearchitectsview2014-oct-141029130130-conversion-gate01/95/an-enterprise-architects-view-of-mongodb-16-638.jpg?cb=1414587854}
 
 
-\bibitem[34]{jq} \textsc{JQuery},
+\bibitem[]{github} \textsc{GitHub},
+\textit{How people build software}
+\url{https://github.com/}
+
+
+\bibitem[]{github2} \textsc{Conociendo GitHub},
+\textit{readthedocs.io }
+\url{http://conociendogithub.readthedocs.io/en/latest/data/introduccion/#que-es-github}
+
+\bibitem[]{github3} \textsc{GitHub Actions},
+\textit{Documentación de GitHub Actions }
+\url{https://help.github.com/es/actions}
+
+
+\bibitem[]{github4} \textsc{GitHub Packages},
+\textit{Documentación de GitHub Packages }
+\url{https://github.com/features/packages}
+
+\bibitem[]{dk} \textsc{Docker},
+\textit{Docker - Aislamiento de recursos}
+\url{https://www.docker.com/what-docker} 
+
+\bibitem[56]{dkw} \textsc{Docker-Wiki},
+\textit{Docker - Wikipedia}
+\url{https://es.wikipedia.org/wiki/Docker_\%28software\%29} 
+
+
+\bibitem[]{jq} \textsc{JQuery},
 \textit{JQuery Oficial}
 \url{https://jquery.com/}
 
 
-\bibitem[35]{aj} \textsc{Ajax},
+\bibitem[]{aj} \textsc{Ajax},
 \textit{Ajax: Libros Web}
 \url{https://librosweb.es/libro/ajax/}
 
