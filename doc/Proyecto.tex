@@ -271,9 +271,9 @@ Hoy en día la sociedad esta rodeada de
 Diversidad de aplicaciones cloud. Nuevas tecnologías entorno variado y cambiante. Demanda de nuevas tecnologías.
 Capacitación para desarrolladores. Diversidad de aplicaciones, mismo tratamiento, simplificar proceso de aprendizaje y desarrollo software. FullStack. 
 
-
-\section{Generadores de aplicaciones}
-\section{Despliegue de código}
+\section{Estado del Arte}
+\subsection{Generadores de aplicaciones}
+\subsection{Despliegue de código}
  
 
 \chapter{Descripción de la Solución}
@@ -405,11 +405,13 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 \subsubsection { \textbf{ RF-2. Gestión de credenciales.}} El sistema proporcionará los mecanismos necesarios para que los usuarios se autentiquen en el sistema. \\
 	
 			
-\textbf{RF-2.1.} El sistema  soportará la autenticacción de usuarios mediante nombre de usuario y contraseña. Típicamente estas credenciales corresponderán al sistema de gestión de repositorios de código. 
+\textbf{RF-2.1.} El sistema  permitirá iniciar sesión  a los usuarios mediante nombre de usuario y contraseña. Típicamente estas credenciales corresponderán al sistema de gestión de repositorios de código. 
 
-\textbf{RF-2.2.} El sistema  realizará todas las operaciones que requieran authenticación mediante TOKEN.  
+\textbf{RF-2.3.} El sistema  permitirá cerrar sesión a los usuarios de manera controlada, es decir, mantendrá las aplicaciones en ejecución. 
 
-\textbf{RF-2.3.} El sistema  proporcionará a los usuarios el TOKEN necesario para trabajar localmente con las aplicaciones. 
+\textbf{RF-2.3.} El sistema  realizará todas las operaciones que requieran autenticación mediante TOKEN.  
+
+\textbf{RF-2.4.} El sistema  proporcionará a los usuarios el TOKEN necesario para trabajar localmente con las aplicaciones. 
    
 
 \subsection{Requisitos No Funcionales }
@@ -444,6 +446,36 @@ Los diagramas de casos de uso, son diagramas UML que representan gráficamente a
 \includegraphics[scale=0.50]{imagenes/casosUso3.jpg}
 \caption{ Casos de uso - Gestión Credenciales\cite{diagrama}  }  
 \end{figure}
+
+\subsection{Diagramas de Secuencia}
+Los diagramas de secuencia especifican las interacciones temporales entre las piezas internas del sistema para cumplir con las funcionalidades requeridas.  
+
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/secuencia1.jpg}
+\caption{ Diagramas de Secuencia - Inicio sesión \cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.43]{imagenes/secuencia2.jpg}
+\caption{ Diagramas de Secuencia - Crear Aplicación\cite{diagrama}  }  
+\end{figure}
+
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.43]{imagenes/secuencia3.jpg}
+\caption{ Diagramas de Secuencia - Ejecutar, Inspeccionar y Detener Aplicación\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.43]{imagenes/secuencia4.jpg}
+\caption{ Diagramas de Secuencia - Eliminar Aplicación\cite{diagrama}  }  
+\end{figure}
+
 
 
 \section{Desarrollo}
@@ -535,7 +567,7 @@ Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicacione
 
 La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores contienen lo mismo pero comparten el núcleo con otros contenedores corriendo como un proceso asilado en el espacio de usuario del sistema operativo anfitrión. No están vinculados con ninguna infraestructura especifica. 
 
-Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se incluye un fichero Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración continua definido en (incluir referencia a ci.yml)  para producir el una imagen docke como artefacto resultante. Este artefacto es utilizadoo para ccrear un contenedor docker en un entorno virtual acesible a internet, habilitando el puerto necesario para garantizar que el trafico es redireccionado al contenedor adecuado. 
+Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se produce un fichero denominado Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración continua definido en (incluir referencia a ci.yml)  para producir una imagen docke como artefacto. Este artefacto es utilizado para crear un contenedor docker en un entorno virtual acesible a internet, habilitando el puerto necesario para garantizar que el trafico es redireccionado al contenedor adecuado. 
 
 
 \subsection{Front-end}
@@ -550,13 +582,24 @@ JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los 
 Ajax\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador. 
 
 
-Socket 
+Socket  --> Logs aplicaciones en tiempo real. 
 
 \subsection{Infraestructura Virtual}
+Heroku ( plataforma as a service) para ejecutar code-runner.go + Maquina expuesta a internet en google cloud ccon un demonio docker expuesto por el puerto 5555 comunicada con el servidor mediant TLS. 
+
+\subsection{Seguridad}
+
+mutual tls
+
 
 \chapter{ Implementación y Pruebas}
 
 \chapter{Conclusiones}
+
+
+\section{Mejoras}
+
+\section{Trabajos Futuros}
 
 
 
@@ -564,6 +607,9 @@ Socket
 \begin{thebibliography}{aaaa}
 
 
+\bibitem[]{diagrama} \textsc{Diagrama},
+\textit{Diagrama Elaboración Propia - Draw.io}
+\url{https://www.draw.io}
 
 \bibitem[]{mvc} \textsc{MVC},
 \textit{MVC: Patrón de arquitectura de software }
