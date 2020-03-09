@@ -1,5 +1,14 @@
 {{define "js"}}
     <script>
+
+        function showCatalog() {
+            document.getElementById("catalog").style.display = "block";
+        }
+
+        function hideCatalog() {
+            document.getElementById("catalog").style.display = "none";
+        }
+
         $(document).ready(function() {
             setInterval(function(){
                 $.ajax({

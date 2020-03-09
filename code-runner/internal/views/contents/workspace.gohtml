@@ -1,6 +1,48 @@
 {{define "yield"}}
+
+
+    <style>
+
+        #catalogData{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+        #catalog {
+            position: fixed; /* Sit on top of the page content */
+            display: none; /* Hidden by default */
+            width: 100%; /* Full width (cover the whole page) */
+            height: 100%; /* Full height (cover the whole page) */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+            z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+            cursor: pointer; /* Add a pointer on hover */
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0, 0.9);
+            overflow-x: hidden;
+        }
+        #catalog .closeX {
+            position: absolute;
+            top: 20px;
+            right: 45px;
+            font-size: 60px;
+            color: white;
+        }
+    </style>
+
+
+
+
     <br>
     <ul>
+        <li><a href="javascript:void(0)" onclick="showCatalog()" >Application Catalog</a></li>
         <li><a href="/createApp">Create App</a></li>
         <li><a href="/token">Show Access Token</a></li>
         <li style="float:right">
@@ -42,4 +84,55 @@
     {{end}}
         </ul>
     </div>
+
+
+
+    <div id="catalog">
+
+    <div id="catalogData">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                Static web app
+                </div>
+                <div class="carousel-item">
+
+                    <p>Database</p>
+                    hghghghg
+                    <h1>descriptciond e de</h1>
+                </div>
+
+                <div class="carousel-item">
+                    <p>devOps</p>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>los devos hacen esto </h5>
+                        <p>y lo ootrooooo </p>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <p>database de</p>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>hhhhhhhhhhh</h5>
+                        <p>hhhhhhhhhhh</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+
+        <a href="javascript:void(0)" class="closeX" onclick="hideCatalog()">&times;</a>
+
+    </div>
+
+
 {{end}}
