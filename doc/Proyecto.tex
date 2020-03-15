@@ -256,27 +256,121 @@ El objetivo de este proyecto es el de dotar a los usuarios o desarrolladores de 
 
 \textbf{OBJ-2.}
 
-\chapter{Descripción del Problema}
 
-\section{El Problema}
-
-El auge de las tecnologías de la información a nivel empresarial, social, etico...blacbla
+\section{Cloud Computing}
 
 
-La cloud esta formada por un conjunto de tecnologías que habilitan al consumidor una sería de servicios de información para ser consumidos vía Internet. Cada vez son mas y mas las empresas y entidades confían en este tipo de servicios para realizar sus actividades económicas. La diversidad de soluciones demandadas ha creado un ecosistema en el que interactuan diversos sistemas y diversas tecnologías. Debido a esto la demanda de personal cualificado o desarrolladores también se ha incrementado. 
+La real academia de la ingeniería, define la computación en la nube o Cloud Computing  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.”\cite{RAI} La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión ya que la computación en la nube juega un papel fundamental en la resolución  del problema planteado.   
 
-Hoy en día la sociedad esta rodeada de 
+La nube  o el cloud computing  puede definirse  como el conjunto de tecnologías que permiten acceder a servicios información a través de Internet, es decir, sin necesidad de instalar programas software, el usuario puede acceder a estos servicios mediante Internet. No hay que entender a la nube como una entidad física, sino como una red de servidores distribuidos en todo el mundo, que inter-conectados entre si funcionan como un único ecosistema.  El paradigma que presenta la nube se basa en que en lugar de acceder a archivos y datos desde un equipo personal o local, se accede a ellos en línea desde cualquier dispositivo conectado a Internet. La siguiente imagen muestra los beneficios de la computación en la nube:
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/beneficiosCC.jpg}
+\caption{ Beneficios Cloud Computing\cite{beneficios} }
+\end{figure}
+
+
+\subsection{Tipos de Nube}
+
+Las nube puede clasificarse en distintos modelos en función del tipo de solución que quiera ofertarse:
+
+\subsubsection{Nube Pública}
+
+Las nubes públicas son propiedad de los proveedores de servicio, es decir, hardware, software y todos los componentes necesarios para la infraestructura virtual subyacente son propiedad del proveedor de servicio cuya tarea es administrarlos. El consumidor accede y administra los recursos que va a consumir desde un explorador web.  Algunos ejemplos de proveedores de nube pública son GoogleCloud\cite{gcp} , Amazon Web Services\cite{aws} o Microsoft Azure\cite{azure} 
+ 
+\subsubsection{Nube Privada}
+Las nubes privadas se caracterizan por que sus servicios e infraestructura subyacente se mantiene en una red privada, utilizados exclusivamente por una empresa u organización. Por ejemplo, una nube privada puede encontrarse físicamente en el centro de datos de una compañía.  
+
+\subsubsection{Nube Híbrida}
+
+Las nubes híbridas se caracterizan por combinar los modelos de nube pública y nube privada. La nubes híbridas inter-conectan ambos modelos con el objetivo de compartir datos y aplicaciones aportando mayor flexibilidad y opciones de desarrollo, optimizando el uso de la infraestructura subyacente y la seguridad.   
+
+
+\subsection{Tipos de Servicios en la Nube}
+
+La computación en la nube permite la integración de servicios en Red dando servicio a nivel mundial y además contribuye al uso eficiente de la energía pero la centralización de las aplicaciones y el almacenamiento de los datos origina una interdependencia con los proveedores de servicios. La disponibilidad de estos servicios necesita de conexión a Internet. Los servicios que ofertados por la nube pueden clasificarse en las siguientes subsecciones: 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/arquitecturaCC.jpg}
+\caption{ Arquitectura Cloud Computing\cite{arquitecturaCC} }
+\end{figure}
+
+\subsubsection{Software como servicio (SaaS)}
+
+El Software como Servicio\cite{saas} (SaaS, Software as a Service) ofrece el consumo de una gran variedad de aplicaciones o servicios proporcionadas por los proveedores del servicio y que se ejecutan en la infraestructura de la nube. Las aplicaciones en la nube son accesibles por distintos dispositivos del cliente a través de una interfaz sencilla, como por ejemplo un navegador web. El cliente no gestiona la infraestructura del servicio, que incluye la red de comunicaciones, los servidores, los sistemas operativos y el almacenamiento, simplemente utiliza el servicio como es el caso de este proyecto. 
+
+\subsubsection{Plataforma como servicio (PaaS)}
+
+La Plataforma como Servicio\cite{paas} (PaaS, Platform as a Service) es una categoría de servicios cloud que proporciona un entorno a los desarrolladores crear aplicaciones y servicios que funcionen a través de internet. Los servicios PaaS se alojan en la nube, y los usuarios pueden acceder a ellos a través de un navegador web. . Los servicios PaaS consisten en funcionalidades pre-configuradas a las que los clientes puedan suscribirse, eligiendo las funciones que deseen incluir en función de sus necesidades.
+
+Algunas de las funcionalidades PaaS son:
+
+\begin{enumerate}
+\item Sistema operativo. 
+\item Entorno de scripting de servidor. 
+\item Sistema de gestión de base de datos. 
+\item Software de servidor. 
+\item Soporte técnico. 
+\item Almacenamiento. 
+\item Acceso a la red. 
+\item Herramientas de diseño y desarrollo. 
+\item Hosting. 
+\end{enumerate}
+
+\subsubsection{Infraestructura como servicio (IaaS)}
+
+La Infraestructura como Servicio\cite{iaas} (IaaS, Infrastructure as a Service) es un servicio cloud, que proporciona acceso a recursos informáticos situados en un entorno virtualizado, a través de una conexión pública. Los recursos informáticos ofrecidos  son básicamente infraestructura de procesamiento. Físicamente, el repertorio de recursos hardware disponibles procede de multitud de servidores y redes, generalmente distribuidos entre numerosos centros de datos, de cuyo mantenimiento se encarga el proveedor del servicio cloud. El cliente, por su parte, obtiene acceso a los componentes virtualizados para construir con ellos su propia plataforma informática.
+
+Estas son algunas de las ventajas o características de una implementación basada en el modelo de Infraestructura como Servicio:
+
+\begin{enumerate}
+\item Escalabilidad.
+\item Sin necesidad de invertir en hardware.
+\item Independencia de la localización.
+\item Seguridad física en los centros de datos.
+\end{enumerate}
+
+\section{Programación Generativa}
+
+Tal y como se presenta en el articulo "Generative Programming"\cite{gp} la programación generativa consiste en diseñar e implementar módulos software que pueden ser combinados para generar sistemas especializados y  optimizados en cumplir requisitos específicos de dominio. Los objetivos de la programación generativa son:
+
+\begin{enumerate}
+\item Disminuir la desviación conceptual entre el código software y los conceptos de dominio.
+\item Reutilización y adaptabilidad de módulos software.
+\item Simplificar la administración de muchas variantes de un componente.
+\item Aumentar la eficiencia  en capacidad y en tiempo de ejecución.
+\end{enumerate}
+
+
+Para alcanzar estos objetivos, la programación generativa ha de cumplir los siguientes principios tratados en el articulo "Generative Programming and Active Libraries" \cite{gpl}
+
+\begin{enumerate}
+\item Separation of concerns (SoC): La separación de preocupaciones pone de manifiesto la importancia de lidiar con los problemas de una manera atómica. Es decir, crear pequeños fragmentos de código que cumplan con una funcionalidad muy especifica e integrarlos para dar lugar al componente deseado. 
+\item Parameterization of differences. La parametrización de componentes da la posibilidad de representar familias de componentes. 
+\item Analysis and modeling of dependencies and interactions. Define el termino conocimiento de configuración horizontal como la dependencia que existe en el valor que toma el parámetro de un modelo, condicionado el valor de otros parámetros del mismo modelo.  
+\item Separating problem space from solution space. Define el termino conocimiento de configuración vertical, donde se pone de manifiesto que el espacio del problema es especifico del dominio mientras que el espació de la solución ha de ser generalizado.  
+\item Eliminating overhead and performing domain-specific optimizations. Donde se aconseja un proceso de refinamiento tras la generación estática de componentes para eliminar software no utilizado en el dominio especifico. 
+\end{enumerate}
+
+
+
+\chapter{Problema y Solución}
+
+En este capítulo se presenta el problema a solucionar con este proyecto. En las siguientes secciones se analizarán 
 
 
 Diversidad de aplicaciones cloud. Nuevas tecnologías entorno variado y cambiante. Demanda de nuevas tecnologías.
 Capacitación para desarrolladores. Diversidad de aplicaciones, mismo tratamiento, simplificar proceso de aprendizaje y desarrollo software. FullStack. 
+
 
 \section{Estado del Arte}
 \subsection{Generadores de aplicaciones}
 \subsection{Despliegue de código}
  
 
-\chapter{Descripción de la Solución}
+\chapter{Planificación y Análisis}
 
 
 Con el objetivo de generalizar y definir aplicación software se han decidido usar las partes:
@@ -316,14 +410,18 @@ push
 
 Lo que permite al desarrollador integrar fácilmente nuevos cambios. 
 
-Definir eel permino produción dentro del marco de este sistema, consiste en la siguiente serie de etapas:
+Definir el permino produción dentro del marco de este sistema, consiste en la siguiente serie de etapas:
 
 \section{Planificación}
 
+La planificación temporal muestra mediante el uso de diagramas de Gant la distribución en el tiempo de las tareas necesarias para cumplir con los objetivos de esta proyecto. 
 
-\section{Análisis}
+--  TODO -- INCLUIR DIAGRAMAS GANT
 
-Como se ha visto, el termino producción en el termino de este sistema considera 
+
+\section{Análisis Software}
+
+El análisis software pone de manifiesto la especificación del sistema software a construir. Dirigida por Ingeniería de requisitos y de casos de uso, las siguientes subseciones muestran las partes y funcionalidades que el sistema resultante ha de cumplir. 
 
 \subsection{Requisitos de Información }
 Los requisitos de información se caracterizan por reunir la información relevante para la solución, que debe gestionar y almacenar el sistema software.\\
@@ -478,6 +576,11 @@ Los diagramas de secuencia especifican las interacciones temporales entre las pi
 
 
 
+
+
+\chapter{ Implementación y Pruebas}
+
+
 \section{Desarrollo}
 
 En el proceso de desarrollo del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y esca-labilidad del software resultante. 
@@ -591,9 +694,6 @@ Heroku ( plataforma as a service) para ejecutar code-runner.go + Maquina expuest
 
 mutual tls
 
-
-\chapter{ Implementación y Pruebas}
-
 \chapter{Conclusiones}
 
 
@@ -604,9 +704,64 @@ mutual tls
 
 
 
-\begin{thebibliography}{aaaa}
+\begin{thebibliography}{}
+
+%cloud computing
+\bibitem[13]{RAI} \textsc{Real Academia de Ingeniería},
+\textit{Acepciones}
+\url{http://diccionario.raing.es/es/lema/computaci\%C3\%B3n-en-la-nube}
 
 
+\bibitem[14]{magazine} \textsc{Magazine Communications of the ACM },
+\textit{A view of cloud computing}
+\url{http://dl.acm.org/citation.cfm?doid=1721654.1721672}
+
+\bibitem[]{gcp} \textsc{Google Cloud Platform},
+\textit{Google Cloud Platform: Crea, moderniza y escala tu negocio}
+\url{https://cloud.google.com}
+
+\bibitem[]{aws} \textsc{Amazon Web Services},
+\textit{Amazon Web Services: Plataforma Cloud Pública}
+\url{https://aws.amazon.com}
+
+\bibitem[]{azure} \textsc{Microsoft Azure},
+\textit{Microsoft Azure: Convierta las ideas en soluciones con más de 100 servicios para crear, implementar y administrar aplicaciones}
+\url{https://azure.microsoft.com}
+
+
+\bibitem[]{beneficios} \textsc{Cloud Computing},
+\textit{Imagen de CLOUD COMPUTING HOY - Mario josé Villamizar Cano}
+\url{https://es.slideshare.net/mariojosevillamizarcano/cloud-computing-hoy-todo-como-servicio}
+
+\bibitem[]{arquitecturaCC} \textsc{Cloud Computing},
+\textit{Imagen Arquitectura}
+\url{http://image.slidesharecdn.com/tocandolanubev2-141007052808-conversion-gate01/95/cloud-computing-una-perspectiva-tecnolgica-9-638.jpg?cb=1412659848}
+
+
+\bibitem[]{saas} \textsc{SaaS},
+\textit{¿Qué es SaaS? Software como servicio}
+\url{https://azure.microsoft.com/es-es/overview/what-is-saas/} 
+
+\bibitem[]{paas} \textsc{PaaS},
+\textit{What Is Platform-as-a-Service?}
+\url{https://www.cloudflare.com/learning/serverless/glossary/platform-as-a-service-paas} 
+
+\bibitem[]{iaas} \textsc{IaaS},
+\textit{¿Qué es IaaS? Infraestructura como servicio}
+\url{https://azure.microsoft.com/es-es/overview/what-is-iaas/} 
+
+%GP
+
+\bibitem[]{gp} \textsc{Generative Programming},
+\textit{Czarnecki, Krzysztof \&  Østerbye, Kasper \& Völter, Markus. (2002). Generative Programming.}
+\url{https://www.researchgate.net/publication/220842465_Generative_Programming} 
+
+
+\bibitem[]{gpl} \textsc{Generative Programming and Active Libraries},
+\textit{K. Czarnecki, U. Eisenecker, R. Glück, D. Vandevoorde, and T. Veldhuizen. GenerativeProgramming and Active libraries.}
+\url{https://pdfs.semanticscholar.org/8605/bec5fce4e8428fcb720ff07eccbeb147e9fc.pdf} 
+
+%Analisis
 \bibitem[]{diagrama} \textsc{Diagrama},
 \textit{Diagrama Elaboración Propia - Draw.io}
 \url{https://www.draw.io}
@@ -628,6 +783,7 @@ mutual tls
 \url{https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93controlador}
 
 
+%Desarrollo
 \bibitem[]{go} \textsc{Golang},
 \textit{Golang}
 \url{https://golang.org}
@@ -681,9 +837,6 @@ mutual tls
 \end{thebibliography}
 
 \chapter{ Anexo}
-
-\section{Plantilla Corrección Tipo Test }
-
 
 
 

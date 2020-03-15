@@ -9,7 +9,7 @@ const (
 	SessionUserKey       = "githubID"
 	SessionUserName      = "githubNAME"
 	SessionUserToken     = "githubTOKEN"
-	Database             = "generative-cloud"
+	Database             = "gcm"
 	WorkspacesCollection = "workspaces"
 	AppsCollection = "apps"
 	SourceCode           = "https://github.com/hugobarzano/GCM"
