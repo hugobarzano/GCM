@@ -213,7 +213,10 @@ pdfproducer = {pdflatex}
 \begin{document}
 \input{portada/portada}
 \input{prefacio/prefacio}
-
+\newpage
+\input{prefacio/abstract}
+\newpage
+\input{prefacio/agradecimientos}
 %\frontmatter
 \tableofcontents
 \listoffigures
@@ -231,25 +234,25 @@ pdfproducer = {pdflatex}
 
 \section{Motivación}
 
-La motivación de este proyecto es la de mejorar el proceso de desarrollo de aplicaciones web y servicios cloud, ayudando al desarrollador a comprender y adquirir conocimientos relativos a las tecnologías de la información.  En el proceso de desarrollo de software informático no existe un proceso universal que indique las pautas a seguir para la correcta producción software. Comúnmente, este proceso ha de amoldarse a la naturaleza del software que se desea desarrollar, a la tecnología con la que ha de desarrollarse y como no a los recursos humanos o desarrolladores que van a construir dicho software. La motivación de este proyecto es la de dotar a los desarroladores de un sistema que los abstraiga de estas etapas, premiando la rápida producción y disponibilidad del software deseado. 
+Este proyecto surge con la motivación de demostrar como la programación generativa y  la integración de diversos servicios web pueden utilizarse de manera conjunta para generalizar y automatizar el proceso de desarrollo y operaciones de aplicaciones web o servicios cloud.  
+
+  
+Este proyecto aborda el proceso de desarrollo de aplicaciones web desde un punto de vista generativo.  Con esta iniciativa se pretende acuñar el lema "From Spec to Cloud" es decir, dada una definición de aplicación especifica de dominio, construir un sistema que generalice este tipo de soluciones y sea capaz de materializarlas en sistemas de información disponibles a través de Internet. De igual forma, con este proyecto se pretende dotar a los desarrolladores o clientes de un sistema que les ayude a comprender y adquirir conocimientos relativos a las tecnologías de la información y al ciclo de vida de las aplicaciones software. 
+
+En las siguientes secciones se presenta a modo de introducción conceptos relativos a Programación Generativa, La Nube y procesos relacionados con el ciclo de vida de los proyectos software como la Integración Continua y el Despliegue Continuo, se pretende con esto dotar al lector de un contexto o conocimiento básico para abordar el proyecto.
+
+A continuación se van a definir los objetivos propuestos a alcanzar siguiendo esta motivación. 
 
 \section{Objetivos}
 
-El objetivo de este proyecto es el de sintetizar el proceso de desarrollo y operación de software en un conjunto automatizado de etapas. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación. La generalización ocurre al manejar los distintos sistemas de información:
+El principal objetivo de este proyecto es el de sintetizar y automatizar el proceso de desarrollo y operación de software, concrétamente el de aplicaciones web o servicios de datos en la nube. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación.
 
-\begin{enumerate}
-\item \textbf{ Aplicaciones web estáticas }  
-\item \textbf{ Aplicaciones web dinámicas}
-\item \textbf{ Interfaces web }  
-\item \textbf{ Api/Rest }  
-\item \textbf{ Servicios }  
-\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }  
-\end{enumerate}
+Para alcanzar el principal objetivo, este proyecto ha de identificar, modelar y automatizar las principales etapas del ciclo de vida de proyectos software, y construir un mecanismo genérico con el que producir aplicaciones. Las aplicaciones producidas por el proyecto han de ser auto-contenidas y auto-consumibles, es decir, han te contener todo lo necesario para ser ejecutadas y usadas fuera del marco de este proyecto. 
 
-como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código y/o configuración necesaria para materializar dicha especificación en un producto software, construir un artefacto auto-contenido que permita la ejecución del software generado, ejecutar dicho artefacto sobre la infraestructura virtual necesaria para que la aplicación especificada sea accesible por Internet y que de esta forma el usuario de este proyecto sea capaz de consumir la aplicación generada.  
- 
-El objetivo de este proyecto es el de dotar a los usuarios o desarrolladores de un  sistema  generativo y automatizado de aplicaciones que mejore el proceso de desarrollo software y facilite el aprendizaje de nuevas tecnologías. El principal objetivo del proyecto es acuñar el lema "From Spec to Cloud" es decir, dada una especificación de aplicación de alto nivel, materializarla en un sistema de información disponible en la nube. 
+Finalmente, este proyecto ha de definir e implementar un mecanismo genérico que permita consumir las aplicaciones producidas a través de Internet, cumpliendo así completamente con el principal objetivo. 
 
+
+De manera adicional, este proyecto tiene como objetivo presentar mejoras y automatizaciones relativas a los proceso de desarrollo software. El sistema resultante se presenta como una herramienta o ayuda para desarrolladores o clientes en la adquisición de conocimientos  en las denominadas tecnologías de la información.  
  
 
 \textbf{OBJ-1.} 
@@ -364,11 +367,42 @@ En este capítulo se presenta el problema a solucionar con este proyecto. En las
 Diversidad de aplicaciones cloud. Nuevas tecnologías entorno variado y cambiante. Demanda de nuevas tecnologías.
 Capacitación para desarrolladores. Diversidad de aplicaciones, mismo tratamiento, simplificar proceso de aprendizaje y desarrollo software. FullStack. 
 
+\section{Definición del Problema}
 
-\section{Estado del Arte}
-\subsection{Generadores de aplicaciones}
-\subsection{Despliegue de código}
- 
+
+
+ cloud  de diversa naturaleza partiendo de una especificación de alto nivel.  Normalmente, las etapas de desarrollo software están segmentadas en el desarrollo del código, la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet.
+
+
+ Normalmente en los proyectos informáticos las etapas o estados que los productos software alcanzan están muy segmentadas. Descritas a muy alto nivel, estas etapas comienzan por el diseño y especificación de la solución,  continuan con el desarrollo del código fuente necesario para cumplir la solución así como las pruebas necesarias para verificar el correcto funcionamiento , la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet. 
+
+
+
+
+Este proyecto muestra como el uso de la programación generativa y las tecnologías de la información mejoran el proceso  aprendizaje y desarrollo software en el ámbito de las soluciones orientadas a la web 2.0. 
+
+Se pretende proporcionar al desarrollador software de un sistema web orientado a la generación, construcción y despliegue de aplicaciones web o servicios cloud  de diversa naturaleza partiendo de una especificación de alto nivel. 
+
+Normalmente, las etapas de desarrollo software están segmentadas en el desarrollo del código, la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet.  
+
+\section{Presentación de la Solución}
+
+Para alcanzarlo, se hace uso de conceptos de programación generativa, como generalizar separar el dominio especcifico de la 
+
+en un conjunto automatizado de etapas.
+
+ La generalización ocurre al manejar los distintos sistemas de información:
+
+\begin{enumerate}
+\item \textbf{ Aplicaciones web estáticas }  
+\item \textbf{ Aplicaciones web dinámicas}
+\item \textbf{ Interfaces web }  
+\item \textbf{ Api/Rest }  
+\item \textbf{ Servicios }  
+\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }  
+\end{enumerate}
+
+como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código y/o configuración necesaria para materializar dicha especificación en un producto software, construir un artefacto auto-contenido que permita la ejecución del software generado, ejecutar dicho artefacto sobre la infraestructura virtual necesaria para que la aplicación especificada sea accesible por Internet y que de esta forma el usuario de este proyecto sea capaz de consumir la aplicación generada.   
 
 \chapter{Planificación y Análisis}
 
