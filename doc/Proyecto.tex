@@ -213,7 +213,10 @@ pdfproducer = {pdflatex}
 \begin{document}
 \input{portada/portada}
 \input{prefacio/prefacio}
-
+\newpage
+\input{prefacio/abstract}
+\newpage
+\input{prefacio/agradecimientos}
 %\frontmatter
 \tableofcontents
 \listoffigures
@@ -231,34 +234,38 @@ pdfproducer = {pdflatex}
 
 \section{Motivación}
 
-La motivación de este proyecto es la de mejorar el proceso de desarrollo de aplicaciones web y servicios cloud, ayudando al desarrollador a comprender y adquirir conocimientos relativos a las tecnologías de la información.  En el proceso de desarrollo de software informático no existe un proceso universal que indique las pautas a seguir para la correcta producción software. Comúnmente, este proceso ha de amoldarse a la naturaleza del software que se desea desarrollar, a la tecnología con la que ha de desarrollarse y como no a los recursos humanos o desarrolladores que van a construir dicho software. La motivación de este proyecto es la de dotar a los desarroladores de un sistema que los abstraiga de estas etapas, premiando la rápida producción y disponibilidad del software deseado. 
+Este proyecto surge con la motivación de demostrar como la programación generativa y  la integración de diversos servicios web pueden utilizarse de manera conjunta para generalizar y automatizar el proceso de desarrollo y operaciones de aplicaciones web o servicios cloud.  
+
+Este proyecto aborda el proceso de desarrollo de aplicaciones web desde un punto de vista generativo.  Con esta iniciativa se pretende acuñar el lema "From Spec to Cloud" es decir, dada una definición de aplicación especifica de dominio, construir un sistema que generalice este tipo de soluciones y sea capaz de materializarlas en sistemas de información disponibles a través de Internet. De igual forma, con este proyecto se pretende dotar a los desarrolladores o clientes de un sistema que les ayude a comprender y adquirir conocimientos relativos a las tecnologías de la información y al ciclo de vida de las aplicaciones software.
+
+En las siguientes secciones se presenta a modo de introducción conceptos relativos a Programación Generativa, Cloud Computing y conceptos relacionados con el proceso de desarrollo software y el ciclo de vida de productos software, conceptos como la Integración Continua y el Despliegue Continuo. Se pretende con esto dotar al lector de un contexto o conocimiento básico para abordar el proyecto.
+
+A continuación se van a definir los objetivos propuestos a alcanzar siguiendo esta motivación. 
 
 \section{Objetivos}
 
-El objetivo de este proyecto es el de sintetizar el proceso de desarrollo y operación de software en un conjunto automatizado de etapas. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación. La generalización ocurre al manejar los distintos sistemas de información:
+El principal objetivo de este proyecto es el de sintetizar y automatizar el proceso de desarrollo y operación de software, concrétamente el de aplicaciones web o servicios de datos en la nube. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación.
 
-\begin{enumerate}
-\item \textbf{ Aplicaciones web estáticas }  
-\item \textbf{ Aplicaciones web dinámicas}
-\item \textbf{ Interfaces web }  
-\item \textbf{ Api/Rest }  
-\item \textbf{ Servicios }  
-\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }  
-\end{enumerate}
+Para alcanzar el principal objetivo, este proyecto ha de identificar, modelar y automatizar las principales etapas del ciclo de vida de proyectos software, y construir un mecanismo genérico con el que producir aplicaciones. Las aplicaciones producidas por el proyecto han de ser auto-contenidas y auto-consumibles, es decir, han te contener todo lo necesario para ser ejecutadas y usadas fuera del marco de este proyecto. 
 
-como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código y/o configuración necesaria para materializar dicha especificación en un producto software, construir un artefacto auto-contenido que permita la ejecución del software generado, ejecutar dicho artefacto sobre la infraestructura virtual necesaria para que la aplicación especificada sea accesible por Internet y que de esta forma el usuario de este proyecto sea capaz de consumir la aplicación generada.  
+Finalmente, este proyecto ha de definir e implementar un mecanismo genérico que permita consumir las aplicaciones producidas a través de Internet, cumpliendo así completamente con el principal objetivo. 
+
+
+De manera adicional, este proyecto tiene como objetivo presentar mejoras y automatizaciones relativas a los proceso de desarrollo software. El sistema resultante se presenta como una herramienta o ayuda para desarrolladores en la adquisición de conocimientos  en las denominadas tecnologías de la información. Tanto el código fuente de este proyecto como las aplicaciones creadas por los usuarios que utilicen el sistema se consideran "Open Source", es decir código abierto y disponible públicamente para quien lo necesite.
  
-El objetivo de este proyecto es el de dotar a los usuarios o desarrolladores de un  sistema  generativo y automatizado de aplicaciones que mejore el proceso de desarrollo software y facilite el aprendizaje de nuevas tecnologías. El principal objetivo del proyecto es acuñar el lema "From Spec to Cloud" es decir, dada una especificación de aplicación de alto nivel, materializarla en un sistema de información disponible en la nube. 
+\begin{itemize}
+\item \textbf{OBJ-1. } Sintetizar y generar aplicaciones software de diversa naturaleza. 
+\item \textbf{OBJ-2. } Sintetizar y generar aplicaciones software de diversa tecnología.  
+\item \textbf{OBJ-3. } Generar aplicaciones auto-contenidas. 
+\item \textbf{OBJ-4. } Producir y publicar el código fuente de las aplicaciones.  
+\item \textbf{OBJ-5. } Producir y publicar paquetes o ejecutables de las aplicaciones.  
+\item \textbf{OBJ-6. } Disponibilizar aplicaciones a través de Internet. 
+\end{itemize}
 
- 
-
-\textbf{OBJ-1.} 
-
-\textbf{OBJ-2.}
+En los siguientes capítulos se presenta el problema de manera formal y se describe la solución propuesta, para ello se planifica y analiza mediante ingeniería de requisitos la solución a implementar. Tras el análisis se detalla la implementación realizada y la consecución de los objetivos propuesto mediante un caso de uso funcional.
 
 
 \section{Cloud Computing}
-
 
 La real academia de la ingeniería, define la computación en la nube o Cloud Computing  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.”\cite{RAI} La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión ya que la computación en la nube juega un papel fundamental en la resolución  del problema planteado.   
 
@@ -355,6 +362,8 @@ Para alcanzar estos objetivos, la programación generativa ha de cumplir los sig
 \end{enumerate}
 
 
+\section{Ciclo de Vida del Desarrollo Software (SDLC)}
+
 
 \chapter{Problema y Solución}
 
@@ -364,11 +373,42 @@ En este capítulo se presenta el problema a solucionar con este proyecto. En las
 Diversidad de aplicaciones cloud. Nuevas tecnologías entorno variado y cambiante. Demanda de nuevas tecnologías.
 Capacitación para desarrolladores. Diversidad de aplicaciones, mismo tratamiento, simplificar proceso de aprendizaje y desarrollo software. FullStack. 
 
+\section{Definición del Problema}
 
-\section{Estado del Arte}
-\subsection{Generadores de aplicaciones}
-\subsection{Despliegue de código}
- 
+
+
+ cloud  de diversa naturaleza partiendo de una especificación de alto nivel.  Normalmente, las etapas de desarrollo software están segmentadas en el desarrollo del código, la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet.
+
+
+ Normalmente en los proyectos informáticos las etapas o estados que los productos software alcanzan están muy segmentadas. Descritas a muy alto nivel, estas etapas comienzan por el diseño y especificación de la solución,  continuan con el desarrollo del código fuente necesario para cumplir la solución así como las pruebas necesarias para verificar el correcto funcionamiento , la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet. 
+
+
+
+
+Este proyecto muestra como el uso de la programación generativa y las tecnologías de la información mejoran el proceso  aprendizaje y desarrollo software en el ámbito de las soluciones orientadas a la web 2.0. 
+
+Se pretende proporcionar al desarrollador software de un sistema web orientado a la generación, construcción y despliegue de aplicaciones web o servicios cloud  de diversa naturaleza partiendo de una especificación de alto nivel. 
+
+Normalmente, las etapas de desarrollo software están segmentadas en el desarrollo del código, la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet.  
+
+\section{Presentación de la Solución}
+
+Para alcanzarlo, se hace uso de conceptos de programación generativa, como generalizar separar el dominio especcifico de la 
+
+en un conjunto automatizado de etapas.
+
+ La generalización ocurre al manejar los distintos sistemas de información:
+
+\begin{enumerate}
+\item \textbf{ Aplicaciones web estáticas }  
+\item \textbf{ Aplicaciones web dinámicas}
+\item \textbf{ Interfaces web }  
+\item \textbf{ Api/Rest }  
+\item \textbf{ Servicios }  
+\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }  
+\end{enumerate}
+
+como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código y/o configuración necesaria para materializar dicha especificación en un producto software, construir un artefacto auto-contenido que permita la ejecución del software generado, ejecutar dicho artefacto sobre la infraestructura virtual necesaria para que la aplicación especificada sea accesible por Internet y que de esta forma el usuario de este proyecto sea capaz de consumir la aplicación generada.   
 
 \chapter{Planificación y Análisis}
 
@@ -707,12 +747,12 @@ mutual tls
 \begin{thebibliography}{}
 
 %cloud computing
-\bibitem[13]{RAI} \textsc{Real Academia de Ingeniería},
+\bibitem[]{RAI} \textsc{Real Academia de Ingeniería},
 \textit{Acepciones}
 \url{http://diccionario.raing.es/es/lema/computaci\%C3\%B3n-en-la-nube}
 
 
-\bibitem[14]{magazine} \textsc{Magazine Communications of the ACM },
+\bibitem[]{magazine} \textsc{Magazine Communications of the ACM },
 \textit{A view of cloud computing}
 \url{http://dl.acm.org/citation.cfm?doid=1721654.1721672}
 
