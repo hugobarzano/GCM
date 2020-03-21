@@ -4,33 +4,43 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 
-% \usepackage[style=list, number=none]{glossary} %
-%\usepackage{titlesec}
-%\usepackage{pailatino}
-\usepackage[table,xcdraw]{xcolor}
-%\decimalpoint
+\usepackage{pdfpages}
+\usepackage[square,numbers]{natbib}
+\usepackage[nottoc]{tocbibind}
 \usepackage{dcolumn}
 \usepackage{float}
-\newcolumntype{.}{D{.}{\esperiod}{-1}}
-\makeatletter
-%\addto\shorthandsspanish{\let\esperiod\es@period@code}
-\makeatother
-
-
+%\usepackage{doxygen/doxygen}
+%\usepackage{pdfpages}
+\usepackage{url}
+\usepackage{colortbl,longtable}
+\usepackage[stable]{footmisc}
+%\usepackage{index}
 %\usepackage[chapter]{algorithm}
 \RequirePackage{verbatim}
 %\RequirePackage[Glenn]{fncychap}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{afterpage}
-
 \usepackage{longtable}
-
 \usepackage[pdfborder={000}]{hyperref} %referencia
+\usepackage[nottoc]{tocbibind}
+
+
+%\usepackage[style=list, number=none]{glossary} %
+%\usepackage{titlesec}
+%\usepackage{pailatino}
+%\usepackage[table,xcdraw]{xcolor}
+%\decimalpoint
+
 
 % ********************************************************************
 % Re-usable information
 % ********************************************************************
+\newcolumntype{.}{D{.}{\esperiod}{-1}}
+\makeatletter
+\makeatother
+
+
 \newcommand{\myTitle}{Trabajo Fin de Máster\xspace}
 \newcommand{\myDegree}{Máster Universitario de Investigación en Ingeniería de Software y Sistemas Informáticos\xspace}
 \newcommand{\myName}{César Hugo Bárzano Cruz\xspace}
@@ -56,12 +66,7 @@ pdfproducer = {pdflatex}
 %\hyphenation{}
 
 
-%\usepackage{doxygen/doxygen}
-%\usepackage{pdfpages}
-\usepackage{url}
-\usepackage{colortbl,longtable}
-\usepackage[stable]{footmisc}
-%\usepackage{index}
+
 
 %\makeindex
 %\usepackage[style=long, cols=2,border=plain,toc=true,number=none]{glossary}
@@ -84,7 +89,7 @@ pdfproducer = {pdflatex}
 
 \usepackage{bera}% optional: just to have a nice mono-spaced font
 \usepackage{listings}
-\usepackage{xcolor}
+%\usepackage{xcolor}
 
 
 \colorlet{punct}{red!60!black}
@@ -191,7 +196,7 @@ pdfproducer = {pdflatex}
 \usepackage{enumitem}
 
 
-%Para conseguir que en las páginas en blanco no ponga cabecerass
+%Para conseguir que en las páginas en blanco no ponga cabeceras
 \makeatletter
 \def\clearpage{%
   \ifvmode
@@ -209,8 +214,12 @@ pdfproducer = {pdflatex}
 }
 \makeatother
 
-\usepackage{pdfpages}
+
+\bibliographystyle{elsarticle-num}
+
+
 \begin{document}
+
 \input{portada/portada}
 \input{prefacio/prefacio}
 \newpage
@@ -220,6 +229,8 @@ pdfproducer = {pdflatex}
 %\frontmatter
 \tableofcontents
 \listoffigures
+\bibliographystyle{elsarticle-num}
+\bibliography{ref/references}
 %\listoftables
 
 %
@@ -267,7 +278,7 @@ En los siguientes capítulos se presenta el problema de manera formal y se descr
 
 \section{Cloud Computing}
 
-La real academia de la ingeniería, define la computación en la nube o Cloud Computing  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.”\cite{RAI} La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión ya que la computación en la nube juega un papel fundamental en la resolución  del problema planteado.
+La real academia de la ingeniería, define la computación en la nube o Cloud Computing\citep{realacademia}  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet\cite{latexcompanion} para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.” La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión ya que la computación en la nube juega un papel fundamental en la resolución  del problema planteado.
 
 La nube  o el cloud computing  puede definirse  como el conjunto de tecnologías que permiten acceder a servicios información a través de Internet, es decir, sin necesidad de instalar programas software, el usuario puede acceder a estos servicios mediante Internet. No hay que entender a la nube como una entidad física, sino como una red de servidores distribuidos en todo el mundo, que inter-conectados entre si funcionan como un único ecosistema.  El paradigma que presenta la nube se basa en que en lugar de acceder a archivos y datos desde un equipo personal o local, se accede a ellos en línea desde cualquier dispositivo conectado a Internet. La siguiente imagen muestra los beneficios de la computación en la nube:
 
@@ -643,7 +654,7 @@ En el proceso de desarrollo del sistema, se ha seguido el patrón de arquitectur
 \caption{ Modelo-Vista-Controlador\cite{mvc2}  }
 \end{figure}
 
-Los componentes\cite{mvc3}\cite{mvc4} del Modelo-Vista-Controlador se pueden definir en:
+Los componentes\cite{mvc3} del Modelo-Vista-Controlador se pueden definir en:
 
 \begin{enumerate}
 \item \textbf{Modelo:} Representa la información , gestionando los accesos a ella, la base de datos  o capa de persistencia es un componente del modelo.
@@ -754,157 +765,7 @@ mutual tls
 \section{Trabajos Futuros}
 
 
-
-
-\begin{thebibliography}{}
-
-%cloud computing
-\bibitem[]{RAI} \textsc{Real Academia de Ingeniería},
-\textit{Acepciones}
-\url{http://diccionario.raing.es/es/lema/computaci\%C3\%B3n-en-la-nube}
-
-
-\bibitem[]{magazine} \textsc{Magazine Communications of the ACM },
-\textit{A view of cloud computing}
-\url{http://dl.acm.org/citation.cfm?doid=1721654.1721672}
-
-\bibitem[]{gcp} \textsc{Google Cloud Platform},
-\textit{Google Cloud Platform: Crea, moderniza y escala tu negocio}
-\url{https://cloud.google.com}
-
-\bibitem[]{aws} \textsc{Amazon Web Services},
-\textit{Amazon Web Services: Plataforma Cloud Pública}
-\url{https://aws.amazon.com}
-
-\bibitem[]{azure} \textsc{Microsoft Azure},
-\textit{Microsoft Azure: Convierta las ideas en soluciones con más de 100 servicios para crear, implementar y administrar aplicaciones}
-\url{https://azure.microsoft.com}
-
-
-\bibitem[]{beneficios} \textsc{Cloud Computing},
-\textit{Imagen de CLOUD COMPUTING HOY - Mario josé Villamizar Cano}
-\url{https://es.slideshare.net/mariojosevillamizarcano/cloud-computing-hoy-todo-como-servicio}
-
-\bibitem[]{arquitecturaCC} \textsc{Cloud Computing},
-\textit{Imagen Arquitectura}
-\url{http://image.slidesharecdn.com/tocandolanubev2-141007052808-conversion-gate01/95/cloud-computing-una-perspectiva-tecnolgica-9-638.jpg?cb=1412659848}
-
-
-\bibitem[]{saas} \textsc{SaaS},
-\textit{¿Qué es SaaS? Software como servicio}
-\url{https://azure.microsoft.com/es-es/overview/what-is-saas/}
-
-\bibitem[]{paas} \textsc{PaaS},
-\textit{What Is Platform-as-a-Service?}
-\url{https://www.cloudflare.com/learning/serverless/glossary/platform-as-a-service-paas}
-
-\bibitem[]{iaas} \textsc{IaaS},
-\textit{¿Qué es IaaS? Infraestructura como servicio}
-\url{https://azure.microsoft.com/es-es/overview/what-is-iaas/}
-
-%GP
-
-\bibitem[]{gp} \textsc{Generative Programming},
-\textit{Czarnecki, Krzysztof \&  Østerbye, Kasper \& Völter, Markus. (2002). Generative Programming.}
-\url{https://www.researchgate.net/publication/220842465_Generative_Programming}
-
-
-\bibitem[]{gpl} \textsc{Generative Programming and Active Libraries},
-\textit{K. Czarnecki, U. Eisenecker, R. Glück, D. Vandevoorde, and T. Veldhuizen. GenerativeProgramming and Active libraries.}
-\url{https://pdfs.semanticscholar.org/8605/bec5fce4e8428fcb720ff07eccbeb147e9fc.pdf}
-
-%Analisis
-\bibitem[]{diagrama} \textsc{Diagrama},
-\textit{Diagrama Elaboración Propia - Draw.io}
-\url{https://www.draw.io}
-
-\bibitem[]{mvc} \textsc{MVC},
-\textit{MVC: Patrón de arquitectura de software }
-\url{http://librosweb.es/libro/jobeet_1_4/capitulo_4/la_arquitectura_mvc.html}
-
-\bibitem[]{mvc2} \textsc{MVC},
-\textit{MVC: Diagrama}
-\url{https://yalantis.com/media/content/ckeditor/2014/05/mvc_role_diagram.png}
-
-\bibitem[]{mvc3} \textsc{MVC},
-\textit{MVC: Componentes}
-\url{http://martinfowler.com/eaaDev/uiArchs.html}
-
-\bibitem[]{mvc4} \textsc{MVC},
-\textit{MVC Wikipedia}
-\url{https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93controlador}
-
-
-%Desarrollo
-\bibitem[]{go} \textsc{Golang},
-\textit{Golang}
-\url{https://golang.org}
-
-\bibitem[]{mg} \textsc{mongo},
-\textit{MongoDB}
-\url{https://www.mongodb.com/}
-
-\bibitem[]{mongoA} \textsc{MongoDB},
-\textit{Arquitectura MongoDB}
-\url{http://image.slidesharecdn.com/enterprisearchitectsview2014-oct-141029130130-conversion-gate01/95/an-enterprise-architects-view-of-mongodb-16-638.jpg?cb=1414587854}
-
-
-\bibitem[]{github} \textsc{GitHub},
-\textit{How people build software}
-\url{https://github.com/}
-
-
-\bibitem[]{github2} \textsc{Conociendo GitHub},
-\textit{readthedocs.io }
-\url{http://conociendogithub.readthedocs.io/en/latest/data/introduccion/#que-es-github}
-
-\bibitem[]{github3} \textsc{GitHub Actions},
-\textit{Documentación de GitHub Actions }
-\url{https://help.github.com/es/actions}
-
-
-\bibitem[]{github4} \textsc{GitHub Packages},
-\textit{Documentación de GitHub Packages }
-\url{https://github.com/features/packages}
-
-\bibitem[]{dk} \textsc{Docker},
-\textit{Docker - Aislamiento de recursos}
-\url{https://www.docker.com/what-docker}
-
-\bibitem[56]{dkw} \textsc{Docker-Wiki},
-\textit{Docker - Wikipedia}
-\url{https://es.wikipedia.org/wiki/Docker_\%28software\%29}
-
-
-\bibitem[]{jq} \textsc{JQuery},
-\textit{JQuery Oficial}
-\url{https://jquery.com/}
-
-
-\bibitem[]{aj} \textsc{Ajax},
-\textit{Ajax: Libros Web}
-\url{https://librosweb.es/libro/ajax/}
-
-
-\end{thebibliography}
-
 \chapter{ Anexo}
-
-
-
-%
-%
-%%\nocite{*}
-%\bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
-%\bibliographystyle{miunsrturl}
-%
-%\appendix
-
-%\input{apendices/manual_usuario/manual_usuario}
-%%\input{apendices/paper/paper}
-%\input{glosario/entradas_glosario}
-% \addcontentsline{toc}{chapter}{Glosario}
-% \printglossary
 
 \thispagestyle{empty}
 
