@@ -247,9 +247,7 @@ pdfproducer = {pdflatex}
 
 Este proyecto surge con la motivación de demostrar como la programación generativa y  la integración de diversos servicios web pueden utilizarse de manera conjunta para generalizar y automatizar el proceso de desarrollo y operaciones de aplicaciones web o servicios cloud.
 
-Este proyecto aborda el proceso de desarrollo de aplicaciones web desde un punto de vista generativo.  Con esta iniciativa se pretende acuñar el lema "From Spec to Cloud" es decir, dada una definición de aplicación especifica de dominio, construir un sistema que generalice este tipo de soluciones y sea capaz de materializarlas en sistemas de información disponibles a través de Internet. De igual forma, con este proyecto se pretende dotar a los desarrolladores o clientes de un sistema que les ayude a comprender y adquirir conocimientos relativos a las tecnologías de la información y al ciclo de vida de las aplicaciones software.
-
-En las siguientes secciones se presenta a modo de introducción conceptos relativos a Programación Generativa, Cloud Computing y conceptos relacionados con el proceso de desarrollo software y el ciclo de vida de productos software, conceptos como la Integración Continua y el Despliegue Continuo. Se pretende con esto dotar al lector de un contexto o conocimiento básico para abordar el proyecto.
+Este proyecto aborda el proceso de desarrollo de aplicaciones web desde un punto de vista generativo.  Con esta iniciativa se pretende acuñar el lema \textbf{From Spec to Cloud} es decir, dada una definición de aplicación especifica de dominio, construir un sistema que generalice este tipo de soluciones y sea capaz de materializarlas en sistemas de información disponibles a través de Internet. De igual forma, con este proyecto se pretende dotar a los desarrolladores o clientes de un sistema que les ayude a comprender y adquirir conocimientos relativos a las tecnologías de la información y al ciclo de vida de las aplicaciones software.
 
 A continuación se van a definir los objetivos propuestos a alcanzar siguiendo esta motivación.
 
@@ -273,8 +271,90 @@ De manera adicional, este proyecto tiene como objetivo presentar mejoras y autom
 \item \textbf{OBJ-6. } Disponibilizar aplicaciones a través de Internet.
 \end{itemize}
 
-En los siguientes capítulos se presenta el problema de manera formal y se describe la solución propuesta, para ello se planifica y analiza mediante ingeniería de requisitos la solución a implementar. Tras el análisis se detalla la implementación realizada y la consecución de los objetivos propuesto mediante un caso de uso funcional.
+A continuación se va a describir de manera literaria el problema planteado por este proyecto. 
 
+\section{Problema}
+
+Como se verá en el capítulo dedicado a los trabajos relacionados, el conjunto de soluciones que ofrece la nube es muy variado. Para cada una de las soluciones cloud, se pueden encontrar diversas implementaciones con diversas tecnologías, lo que incrementa
+de manera significativa el conjunto final de productos software disponibles para ser consumidos por internet. Este es el primer problema que intenta abordar este proyecto, ¿Como manejar la diversidad tecnológica que produce trabajar en entornos de computación
+en la nube? ¿Qué solución es mas adecuada para un problema concreto de negocio? ¿Con qué tecnología implementar la solución elegida? Este proyecto aborda este problema dotando a los desarrolladores de una plataforma open-source donde probar la tecnología que desean consumir.  \\
+
+El conjunto de soluciones ofrecidas por los diversos proveedores de soluciones cloud aumenta día a día en función de las necesidades de negocio de los consumidores lo que obliga a los profesionales a estar continuamente renovando y certificando sus conocimientos. A raíz de esto han surgido muchas plataformas de aprendizaje o E-learning para que los profesionales adquieran conocimientos en las consideras tecnologías de vanguardia,  en otras palabras, tecnologías altamente demandadas por el mundo empresarial. Algunas de esta plataformas son:
+
+\begin{itemize}
+\item \href{https://linuxacademy.com/}{Linux Academy}
+\item \href{https://es.coursera.org/}{Coursera}
+\item \href{https://www.udemy.com}{Udemi}
+\end{itemize}
+
+Estas plataformas cuentan con diversos recursos virtuales para el aprendizaje ( videos, tutoriales, laboratorios virtuales, ejercicios, test) pero ninguna de ellas materializa el tipo de software que el desarrollador desea aprender en una aplicación o servicio consumible a través de Internet siendo este uno de los objetivos a alcanzar por el proyecto aquí planteado. \\
+
+
+Normalmente en los proyectos informáticos las etapas que forman el ciclo de vida del desarrollo software están altamente segmentadas y debido a esto el tiempo y recursos necesarios para diseñar, implementar y desplegar un producto software es elevado.  Este proyecto intenta mejorar esto dando un enfoque reducido, generativo y automatizado para la especificación, producción y despliegue de software en entornos de computación en la nube.  
+
+A continuación, se va a describir la solución alcanzada por este proyecto. 
+
+\section{Solución}
+
+Este proyecto muestra como el uso de la programación generativa y las tecnologías de la información mejoran el proceso desarrollo y despliegue software en el ámbito de las soluciones orientadas a la web 2.0. Se pretende proporcionar al desarrollador software de un sistema web orientado a la generación, construcción y despliegue de aplicaciones web o servicios de datos de diversa naturaleza partiendo de una definición especifica de dominio. Con esta solución se intenta que el desarrollador adquiera conceptos y conocimientos relativos a las tecnologías de la información y el ciclo de vida del desarrollo software.  \\
+
+Como solución se propone realizar las siguientes síntesis o generalidades.  Por una parte, ante la gran diversidad de soluciones cloud: 
+
+\begin{enumerate}
+\item \textbf{ Aplicaciones web estáticas }
+\item \textbf{ Aplicaciones web dinámicas}
+\item \textbf{ Interfaces web }
+\item \textbf{ Api/Rest }
+\item \textbf{ Servicios de Datos }
+\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }
+\end{enumerate}
+
+Se propone sintetizar todas ellas  como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código fuente necesario para materializar dicha especificación en un producto software funcional. 
+
+
+
+La entidad de propósito general \textbf{aplicación} es definida por el siguiente conjunto de recursos:    
+
+\begin{enumerate}
+\item \textbf{ Repositorio de Código Fuente. } Lugar donde habita la aplicación. 
+\item \textbf{ README.} Fichero descriptivo con información relativa a  la aplicación. 
+\item \textbf{ LICENCE. }Fichero descriptivo caracterizando la aplicación como Open-Source 
+\item \textbf{ Makefile.} Herramienta  de construcción, permite realizar operacionales básicas a nivel de proyecto software ( make build, make run, make test, make push, make pull)
+
+  \begin{enumerate}[label*=\arabic*.]
+    \item build
+    \item test
+   	\item run
+   	\item pull
+   	\item push	
+  \end{enumerate}
+  
+  
+\item \textbf{ Codigo Fuente.}Representa el software en si, contiene la lógica de la aplicación.  
+\item \textbf{ Configuración.} Representa la configuración necesaria para ejecutar la aplicación. 
+\item \textbf{ Dockerfile.} Representa al artefacto necesario para ejecutar la aplicación 
+\end{enumerate}
+
+
+
+
+Por otra parte, sintetizar el proceso de desarrollo y despliegue de software de manera automatizada y generativa  este proyecto define las siguientes etapas: 
+
+\begin{enumerate}
+\item \textbf{ Code Generation }  Etapa inicial donde se sintetiza el proceso de desarrollo software, es decir se produce el código necesario para la solución especificada por el desarrollador.
+\item \textbf{ Artefact Generation }  El objetivo de esta etapa es aprovechar el código fuente generado en la etapa Code Generation para producir un artefacto auto-contenido junto con la configuración necesaria para su ejecución en un entorno virtual.
+\item \textbf{ Deploy Generation } En esta etapa se aprovecha el producto de la etapa Artefact Generation para disponibilizar la solución en Internet.
+\end{enumerate}
+
+Toda aplicación generada por el sistema es sometida a estas etapas, independientemente de su naturaleza, dominio o tecnología. Con ellas se consigue que dada una especificación de aplicación se genere y publique el código fuente que materializa la definición en producto software, transformando problemas especifico de dominio en soluciones generalizadas, la construcción de artefactos auto-contenidos que permita la distribución y ejecución del software generado, así como la disponibilización de  las aplicaciones en Internet para que pueda ser consumida por los usuarios del sistema. 
+
+
+En los siguientes capítulos se mostraran trabajos, publicaciones y tecnologías relacionadas con el campo de estudio aquí propuesto. Con el objetivo de facilitar la comprensión del sistema software a construir, se planifica y analiza el problema  a resolver mediante ingeniería de requisitos. Tras el análisis se detalla la implementación realizada y la consecución de los objetivos propuesto mediante un caso de uso funcional.
+
+
+\chapter{Trabajos Relacionados}
+
+En las siguientes secciones se presenta a modo de introducción conceptos relativos a Programación Generativa, Cloud Computing y conceptos relacionados con el proceso de desarrollo software y el ciclo de vida de productos software, conceptos como la Integración Continua y el Despliegue Continuo. Se pretende con esto dotar al lector de un contexto o conocimiento básico para abordar el proyecto. De manera adicional se abordan tecnologías, trabajos y publicaciones relacionadas para mostrar el estado actual del arte. 
 
 \section{Cloud Computing}
 
@@ -388,92 +468,11 @@ Normalmente este procedimiento es aprovechado por las figuras encargadas de gest
 \item
 \end{enumerate}
 
-\chapter{Problema y Solución}
-
-En este capítulo se presenta el problema a solucionar con este proyecto. En las siguientes secciones se analizarán
-
-
-Diversidad de aplicaciones cloud. Nuevas tecnologías entorno variado y cambiante. Demanda de nuevas tecnologías.
-Capacitación para desarrolladores. Diversidad de aplicaciones, mismo tratamiento, simplificar proceso de aprendizaje y desarrollo software. FullStack.
-
-\section{Definición del Problema}
-
-
-
- cloud  de diversa naturaleza partiendo de una especificación de alto nivel.  Normalmente, las etapas de desarrollo software están segmentadas en el desarrollo del código, la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet.
-
-
- Normalmente en los proyectos informáticos las etapas o estados que los productos software alcanzan están muy segmentadas. Descritas a muy alto nivel, estas etapas comienzan por el diseño y especificación de la solución,  continuan con el desarrollo del código fuente necesario para cumplir la solución así como las pruebas necesarias para verificar el correcto funcionamiento , la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet.
-
-
-
-
-Este proyecto muestra como el uso de la programación generativa y las tecnologías de la información mejoran el proceso  aprendizaje y desarrollo software en el ámbito de las soluciones orientadas a la web 2.0.
-
-Se pretende proporcionar al desarrollador software de un sistema web orientado a la generación, construcción y despliegue de aplicaciones web o servicios cloud  de diversa naturaleza partiendo de una especificación de alto nivel.
-
-Normalmente, las etapas de desarrollo software están segmentadas en el desarrollo del código, la compilación de este código junto con las dependencias de terceros necesarias para producir un ejecutable, binario o artefacto para su posterior ejecución,  la configuración necesaria para poder ejecutar el artefacto resultante así como  la infraestructura virtual necesaria para desplegar y soportar la actividad de negocio de  dicho software, siendo este accesible desde Internet.
-
-\section{Presentación de la Solución}
-
-Para alcanzarlo, se hace uso de conceptos de programación generativa, como generalizar separar el dominio especcifico de la
-
-en un conjunto automatizado de etapas.
-
- La generalización ocurre al manejar los distintos sistemas de información:
-
-\begin{enumerate}
-\item \textbf{ Aplicaciones web estáticas }
-\item \textbf{ Aplicaciones web dinámicas}
-\item \textbf{ Interfaces web }
-\item \textbf{ Api/Rest }
-\item \textbf{ Servicios }
-\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }
-\end{enumerate}
-
-como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código y/o configuración necesaria para materializar dicha especificación en un producto software, construir un artefacto auto-contenido que permita la ejecución del software generado, ejecutar dicho artefacto sobre la infraestructura virtual necesaria para que la aplicación especificada sea accesible por Internet y que de esta forma el usuario de este proyecto sea capaz de consumir la aplicación generada.
 
 \chapter{Planificación y Análisis}
 
 
-Con el objetivo de generalizar y definir aplicación software se han decidido usar las partes:
 
-Repositorio
-Readme
-Makefile
-Licencia
-src codigo fuente
-config configuración
-
-
-\begin{enumerate}
-\item \textbf{ Code Generation }  Etapa inicial donde se sintetiza el proceso de desarrollo software, es decir se produce el código necesario para la solución especificada por el desarrollador.
-\item \textbf{ Artefact Generation }  El objetivo de esta etapa es aprovechar el código fuente generado en la etapa Code Generation para producir un artefacto auto-contenido junto con la configuración necesaria para su ejecución en un entorno virtual.
-\item \textbf{ Deploy Generation } En esta etapa se aprovecha el producto de la etapa Artefact Generation para disponibilizar la solución en Internet.
-\end{enumerate}
-
-
-Programación generativa: generar, automatizar  y despliegue accesible a Internet.
-
-
-La aplicación software es el elemento de negocio de este sistema.  Para materializar esto, el sistema crea un repositorio de código por cada aplicación creada para albergar la producción de código especificado por  el desarrolador.
-
-
-Generar: Aplicaciones completas, independientemente de la tecnología, utilidad o fin. Las aplicaciones generadas por el sistema
-son auto-contenidas y automatizadas, es decir mantienen una semántica común
-
-
-
-
-d
-test
-run
-pull
-push
-
-Lo que permite al desarrollador integrar fácilmente nuevos cambios.
-
-Definir el permino produción dentro del marco de este sistema, consiste en la siguiente serie de etapas:
 
 \section{Planificación}
 
@@ -644,6 +643,8 @@ Los diagramas de secuencia especifican las interacciones temporales entre las pi
 \chapter{ Implementación y Pruebas}
 
 
+\section{Implementación}
+
 \section{Desarrollo}
 
 En el proceso de desarrollo del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y esca-labilidad del software resultante.
@@ -756,6 +757,8 @@ Heroku ( plataforma as a service) para ejecutar code-runner.go + Maquina expuest
 \subsection{Seguridad}
 
 mutual tls
+
+\section{Caso de Uso}
 
 \chapter{Conclusiones}
 
