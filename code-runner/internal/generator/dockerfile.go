@@ -13,7 +13,7 @@ type  dockerfileEntry struct {
 
 func generateDockerfile(app *models.App,properties []dockerfileEntry)[]byte{
 
-	dockerfile:="# Dockerfile2 from "+app.Repository+"\n"
+	dockerfile:="# Dockerfile from "+app.Repository+"\n"
 	for iterator :=range properties{
 		dockerfile=dockerfile+properties[iterator].Action+"    "+properties[iterator].Data+"  \n"
 	}
@@ -104,8 +104,8 @@ func GenerateNodeDockerfile(app *models.App) 	[]byte {
 
 func (app *GenApp)generateDockerfile(){
 
-	switch nature := app.App.Spec["nature"]; nature {
-	case "staticApp":
+	switch nature := app.App.Spec["tech"]; nature {
+	case "apacheStatic":
 		app.Dockerfile=GenerateApacheDockerfile(app.App)
 	case "mongodb":
 		app.Dockerfile=GenerateMongoDockerfile(app.App)
@@ -115,7 +115,7 @@ func (app *GenApp)generateDockerfile(){
 		app.Dockerfile=GenerateRedisDockerfile(app.App)
 	case "jenkins":
 		app.Dockerfile=GenerateJenkinsDockerfile(app.App)
-	case "node":
+	case "nodeStatic":
 		app.Dockerfile=GenerateNodeDockerfile(app.App)
 	case "TBD":
 		fmt.Println("TBD.")

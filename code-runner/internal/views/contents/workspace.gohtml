@@ -1,7 +1,6 @@
 {{define "yield"}}
     <div class="container-fluid" id ="apps">
     {{range $element := .Apps}}
-        <br>
         <hr>
         <div class="card">
             <div class="row no-gutters">
@@ -12,10 +11,18 @@
                     <div class="card-block px-2">
                         <h4 class="card-title">{{$element.Name}}</h4>
                         <p class="card-text">{{$element.Des}}</p>
-                        <div class="list-group">
-                            <a target="_blank" href="{{$element.Repository}}" class="list-group-item list-group-item-action list-group-item-success"><strong>Source-Code:</strong> {{$element.Repository}}</a>
-                            <a target="_blank" href="{{$element.Url}}" class="list-group-item list-group-item-action list-group-item-success"><strong>Deploy-Address: </strong>{{$element.Url}} </a>
-                        </div>
+
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-success align-items-center d-flex">
+                                <strong>Source-Code:</strong>
+                                <a target="_blank" href="{{$element.Repository}}">{{$element.Repository}}</a>
+                            </li>
+                            <li class="list-group-item list-group-item-success align-items-center d-flex">
+                                <strong>Deploy-Address:</strong>
+                                <a target="_blank" href="{{$element.Url}}">{{$element.Url}}</a>
+
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -45,7 +52,6 @@
 
             </div>
         </div>
-        <br>
         <hr>
     {{end}}
     </div>

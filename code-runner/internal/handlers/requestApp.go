@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"code-runner/internal/constants"
 	"code-runner/internal/models"
+	"encoding/json"
 	"net/http"
 	"regexp"
 	"strings"
@@ -20,9 +22,13 @@ func getAppFromRequest(req *http.Request) (*requestApp, error) {
 	appName := req.FormValue("name")
 	appPort := req.FormValue("port")
 	appNature := req.FormValue("nature")
+	appTech := req.FormValue("tech")
+	appModelJson := req.FormValue("model")
 	appSpec := make(map[string]string)
 	appSpec["port"] = appPort
 	appSpec["nature"] = appNature
+	appSpec["tech"] = appTech
+	appSpec["modelJson"] = appModelJson
 
 	app := &models.App{
 		Name: strings.ToLower(
@@ -81,6 +87,17 @@ func (appRequest *requestApp) validateRequest() bool {
 	if appRequest.App.Spec["nature"] == "" {
 		appRequest.Errors["Nature"] = "Nature is mandatory."
 	}
+	if appRequest.App.Spec["tech"] == "" {
+		appRequest.Errors["Tech"] = "Technology is mandatory."
+	}
+	if appRequest.App.Spec["tech"] == string(constants.ApiRest) {
+		var js map[string]interface{}
+		err:=json.Unmarshal([]byte(appRequest.App.Spec["modelJson"]), &js)
+		if err!=nil{
+			appRequest.Errors["Model"] = err.Error()
+		}
+	}
+
 	return len(appRequest.Errors) == 0
 }
 
@@ -97,4 +114,10 @@ func getImgFromNature(nature string)string {
 	default:
 		return ""
 	}
+}
+
+func isJSON(s string) bool {
+	var js map[string]interface{}
+	return json.Unmarshal([]byte(s), &js) == nil
+
 }

@@ -51,15 +51,12 @@ func (app *App) GetLocalPath() string {
 func (app *App) SetDeployURL(port string) {
 
 	var appUrl string
-	switch app.Spec["nature"] {
-	case "staticApp":
-		appUrl=fmt.Sprintf("http://%v:%v",
-			config.GetConfig().DeployAddress, port)
+	switch app.Spec["tech"] {
 	case "mongodb":
 		appUrl=fmt.Sprintf("mongodb://%v:%v",
 			config.GetConfig().DeployAddress, port)
 	default:
-		appUrl=fmt.Sprintf("%v:%v",
+		appUrl=fmt.Sprintf("http://%v:%v",
 			config.GetConfig().DeployAddress, port)
 	}
 	app.Url=appUrl
