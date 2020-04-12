@@ -16,13 +16,12 @@ const (
 	DockerRegistry       = "docker.pkg.github.com"
 )
 
-type Nature string
 
 const (
-	StaticApp Nature = "Single-Page"
-	ApiRest Nature = "Api-Rest"
-	DataService Nature = "Data-Service"
-	DevOpsService Nature = "DevOps-Service"
+	SinglePage    string = "Single-Page"
+	ApiRest       string = "Api-Rest"
+	DataService   string = "Data-Service"
+	DevOpsService string = "DevOps-Service"
 )
 
 

@@ -11,7 +11,6 @@ var (
 	sessionStore    = sessions.NewCookieStore([]byte(constants.SessionSecret), nil)
 	contentsDir     = "internal/views/contents"
 	jsDir     		= "internal/views/js"
-	img             = views.LoadImg("internal/views/resources/img2.png")
 	userAccessViews = map[string]*views.View{
 		"index": views.NewView(
 			"base", contentsDir+"/index.gohtml",jsDir+"/noJs.gohtml",

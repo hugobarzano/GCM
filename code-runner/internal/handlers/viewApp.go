@@ -139,9 +139,9 @@ func getApp(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if err := appsViews["getApp"].Render(w, appObj); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Println(err.Error())
 		}
-		return
 
+		return
 }
 

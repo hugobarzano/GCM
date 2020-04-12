@@ -25,7 +25,7 @@ type App struct {
 	Url        string    `bson:"url"  json:"url"`
 	Owner      string    `bson:"owner"  json:"owner"`
 	Status     AppStatus `bson:"status"  json:"status"`
-	Img string `bson:"img"  json:"img"`
+	Img        string    `bson:"-" json:"img"`
 }
 
 func (app *App) IsRunning() bool {

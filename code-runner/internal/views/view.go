@@ -1,11 +1,8 @@
 package views
 
 import (
-	"encoding/base64"
 	"fmt"
 	"html/template"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"path/filepath"
 )
@@ -44,15 +41,4 @@ func layoutFiles() []string {
 		panic(err)
 	}
 	return files
-}
-
-func LoadImg(path string)string{
-	imageFile, err := ioutil.ReadFile(path)
-
-	if err != nil {
-		log.Println(err.Error())
-		return ""
-	}
-	encodedString := base64.StdEncoding.EncodeToString(imageFile)
-	return encodedString
 }

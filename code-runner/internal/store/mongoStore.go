@@ -86,6 +86,7 @@ func (dao *MongoStore) GetApp(ctx context.Context, owner, name string) (*models.
 	if err := documentReturned.Decode(&app); err != nil {
 		return nil, err
 	}
+	app.Img=setupImg(app.Spec["nature"])
 	return app, nil
 }
 
@@ -112,6 +113,7 @@ func (dao *MongoStore) GetApps(ctx context.Context, owner string) ([]models.App,
 			fmt.Println("Error decoding from cursor")
 			return nil, err
 		}
+		app.Img=setupImg(app.Spec["nature"])
 		apps = append(apps, app)
 	}
 	if err := cursor.Err(); err != nil {
@@ -139,26 +141,6 @@ func (dao *MongoStore) UpdateApp(ctx context.Context, app *models.App) (*models.
 		fmt.Println("Error decoding updated app")
 		return nil, err
 	}
+	updated.Img=setupImg(updated.Spec["nature"])
 	return updated, nil
 }
-
-//func (dao *MongoStore)UpdateApp(ctx context.Context,app *models.App) (*models.Workspace, error) {
-//	collection := dao.Client.Database(constants.Database).Collection(constants.WorkspacesCollection)
-//	ws,err:=dao.GetWorkspace(ctx,app.Owner)
-//	if err != nil {
-//		return nil, err
-//	}
-//	a:=ws.GetApp(app.Name)
-//	if a!=nil{}
-//	query := bson.M{"_id": app.Owner}
-//	change := bson.M{"$push": bson.M{"apps": app}}
-//	_, err := collection.UpdateOne(ctx, query, change)
-//	if err != nil {
-//		return nil, err
-//	}
-//	ws,err:=dao.GetWorkspace(ctx,app.Owner)
-//	if err != nil {
-//		return nil, err
-//	}
-//	return ws, nil
-//}
