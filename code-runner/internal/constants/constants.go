@@ -17,6 +17,13 @@ const (
 )
 
 
+const (
+	SinglePage    string = "Single-Page"
+	ApiRest       string = "Api-Rest"
+	DataService   string = "Data-Service"
+	DevOpsService string = "DevOps-Service"
+)
+
 
 var (
 	Version = "0.0.0"

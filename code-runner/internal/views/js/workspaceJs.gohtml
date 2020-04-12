@@ -6,10 +6,10 @@
                     url: "/getWs",
                     type: "get",
                     data: {owner: "{{ .Owner}}"},
-                    cache: false,
+                    cache: true,
                     success: function (response) {
-                        console.log(response);
                         $('#apps').html(response)
+                        console.log(response)
                     },
                     error: function (xhr) {
                     }

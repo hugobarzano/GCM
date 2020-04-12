@@ -8,8 +8,8 @@ googleGithub "github.com/google/go-github/github")
 
 func (app *GenApp)generateSourceCode()  {
 
-	switch nature := app.App.Spec["nature"]; nature {
-	case "staticApp":
+	switch tech := app.App.Spec["tech"]; tech {
+	case "apacheStatic":
 		app.generateStaticAppCode()
 	case "mongodb":
 		app.generateMongoService()
@@ -19,7 +19,7 @@ func (app *GenApp)generateSourceCode()  {
 		app.generateRedisService()
 	case "jenkins":
 		app.generateJenkinsService()
-	case "node":
+	case "nodeStatic":
 		app.generateNodeCode()
 	default:
 		fmt.Printf("NOT SUPPORTED")

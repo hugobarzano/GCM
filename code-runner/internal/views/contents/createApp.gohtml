@@ -1,76 +1,87 @@
 {{define "yield"}}
-        <br>
-        <form class="form-horizontal" method="post" action="/createApp">
-            <ul>
-                <li><h6 class="text"> Create your App!</h6></li>
+    <style>
+        .base{
+            padding: 20px;
+            margin: 0 auto;
+            width:80%
+        }
+    </style>
 
-                <li style="float:right">
-                    <a class="active" href="/workspace">
-                        <input class="active" type="button" value="Back to workspace!" />
-                    </a>
-                </li>
-                <li style="float:right">
-                    <a class="active">
-                        <input class="active" type="submit" value="Create!" />
-                    </a>
-                </li>
-            </ul>
-
-            <br>
-            <br>
-            <div class="container">
-            <div class="form-group">
-                <label class="control-label col-sm-2">
-                    Name:
-                </label>
-                <div class="col-sm-2">
+    <div class="base">
+    <form method="post" action="/createApp">
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">Name:</label>
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="name" placeholder="Enter app name" name="name" value="{{ .App.Name }}">
                     {{ with .Errors.Name }}
                         <p class="text-danger">{{ . }}</p>
                     {{ end }}
                 </div>
-
             </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2">
-                    Description:
-                </label>
-                <div class="col-sm-2">
-                    <textarea name="description" placeholder="Describe your app..." rows="5" cols="50">{{ .App.Des }}</textarea>
-                    <br/>
+
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label"> Description:</label>
+                <div class="col-sm-6">
+                    <textarea name="description" placeholder=" Describe your app..." rows="5" cols="65">{{ .App.Des }}</textarea>
                     {{ with .Errors.Des }}
                         <p class="text-danger">{{ . }}</p>
                     {{ end }}
                 </div>
             </div>
-            <div class="form-group">
-                <label for="natureForm" class="control-label col-sm-2">Nature</label>
-                <div class="col-sm-2">
+
+            <div class="form-group row">
+                <label for="natureForm" class="col-sm-1 col-form-label">Nature: </label>
+                <div class="col-sm-6">
                 <select class="form-control" id="natureForm" name="nature">
-                    <option>staticApp</option>
-                    <option>mongodb</option>
-                    <option>mysql</option>
-                    <option>redis</option>
-                    <option>jenkins</option>
-                    <option>node</option>
-                    <option>TBD</option>
+                    <option>Single-Page</option>
+                    <option>Api-Rest</option>
+                    <option>Data-Service</option>
+                    <option>DevOps-Service</option>
                 </select>
                 {{ with .Errors.Nature }}
                     <p class="text-danger">{{ . }}</p>
                 {{ end }}
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2">
-                    Port:
-                </label>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" id="port" placeholder="80 e.g." name="port" value="{{ .App.Spec.port }}">
+
+
+            <div class="form-group row" id="techOpt">
+                <label for="techForm" class="col-sm-1 col-form-label">Technology: </label>
+                <div class="col-sm-6">
+                    <select class="form-control"  name="tech">
+                        <option value="apacheStatic">html + css over Apache2</option>
+                        <option value="nodeStatic">html + css over NodeJs</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group row" id="apiRestModel">
+                <label for="modelForm" class="col-sm-1 col-form-label">Model: </label>
+                <div class="col-sm-6">
+                    <textarea name="model" placeholder="Describe your business model..." rows="5" cols="65">
+                        {"id":"xxxx", "name":"objName"}
+                    </textarea>
+                    {{ with .Errors.Model }}
+                        <p class="text-danger">{{ . }}</p>
+                    {{ end }}
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">Port: </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="port" placeholder="8085 e.g." name="port" value="{{ .App.Spec.port }}">
                     {{ with .Errors.Port }}
                         <p class="text-danger">{{ . }}</p>
                     {{ end }}
                 </div>
             </div>
-            </div>
-        </form>
+
+        <div class="form-group row">
+                <button type="submit" class="btn btn-success col-sm-7 btn-block">Generate!</button>
+        </div>
+    </form>
+    </div>
 {{end}}

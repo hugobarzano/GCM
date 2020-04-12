@@ -1,0 +1,71 @@
+{{define "js"}}
+<script>
+
+    var singlePageTech=`
+            <div class="form-group row" id="techOpt">
+                <label for="techForm" class="col-sm-1 col-form-label">Technology</label>
+
+                <div class="col-sm-6">
+                    <select class="form-control"  name="tech">
+                        <option value="apacheStatic">html + css over Apache2</option>
+                        <option value="nodeStatic">html + css over NodeJs</option>
+                    </select>
+                </div>
+            </div>`
+
+    var apiRestTech=`
+            <div class="form-group row" id="techOpt">
+                <label for="techForm" class="col-sm-1 col-form-label">Technology</label>
+                <div class="col-sm-6">
+                    <select class="form-control"  name="tech">
+                        <option value="goApi">go</option>
+                        <option value="pythonApi">python</option>
+                        <option value="jsApi">javascript</option>
+                    </select>
+                </div>
+            </div>`
+
+    var dataServiceTech=`
+                <div class="form-group row" id="techOpt">
+                <label for="techForm" class="col-sm-1 col-form-label">Technology</label>
+                <div class="col-sm-6">
+                    <select class="form-control"  name="tech">
+                        <option value="mongodb">mongodb</option>
+                        <option value="mysql">mysql</option>
+                        <option value="redis">redis</option>
+                    </select>
+                </div>
+            </div>`
+
+    var devOpsServiceTech=`
+            <div class="form-group row" id="techOpt">
+                <label for="techForm" class="col-sm-1 col-form-label">Technology</label>
+                <div class="col-sm-6">
+                    <select class="form-control"  name="tech">
+                        <option value="jenkins">jenkins</option>
+                    </select>
+                </div>
+            </div>`
+
+
+    $("#natureForm").change(function() {
+        if ($(this).val() == "Single-Page") {
+            $('#techOpt').replaceWith(singlePageTech)
+            $('#apiRestModel').hide();
+        } else if ($(this).val() == "Api-Rest") {
+            $('#techOpt').replaceWith(apiRestTech)
+            $('#apiRestModel').show();
+        } else if ($(this).val() == "Data-Service") {
+            $('#techOpt').replaceWith(dataServiceTech)
+            $('#apiRestModel').hide();
+        } else if ($(this).val() == "DevOps-Service") {
+            $('#techOpt').replaceWith(devOpsServiceTech)
+            $('#apiRestModel').hide();
+        } else {
+           console.log("Default form")
+        }
+    });
+
+    $("#natureForm").trigger("change");
+</script>
+{{end}}

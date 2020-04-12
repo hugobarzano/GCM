@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"code-runner/internal/constants"
 	"code-runner/internal/models"
+	"encoding/json"
 	"net/http"
 	"regexp"
 	"strings"
@@ -20,13 +22,18 @@ func getAppFromRequest(req *http.Request) (*requestApp, error) {
 	appName := req.FormValue("name")
 	appPort := req.FormValue("port")
 	appNature := req.FormValue("nature")
+	appTech := req.FormValue("tech")
+	appModelJson := req.FormValue("model")
 	appSpec := make(map[string]string)
 	appSpec["port"] = appPort
 	appSpec["nature"] = appNature
+	appSpec["tech"] = appTech
+	appSpec["modelJson"] = appModelJson
 
 	app := &models.App{
-		Name: strings.Replace(
-			appName, "\"", "", -1),
+		Name: strings.ToLower(
+				strings.Replace(
+					appName, "\"", "", -1)),
 		Des: strings.Replace(
 			req.FormValue("description"), "\"", "", -1),
 		Spec: appSpec,
@@ -41,16 +48,16 @@ func (appRequest *requestApp) validateRequest() bool {
 	appRequest.Errors=make(map[string]string)
 
 	if appRequest.App.Name == ""{
-		appRequest.Errors["Name"] = "Name is mandatory."
+		appRequest.Errors["Name"] = "Name is mandatory. Lowercase."
 	}
 
 	if len(appRequest.App.Name) > 20{
 		appRequest.Errors["Name"] = "Name too long. It has to be less than 20 chars."
 	}
 
-	re := regexp.MustCompile("^[a-zA-Z0-9_]*$")
+	re := regexp.MustCompile("^[a-zA-Z_]*$")
 	if ok := re.Match([]byte(appRequest.App.Name)); !ok{
-		appRequest.Errors["Name"] = "Name must contains only alphanumeric chars."
+		appRequest.Errors["Name"] = "Name must contains only alphabetic lowercase chars and _ "
 	}
 
 	re = regexp.MustCompile("^[a-zA-Z0-9@_.,\\s\\w]*$")
@@ -78,6 +85,16 @@ func (appRequest *requestApp) validateRequest() bool {
 
 	if appRequest.App.Spec["nature"] == "" {
 		appRequest.Errors["Nature"] = "Nature is mandatory."
+	}
+	if appRequest.App.Spec["tech"] == "" {
+		appRequest.Errors["Tech"] = "Technology is mandatory."
+	}
+	if appRequest.App.Spec["tech"] == constants.ApiRest {
+		var js map[string]interface{}
+		err:=json.Unmarshal([]byte(appRequest.App.Spec["modelJson"]), &js)
+		if err!=nil{
+			appRequest.Errors["Model"] = err.Error()
+		}
 	}
 	return len(appRequest.Errors) == 0
 }

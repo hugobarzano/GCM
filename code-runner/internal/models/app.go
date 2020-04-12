@@ -25,6 +25,7 @@ type App struct {
 	Url        string    `bson:"url"  json:"url"`
 	Owner      string    `bson:"owner"  json:"owner"`
 	Status     AppStatus `bson:"status"  json:"status"`
+	Img        string    `bson:"-" json:"img"`
 }
 
 func (app *App) IsRunning() bool {
@@ -50,15 +51,12 @@ func (app *App) GetLocalPath() string {
 func (app *App) SetDeployURL(port string) {
 
 	var appUrl string
-	switch app.Spec["nature"] {
-	case "staticApp":
-		appUrl=fmt.Sprintf("http://%v:%v",
-			config.GetConfig().DeployAddress, port)
+	switch app.Spec["tech"] {
 	case "mongodb":
 		appUrl=fmt.Sprintf("mongodb://%v:%v",
 			config.GetConfig().DeployAddress, port)
 	default:
-		appUrl=fmt.Sprintf("%v:%v",
+		appUrl=fmt.Sprintf("http://%v:%v",
 			config.GetConfig().DeployAddress, port)
 	}
 	app.Url=appUrl

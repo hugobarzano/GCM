@@ -1,0 +1,16 @@
+{{define "navbar"}}
+    <ul>
+        <li>
+            <a>
+                <input type="submit" value="Help!" class="btn btn-outline-success" onclick="showHelp()">
+            </a>
+
+        <li style="float:right">
+            <a>
+                <form action="/workspace">
+                    <input type="submit" value="Back to Workspace" class="btn btn-outline-success">
+                </form>
+            </a>
+        </li>
+    </ul>
+{{end}}
