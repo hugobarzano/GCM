@@ -25,11 +25,13 @@ func getAppFromRequest(req *http.Request) (*requestApp, error) {
 	appSpec["nature"] = appNature
 
 	app := &models.App{
-		Name: strings.Replace(
-			appName, "\"", "", -1),
+		Name: strings.ToLower(
+				strings.Replace(
+					appName, "\"", "", -1)),
 		Des: strings.Replace(
 			req.FormValue("description"), "\"", "", -1),
 		Spec: appSpec,
+		Img:getImgFromNature(appNature),
 	}
 	reqApp := &requestApp{
 		App:    app,
@@ -41,7 +43,7 @@ func (appRequest *requestApp) validateRequest() bool {
 	appRequest.Errors=make(map[string]string)
 
 	if appRequest.App.Name == ""{
-		appRequest.Errors["Name"] = "Name is mandatory."
+		appRequest.Errors["Name"] = "Name is mandatory. Lowercase."
 	}
 
 	if len(appRequest.App.Name) > 20{
@@ -50,7 +52,7 @@ func (appRequest *requestApp) validateRequest() bool {
 
 	re := regexp.MustCompile("^[a-zA-Z0-9_]*$")
 	if ok := re.Match([]byte(appRequest.App.Name)); !ok{
-		appRequest.Errors["Name"] = "Name must contains only alphanumeric chars."
+		appRequest.Errors["Name"] = "Name must contains only alphanumeric lowercase chars."
 	}
 
 	re = regexp.MustCompile("^[a-zA-Z0-9@_.,\\s\\w]*$")
@@ -80,4 +82,19 @@ func (appRequest *requestApp) validateRequest() bool {
 		appRequest.Errors["Nature"] = "Nature is mandatory."
 	}
 	return len(appRequest.Errors) == 0
+}
+
+func getImgFromNature(nature string)string {
+	switch nature {
+	case "staticApp":
+		return img
+	case "dataService":
+		return img
+	case "api":
+		return img
+	case "devOps":
+		return img
+	default:
+		return ""
+	}
 }

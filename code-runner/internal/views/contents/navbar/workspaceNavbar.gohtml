@@ -1,0 +1,27 @@
+{{define "navbar"}}
+<ul>
+    <li>
+        <a>
+            <form action="/createApp">
+                <input type="submit" value="Create App" class="btn btn-outline-success">
+            </form>
+        </a>
+    </li>
+
+    <li>
+        <a>
+            <form action="/token">
+                <input type="submit" value="Show Access Token" class="btn btn-outline-success">
+            </form>
+        </a>
+    </li>
+
+    <li style="float:right">
+        <a>
+            <form action="/logout" method="post">
+                <input type="submit" value="Logout" class="btn btn-outline-success">
+            </form>
+        </a>
+    </li>
+</ul>
+{{end}}

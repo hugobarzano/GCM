@@ -1,24 +1,27 @@
 {{define "yield"}}
-    <table class="tg" id="appData">
-        <tr>
-            <th class="tg-koh6"><span style="font-weight:bold">{{.Name}}</span></th>
-            <th class="tg-0pky">{{.Des}}</th>
-        </tr>
-        <tr>
-            <td class="tg-eqm3">Status</td>
-            <td class="tg-0pky">{{.Status}}</td>
-        </tr>
-        <tr>
-            <td class="tg-eqm3">Source-Code</td>
-            <td class="tg-0pky"><a href="{{.Repository}}">{{.Repository}}</a></td>
-        </tr>
-        <tr>
-            <td class="tg-eqm3">Deploy</td>
-            <td class="tg-0pky"><a href="{{.Url}}">{{.Url}}</a></td>
-        </tr>
-        <tr>
-            <td class="tg-eqm3">Spec</td>
-            <td class="tg-0pky">{{.Spec}}</td>
-        </tr>
-    </table>
+
+
+            <div id="appData">
+            <div class="row no-gutters">
+                <div class="col-auto">
+                    <img src="data:image/png;base64,{{ .Img}}" alt="" class="img-fluid">
+                </div>
+                <div class="col">
+                    <div class="card-block px-2">
+                        <h4 class="card-title">{{ .Name}}</h4>
+                        <p class="card-text">{{ .Des}}</p>
+                        <div class="list-group">
+                            <a target="_blank" href="{{ .Repository}}" class="list-group-item list-group-item-action list-group-item-success"><strong>Source-Code:</strong> {{ .Repository}}</a>
+                            <a target="_blank" href="{{ .Url}}" class="list-group-item list-group-item-action list-group-item-success"><strong>Deploy-Address: </strong>{{ .Url}} </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="card-footer w-100 text-muted">
+                {{ .Status}}
+            </div>
+            </div>
+
 {{end}}

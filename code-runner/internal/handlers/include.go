@@ -11,23 +11,29 @@ var (
 	sessionStore    = sessions.NewCookieStore([]byte(constants.SessionSecret), nil)
 	contentsDir     = "internal/views/contents"
 	jsDir     		= "internal/views/js"
+	img             = views.LoadImg("internal/views/resources/img2.png")
 	userAccessViews = map[string]*views.View{
 		"index": views.NewView(
-			"base", contentsDir+"/index.gohtml",jsDir+"/noJs.gohtml"),
+			"base", contentsDir+"/index.gohtml",jsDir+"/noJs.gohtml",
+			contentsDir + "/navbar/indexNavbar.gohtml"),
 		"workspace": views.NewView(
-			"base", contentsDir+"/workspace.gohtml",jsDir+"/workspaceJs.gohtml"),
+			"base",
+			contentsDir +"/workspace.gohtml",
+			jsDir+"/workspaceJs.gohtml",
+			contentsDir + "/navbar/workspaceNavbar.gohtml"),
 		"token": views.NewView(
-			"base", contentsDir+"/token.gohtml",jsDir+"/tokenJs.gohtml"),
+			"base", contentsDir+"/token.gohtml",jsDir+"/tokenJs.gohtml",
+			contentsDir + "/navbar/tokenNavbar.gohtml"),
 		"getWs": views.NewView(
-			"emptyBase", contentsDir+"/getWs.gohtml"),
+			"emptyBase", contentsDir+"/workspace.gohtml"),
 	}
 	appsViews = map[string]*views.View{
 		"createApp": views.NewView(
-			"base", contentsDir+"/createApp.gohtml",jsDir+"/noJs.gohtml"),
+			"base", contentsDir+"/createApp.gohtml",jsDir+"/noJs.gohtml",contentsDir + "/navbar/noNavbar.gohtml"),
 		"viewApp": views.NewView(
-			"base", contentsDir+"/viewApp.gohtml",jsDir+"/viewJs.gohtml"),
+			"base", contentsDir+"/viewApp.gohtml",jsDir+"/viewJs.gohtml",contentsDir + "/navbar/viewAppNavbar.gohtml"),
 		"getApp": views.NewView(
-			"emptyBase", contentsDir+"/getApp.gohtml"),
+			"emptyBase", contentsDir+"/getApp.gohtml",contentsDir + "/navbar/noNavbar.gohtml"),
 	}
 
  	upgrader = websocket.Upgrader{

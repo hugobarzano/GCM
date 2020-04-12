@@ -1,45 +1,52 @@
 {{define "yield"}}
-    <br>
-    <ul>
-        <li><a href="/createApp">Create App</a></li>
-        <li><a href="/token">Show Access Token</a></li>
-        <li style="float:right">
-            <a class="active">
-                <form action="/logout" method="post" class="active">
-                    <input type="submit" class="active" value="Logout">
-                </form>
-            </a>
-        </li>
-    </ul>
-    <br>
-    <div class="list-group" id ="apps">
-        <ul>
+    <div class="container-fluid" id ="apps">
     {{range $element := .Apps}}
-        <li class="list-group-item enabled">
+        <br>
+        <hr>
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-auto">
+                    <img src="data:image/png;base64,{{$element.Img}}" alt="" class="img-fluid">
+                </div>
+                <div class="col">
+                    <div class="card-block px-2">
+                        <h4 class="card-title">{{$element.Name}}</h4>
+                        <p class="card-text">{{$element.Des}}</p>
+                        <div class="list-group">
+                            <a target="_blank" href="{{$element.Repository}}" class="list-group-item list-group-item-action list-group-item-success"><strong>Source-Code:</strong> {{$element.Repository}}</a>
+                            <a target="_blank" href="{{$element.Url}}" class="list-group-item list-group-item-action list-group-item-success"><strong>Deploy-Address: </strong>{{$element.Url}} </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer w-100 text-muted">
+                {{$element.Status}}
 
-            <h3>App: {{$element.Name}}</h3>
-            <h6>Status {{$element.Status}}</h6>
-            <br>
-            <br>
-            <p><h4>Description: </h4> <p style="line-:">{{$element.Des}}</p></p>
-            <a class="options" href="{{$element.Repository}}">Source-Code</a>
-            <a class="options" href="{{$element.Url}}">{{$element.Url}}</a>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group">
 
-            <hr>
-            <form action="/stop/{{$element.Name}}" method="post">
-                <input type="submit" value="Stop App">
-            </form>
-            <form action="/run/{{$element.Name}}" method="post">
-                <input type="submit" value="Run App">
-            </form>
-            <form action="/remove/{{$element.Name}}" method="post">
-                <input type="submit" value="Delete App">
-            </form>
-            <form action="/view/{{$element.Name}}" method="post">
-                <input type="submit" value="View App">
-            </form>
-        </li>
+                        <form action="/stop/{{$element.Name}}" method="post">
+                            <input type="submit" value="Stop" class="btn btn-outline-success">
+                        </form>
+                        <form action="/run/{{$element.Name}}" method="post">
+                            <input type="submit" value="Run" class="btn btn-outline-success">
+                        </form>
+
+                        <form action="/view/{{$element.Name}}" method="post">
+                            <input type="submit" value="View" class="btn btn-outline-warning">
+                        </form>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <form action="/remove/{{$element.Name}}" method="post">
+                            <input type="submit" value="Delete" class="btn btn-outline-danger">
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <hr>
     {{end}}
-        </ul>
     </div>
 {{end}}
