@@ -1,19 +1,13 @@
-package generator
-
-func (app *GenApp) generateNodeCode() {
-	app.Data = make(map[string][]byte)
-	app.Data["package.json"] = app.genPackageJson()
-	app.Data["server.js"] = app.genServerJs()
-}
+package single
 
 
-func (app *GenApp) genPackageJson() []byte {
+func GenPackageJson(name,des,owner string) []byte {
 	pk := `
 {
-  "name": "`+app.App.Name+`",
+  "name": "`+name+`",
   "version": "1.0.0",
-  "description": "`+app.App.Des+`",
-  "author": "`+app.App.Owner+`",
+  "description": "`+des+`",
+  "author": "`+owner+`",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -26,19 +20,19 @@ func (app *GenApp) genPackageJson() []byte {
 	return []byte(pk)
 }
 
-func (app *GenApp) genServerJs() []byte {
+func GenServerJs(name, port string) []byte {
 	index := ` 
 'use strict';
 const express = require('express');
 
 // Constants
-const PORT = `+app.App.Spec["port"]+`;
+const PORT = `+port+`;
 const HOST = '0.0.0.0';
 
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('`+app.App.Name+`');
+  res.send('`+name+`');
 });
 
 app.listen(PORT, HOST);
@@ -46,3 +40,4 @@ console.log("Running on http://${HOST}:${PORT}");
 `
 	return []byte(index)
 }
+

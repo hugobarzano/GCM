@@ -3,6 +3,7 @@ module code-runner
 go 1.13
 
 require (
+	github.com/ChimeraCoder/gojson v1.1.0
 	github.com/Microsoft/go-winio v0.4.14 // indirect
 	github.com/dghubble/gologin/v2 v2.2.0
 	github.com/dghubble/sessions v0.1.0
@@ -25,4 +26,5 @@ require (
 	go.mongodb.org/mongo-driver v1.1.3
 	golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

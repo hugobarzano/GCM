@@ -2,7 +2,7 @@ package generator
 
 import 	googleGithub "github.com/google/go-github/github"
 
-func BuilFileOptions(commit,user string, fileContent []byte ) *googleGithub.RepositoryContentFileOptions  {
+func BuildFileOptions(commit,user string, fileContent []byte ) *googleGithub.RepositoryContentFileOptions  {
 
 	opts:=&googleGithub.RepositoryContentFileOptions{
 		Message:   googleGithub.String(commit),

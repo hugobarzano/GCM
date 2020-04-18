@@ -88,15 +88,42 @@ func GenerateJenkinsDockerfile(app *models.App) 	[]byte {
 
 func GenerateNodeDockerfile(app *models.App) 	[]byte {
 	properties:=[]dockerfileEntry{
-		{"FROM","node:10"},
+		{"FROM","node:13"},
 		{"MAINTAINER", app.Owner},
 		{"WORKDIR","/usr/src/app"},
-		{"COPY", "package.json ./"},
-		{"COPY", "server.js ./"},
+		{"COPY", ". /usr/src/app"},
 		{"RUN", "npm install"},
 		{"EXPOSE", app.Spec["port"]},
 		{"ENTRYPOINT", "[\"node\", \"server.js\"]"},
 
+	}
+	dockerfile:=generateDockerfile(app,properties)
+	return []byte(dockerfile)
+}
+
+func GeneratePython3Dockerfile(app *models.App) []byte {
+	properties:=[]dockerfileEntry{
+		{"FROM","python:3"},
+		{"MAINTAINER", app.Owner},
+		{"WORKDIR","/usr/src/app"},
+		{"COPY", ". /usr/src/app"},
+		{"RUN", "pip install -r requirements.txt"},
+		{"EXPOSE", app.Spec["port"]},
+		{"ENTRYPOINT", "[\"python\", \"server.py\"]"},
+	}
+	dockerfile:=generateDockerfile(app,properties)
+	return []byte(dockerfile)
+}
+
+func GenerateGo13Dockerfile(app *models.App) []byte {
+	properties:=[]dockerfileEntry{
+		{"FROM","golang:1.13"},
+		{"MAINTAINER", app.Owner},
+		{"WORKDIR","/usr/src/app"},
+		{"COPY", ". /usr/src/app"},
+		{"RUN", "go get -d -v ./..."},
+		{"EXPOSE", app.Spec["port"]},
+		{"ENTRYPOINT", "[\"go\", \"run\", \"server.go\"]"},
 	}
 	dockerfile:=generateDockerfile(app,properties)
 	return []byte(dockerfile)
@@ -117,15 +144,19 @@ func (app *GenApp)generateDockerfile(){
 		app.Dockerfile=GenerateJenkinsDockerfile(app.App)
 	case "nodeStatic":
 		app.Dockerfile=GenerateNodeDockerfile(app.App)
-	case "TBD":
-		fmt.Println("TBD.")
+	case "js":
+		app.Dockerfile=GenerateNodeDockerfile(app.App)
+	case "python":
+		app.Dockerfile=GeneratePython3Dockerfile(app.App)
+	case "go":
+		app.Dockerfile=GenerateGo13Dockerfile(app.App)
 	default:
-		fmt.Printf("NOT SUPPORTED")
+		fmt.Println("NOT SUPPORTED")
 	}
 }
 
 func (app *GenApp)pushDockerfile(ctx context.Context,user string)error  {
-	dockerfileOptions := BuilFileOptions("Generating Dockerfile...", user, app.Dockerfile)
+	dockerfileOptions := BuildFileOptions("Generating Dockerfile...", user, app.Dockerfile)
 	_, err := app.CommitFile(ctx, "Dockerfile", dockerfileOptions)
 	return err
 }
