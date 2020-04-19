@@ -24,7 +24,7 @@ alert( 'Hi, this is your site `+ owner +`!' );
 	return []byte(index)
 }
 
-func GenIndexHtmlNew(name, des string)[]byte  {
+func GenIndexHtml(name, des string)[]byte  {
 	index:=`
 <!DOCTYPE html>
 <html lang="en">

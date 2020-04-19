@@ -32,7 +32,7 @@ func main() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	log.Printf("Starting Server listening on %s\n", apiAddr)
+	log.Printf("Starting Server listening on http://%s\n", apiAddr)
 	err := server.ListenAndServe()
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)

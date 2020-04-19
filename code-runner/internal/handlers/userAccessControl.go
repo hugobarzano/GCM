@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
+	"code-runner/internal/store"
 	"github.com/dghubble/gologin/v2/github"
 	oauth2Login "github.com/dghubble/gologin/v2/oauth2"
 	"net/http"
@@ -19,7 +20,12 @@ func index(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	if err := userAccessViews["index"].Render(w, nil); err != nil {
+	var data = make(map[string]interface{})
+	data["single"]=store.SinglePageImg
+	data["api"]=store.ApiRestImg
+	data["data"]=store.DataServiceImg
+	data["devops"]=store.DevOpsServiceImg
+	if err := userAccessViews["index"].Render(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
