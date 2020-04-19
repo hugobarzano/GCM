@@ -55,7 +55,13 @@ func (app *App) SetDeployURL(port string) {
 	case "mongodb":
 		appUrl=fmt.Sprintf("mongodb://%v:%v",
 			config.GetConfig().DeployAddress, port)
-	default:
+	}
+
+	switch app.Spec["nature"] {
+	case constants.ApiRest:
+		appUrl=fmt.Sprintf("http://%v:%v/api",
+			config.GetConfig().DeployAddress, port)
+	case constants.SinglePage:
 		appUrl=fmt.Sprintf("http://%v:%v",
 			config.GetConfig().DeployAddress, port)
 	}

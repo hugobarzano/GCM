@@ -20,7 +20,7 @@ func GenPackageJson(name,des,owner string) []byte {
 	return []byte(pk)
 }
 
-func GenServerJs(name, port string) []byte {
+func GenServerJs(name,des, port string) []byte {
 	index := ` 
 'use strict';
 const express = require('express');
@@ -32,7 +32,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('`+name+`');
+  res.send('`+string(GenIndexHtmlNew(name,des))+`');
 });
 
 app.listen(PORT, HOST);

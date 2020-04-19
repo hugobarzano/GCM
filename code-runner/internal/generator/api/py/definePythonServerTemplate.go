@@ -10,7 +10,7 @@ app = connexion.App(__name__, specification_dir='spec')
 # Read apiSpec file to setup api endpoints
 app.add_api('spec.yml')
 
-@app.route('/home')
+@app.route('/api')
 def home():
     """
     This function just responds to the browser ULR

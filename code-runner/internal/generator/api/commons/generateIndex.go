@@ -6,10 +6,10 @@ import (
 	"text/template"
 )
 
-func GenerateIndex(uiLink string) []byte {
+func GenerateIndex(data map[string]interface{}) []byte {
 	tpl, err := template.New("Index").Parse(IndexTemplate)
 	var buf bytes.Buffer
-	err = tpl.Execute(&buf, uiLink)
+	err = tpl.Execute(&buf, data)
 	if err != nil {
 		log.Println(err.Error())
 		return nil

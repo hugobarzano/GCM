@@ -33,12 +33,12 @@ const IndexTemplate = `
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center">
-            <h1 class="mt-5">API Generated</h1>
-			{{.}}
+            <h1 class="mt-5">API Generated: {{.name}}</h1>
+			{{.ui}}
             <br>
             <hr>
+			<p>{{.des}}</p>
             <br>
-            <p class="lead">Generator Source Code:<a href="https://github.com/hugobarzano/LProductosSoftware"> LProductosSoftware</a></p>
         </div>
     </div>
 

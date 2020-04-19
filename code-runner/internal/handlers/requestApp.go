@@ -79,8 +79,8 @@ func (appRequest *requestApp) validateRequest() bool {
 		appRequest.Errors["Port"] = "Port must contains only numeric chars."
 	}
 
-	if len(appRequest.App.Spec["port"]) > 7 || len(appRequest.App.Spec["port"]) < 2 {
-		appRequest.Errors["Port"] = "Invalid por length. At least 2 digits and at most 7."
+	if len(appRequest.App.Spec["port"]) > 4 || len(appRequest.App.Spec["port"]) < 2 {
+		appRequest.Errors["Port"] = "Invalid por length. At least 2 digits and at most 4."
 	}
 
 	if appRequest.App.Spec["nature"] == "" {
@@ -90,8 +90,8 @@ func (appRequest *requestApp) validateRequest() bool {
 		appRequest.Errors["Tech"] = "Technology is mandatory."
 	}
 	if appRequest.App.Spec["tech"] == constants.ApiRest {
-		var js map[string]interface{}
-		err:=json.Unmarshal([]byte(appRequest.App.Spec["modelJson"]), &js)
+		var jsonModel map[string]interface{}
+		err:=json.Unmarshal([]byte(appRequest.App.Spec["modelJson"]), &jsonModel)
 		if err!=nil{
 			appRequest.Errors["Model"] = err.Error()
 		}

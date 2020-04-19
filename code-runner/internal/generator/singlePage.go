@@ -4,7 +4,7 @@ import "code-runner/internal/generator/single"
 
 func (app *GenApp) generateApacheSinglePageCode() {
 	app.Data = make(map[string][]byte)
-	app.Data["html/index.html"] = single.GenIndexHtml(
+	app.Data["html/index.html"] = single.GenIndexHtmlNew(
 		app.App.Name,
 		app.App.Des)
 
@@ -21,6 +21,7 @@ func (app *GenApp) generateNodeSinglePageCode() {
 
 	app.Data["server.js"] = single.GenServerJs(
 		app.App.Name,
+		app.App.Des,
 		app.App.Spec["port"])
 }
 

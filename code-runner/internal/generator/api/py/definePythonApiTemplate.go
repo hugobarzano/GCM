@@ -28,7 +28,8 @@ def createOne(object):
     res = {}
     id = object.get("id", None)
     if id not in DATA and id is not None:
-        object["timestamp"] = getTimestamp()
+        object["createdAt"] = getTimestamp()
+        object["updatedAt"] = getTimestamp()
         DATA[id] = object
         return make_response(DATA[id], 201)
     else:
@@ -42,6 +43,8 @@ def updateOne(id, object):
     res = {}
     if id in DATA:
         object["id"]=id
+        object["updatedAt"] = getTimestamp()
+        object["createdAt"] = DATA[id]["createdAt"]
         DATA[id]=object
         return DATA[id]
     else:

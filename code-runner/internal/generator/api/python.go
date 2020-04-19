@@ -47,14 +47,17 @@ func (g *python) WithInputSpec(spec string) Generator {
 	return g
 }
 
-func (g *python) GenerateApi() {
+func (g *python) GenerateApi(des string) {
 
+	data := make(map[string]interface{})
+	data["ui"] = `<a href="api/ui" class="navbar-brand"> Checkout API UI</a>`
+	data["name"]=g.name
+	data["des"]=des
 	g.files["spec/spec.yml"] = commons.GenerateApiSpecFile(
 		g.name,
 		"api.",
 		g.model)
-	g.files["templates/index.html"] = commons.GenerateIndex(
-		`<a href="api/ui" class="navbar-brand"> Checkout API UI</a>`)
+	g.files["templates/index.html"] = commons.GenerateIndex(data)
 	g.files["api.py"] = py.GenerateApi()
 	g.files["server.py"] = py.GenerateServer(g.port)
 	g.files["requirements.txt"] = py.GenerateDependencies()

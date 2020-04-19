@@ -71,18 +71,19 @@ func customizeModel(inputModel []byte) []byte {
 }
 
 
-func (g *goApi) GenerateApi() {
+func (g *goApi) GenerateApi(des string) {
 
 	data := make(map[string]interface{})
 	data["api"] = strings.ToLower(g.name)
 	data["model"] = strings.ToUpper(g.name)
 	data["port"] = g.port
-
+	data["name"]=g.name
+	data["des"]=des
 	g.files["spec/spec.yml"] = commons.GenerateApiSpecFile(
 		g.name,
 		"api.",
 		g.model)
-	g.files["templates/index.html"] = commons.GenerateIndex("")
+	g.files["templates/index.html"] = commons.GenerateIndex(data)
 	g.files["api/api.go"] = golang.GenerateApi(data)
 	g.files["model/model.go"] = g.nativeModel
 	g.files["server.go"] = golang.GenerateServer(data)

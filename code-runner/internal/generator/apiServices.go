@@ -22,6 +22,6 @@ func (app *GenApp) generateApiService() {
 	apiGenerator.Init().
 		WithName(app.App.Name).
 		WithPort(port).
-		WithInputSpec(app.App.Spec["modelJson"]).GenerateApi()
+		WithInputSpec(app.App.Spec["modelJson"]).GenerateApi(app.App.Des)
 	app.Data=apiGenerator.GetFiles()
 }

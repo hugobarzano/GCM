@@ -29,7 +29,7 @@ func main() {
 	basePath:="api"
 	apiPath:="{{.api}}"
 	route:=fmt.Sprintf("/%v/%v",basePath,apiPath)
-	router.HandleFunc("/", home).Methods(http.MethodGet)
+	router.HandleFunc("/api", home).Methods(http.MethodGet)
 	router.HandleFunc(route, api.ListAll).Methods(http.MethodGet)
 	router.HandleFunc(route, api.CreateOne).Methods(http.MethodPost)
 	router.HandleFunc(route+"/{id}", api.GetOne).Methods(http.MethodGet)

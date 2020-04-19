@@ -20,7 +20,7 @@ type Generator interface {
 	WithName(name string) Generator
 	WithPort(port int) Generator
 	WithInputSpec(spec string) Generator
-	GenerateApi()
+	GenerateApi(des string)
 	GetFiles()map[string][]byte
 }
 
@@ -30,7 +30,7 @@ func (g *defaultNature) Init() Generator                          { return g }
 func (g *defaultNature) WithName(name string) Generator           { return g }
 func (g *defaultNature) WithPort(port int) Generator              { return g }
 func (g *defaultNature) WithInputSpec(spec string) Generator { return g }
-func (g *defaultNature) GenerateApi()                                {}
+func (g *defaultNature) GenerateApi(des string)                   {}
 func (g *defaultNature) GetFiles() map[string][]byte			  { return nil }
 
 

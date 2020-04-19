@@ -1,10 +1,10 @@
 package api
 
 import (
-	"encoding/json"
-	"fmt"
 	"code-runner/internal/generator/api/commons"
 	"code-runner/internal/generator/api/js"
+	"encoding/json"
+	"fmt"
 	"log"
 )
 
@@ -47,14 +47,17 @@ func (g *javascript) WithInputSpec(spec string) Generator {
 }
 
 
-func (g *javascript) GenerateApi() {
+func (g *javascript) GenerateApi(des string) {
 
+	data := make(map[string]interface{})
+	data["ui"] = `<a href="api/ui" class="navbar-brand"> Checkout API UI</a>`
+	data["name"]=g.name
+	data["des"]=des
 	g.files["spec/spec.yml"] = commons.GenerateApiSpecFile(
 		g.name,
 		"",
 		g.model)
-	g.files["templates/index.html"] = commons.GenerateIndex(
-		`<a href="api/ui" class="navbar-brand"> Checkout API UI</a>`)
+	g.files["templates/index.html"] = commons.GenerateIndex(data)
 	g.files["api/index.js"] = js.GenerateApi()
 	g.files["server.js"] = js.GenerateServer(g.port)
 	g.files["package.json"] = js.GenerateDependencies(g.name)
