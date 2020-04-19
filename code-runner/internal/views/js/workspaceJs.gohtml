@@ -6,7 +6,7 @@
                     url: "/getWs",
                     type: "get",
                     data: {owner: "{{ .Owner}}"},
-                    cache: true,
+                    cache: false,
                     success: function (response) {
                         $('#apps').html(response)
                         console.log(response)

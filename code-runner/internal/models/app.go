@@ -18,18 +18,18 @@ const (
 )
 
 type App struct {
-	Name       string    `bson:"_id"  json:"name"`
-	Repository string    `bson:"repo" json:"repo"`
-	Spec       map[string]string    `bson:"spec" json:"spec"`
-	Des        string    `bson:"des" json:"des,omitempty"`
-	Url        string    `bson:"url"  json:"url"`
-	Owner      string    `bson:"owner"  json:"owner"`
-	Status     AppStatus `bson:"status"  json:"status"`
-	Img        string    `bson:"-" json:"img"`
+	Name       string            `bson:"_id"  json:"name"`
+	Repository string            `bson:"repo" json:"repo"`
+	Spec       map[string]string `bson:"spec" json:"spec"`
+	Des        string            `bson:"des" json:"des,omitempty"`
+	Url        string            `bson:"url"  json:"url"`
+	Owner      string            `bson:"owner"  json:"owner"`
+	Status     AppStatus         `bson:"status"  json:"status"`
+	Img        string            `bson:"-" json:"img"`
 }
 
 func (app *App) IsRunning() bool {
-	return app.Status==RUNNING
+	return app.Status == RUNNING
 }
 
 func (app *App) GetImageName() string {
@@ -51,13 +51,28 @@ func (app *App) GetLocalPath() string {
 func (app *App) SetDeployURL(port string) {
 
 	var appUrl string
-	switch app.Spec["tech"] {
-	case "mongodb":
-		appUrl=fmt.Sprintf("mongodb://%v:%v",
+	switch app.Spec["nature"] {
+	case constants.SinglePage:
+		appUrl = fmt.Sprintf("http://%v:%v",
 			config.GetConfig().DeployAddress, port)
-	default:
-		appUrl=fmt.Sprintf("http://%v:%v",
+	case constants.ApiRest:
+		appUrl = fmt.Sprintf("http://%v:%v/api",
+			config.GetConfig().DeployAddress, port)
+	case constants.DataService:
+		switch app.Spec["tech"] {
+		case "mongodb":
+			appUrl = fmt.Sprintf("mongo mongodb://%v:%v",
+				config.GetConfig().DeployAddress, port)
+		case "mysql":
+			appUrl = fmt.Sprintf("mysql -h %v --port %v -u root",
+				config.GetConfig().DeployAddress, port)
+		case "redis":
+			appUrl = fmt.Sprintf("redis-cli -h %v -p %v",
+				config.GetConfig().DeployAddress, port)
+		}
+	case constants.DevOpsService:
+		appUrl = fmt.Sprintf("http://%v:%v",
 			config.GetConfig().DeployAddress, port)
 	}
-	app.Url=appUrl
+	app.Url = appUrl
 }

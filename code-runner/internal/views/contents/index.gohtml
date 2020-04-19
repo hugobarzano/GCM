@@ -1,12 +1,47 @@
 {{define "yield"}}
     <div class="container">
         <div className="col-xs-8 col-xs-offset-2 jumbotron text-center">
+            <h1>Generate and deploy your apps in a few clicks!</h1>
+            <br>
 
-            <br>
-            <h1>Welcome to CODE-RUNNER!</h1>
-            <br>
-            <br>
-            <h3><p>Spec your cloud application, build the solution  and deploy the future!</p></h3>
+
+        <div class="row justify-content-between">
+
+
+        <div class="card" style="width:200px">
+            <img src="data:image/png;base64,{{.single}}" alt="" class="img-fluid">
+            <div class="card-body">
+                <h4 class="card-title">Single Page Applications</h4>
+                <p class="card-text">
+                    SPA is a web application that fits on a single page in order to give a
+                    more fluid experience to users.</p>
+            </div>
+        </div>
+        <div class="card" style="width:200px">
+            <img src="data:image/png;base64,{{.api}}" alt="" class="img-fluid">
+            <div class="card-body">
+                <h4 class="card-title">Api-Rest Applications</h4>
+                <p class="card-text"> Define applications programming interfaces to a software
+                    component or a system.</p>
+            </div>
+        </div>
+        <div class="card" style="width:200px">
+            <img src="data:image/png;base64,{{.data}}" alt="" class="img-fluid">
+            <div class="card-body">
+                <h4 class="card-title">Data Services</h4>
+                <p class="card-text">DaaS provides cloud services that enables data access on demand.
+                    to users</p>
+            </div>
+        </div>
+        <div class="card" style="width:200px">
+            <img src="data:image/png;base64,{{.devops}}" alt="" class="img-fluid">
+            <div class="card-body">
+                <h4 class="card-title">DevOps Services</h4>
+                <p class="card-text">Set of cloud services that combine software development (Dev)
+                    and information-technology operations (Ops).</p>
+            </div>
+        </div>
+        </div>
         </div>
     </div>
 {{end}}
