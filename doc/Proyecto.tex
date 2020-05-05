@@ -253,14 +253,14 @@ A continuación se van a definir los objetivos propuestos a alcanzar siguiendo e
 
 \section{Objetivos}
 
-El principal objetivo de este proyecto es el de sintetizar y automatizar el proceso de desarrollo y operación de software, concrétamente el de aplicaciones web o servicios de datos en la nube. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación.
+El principal objetivo de este proyecto es el de sintetizar y automatizar el proceso de desarrollo y operación de software, concrétamente el de aplicaciones web o servicios de datos en la nube mediante un enfoque generativo. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación.
 
 Para alcanzar el principal objetivo, este proyecto ha de identificar, modelar y automatizar las principales etapas del ciclo de vida de proyectos software, y construir un mecanismo genérico con el que producir aplicaciones. Las aplicaciones producidas por el proyecto han de ser auto-contenidas y auto-consumibles, es decir, han te contener todo lo necesario para ser ejecutadas y usadas fuera del marco de este proyecto.
 
 Finalmente, este proyecto ha de definir e implementar un mecanismo genérico que permita consumir las aplicaciones producidas a través de Internet, cumpliendo así completamente con el principal objetivo.
 
 
-De manera adicional, este proyecto tiene como objetivo presentar mejoras y automatizaciones relativas a los proceso de desarrollo software. El sistema resultante se presenta como una herramienta o ayuda para desarrolladores en la adquisición de conocimientos  en las denominadas tecnologías de la información. Tanto el código fuente de este proyecto como las aplicaciones creadas por los usuarios que utilicen el sistema se consideran "Open Source", es decir código abierto y disponible públicamente para quien lo necesite.
+De manera adicional, este proyecto tiene como objetivo presentar mejoras y automatizaciones relativas a los proceso de desarrollo software. El sistema resultante se presenta como una herramienta o ayuda para desarrolladores en la adquisición de conocimientos  en las denominadas tecnologías de la información. Tanto el código fuente de este proyecto como las aplicaciones creadas por los usuarios que utilicen el sistema se consideran  \textbf{Open Source}, es decir código abierto y disponible públicamente para quien lo necesite.
 
 \begin{itemize}
 \item \textbf{OBJ-1. } Sintetizar y generar aplicaciones software de diversa naturaleza.
@@ -277,7 +277,7 @@ A continuación se va a describir de manera literaria el problema planteado por 
 
 Como se verá en el capítulo dedicado a los trabajos relacionados, el conjunto de soluciones que ofrece la nube es muy variado. Para cada una de las soluciones cloud, se pueden encontrar diversas implementaciones con diversas tecnologías, lo que incrementa
 de manera significativa el conjunto final de productos software disponibles para ser consumidos por internet. Este es el primer problema que intenta abordar este proyecto, ¿Como manejar la diversidad tecnológica que produce trabajar en entornos de computación
-en la nube? ¿Qué solución es mas adecuada para un problema concreto de negocio? ¿Con qué tecnología implementar la solución elegida? Este proyecto aborda este problema dotando a los desarrolladores de una plataforma open-source donde probar la tecnología que desean consumir.  \\
+en la nube? ¿Qué solución es mas adecuada para un problema concreto de negocio? ¿Con qué tecnología implementar la solución elegida? Este proyecto aborda este problema dotando a los desarrolladores de una plataforma Open Source donde probar la tecnología que desean consumir.  \\
 
 El conjunto de soluciones ofrecidas por los diversos proveedores de soluciones cloud aumenta día a día en función de las necesidades de negocio de los consumidores lo que obliga a los profesionales a estar continuamente renovando y certificando sus conocimientos. A raíz de esto han surgido muchas plataformas de aprendizaje o E-learning para que los profesionales adquieran conocimientos en las consideras tecnologías de vanguardia,  en otras palabras, tecnologías altamente demandadas por el mundo empresarial. Algunas de esta plataformas son:
 
@@ -306,7 +306,6 @@ Como solución se propone realizar las siguientes síntesis o generalidades.  Po
 \item \textbf{ Interfaces web }
 \item \textbf{ Api/Rest }
 \item \textbf{ Servicios de Datos }
-\item \textbf{ Cualquier pieza software que pueda ser consumida mediante protocolo tcp/http }
 \end{enumerate}
 
 Se propone sintetizar todas ellas  como una única  entidad \textbf{aplicación} y  someter a esta entidad al mismo proceso o etapas independientemente de cual sea su naturaleza o dominio cumpliendo con el objetivo de dada una especificación de aplicación, producir el código fuente necesario para materializar dicha especificación en un producto software funcional. 
@@ -318,7 +317,7 @@ La entidad de propósito general \textbf{aplicación} es definida por el siguien
 \begin{enumerate}
 \item \textbf{ Repositorio de Código Fuente. } Lugar donde habita la aplicación. 
 \item \textbf{ README.} Fichero descriptivo con información relativa a  la aplicación. 
-\item \textbf{ LICENCE. }Fichero descriptivo caracterizando la aplicación como Open-Source 
+\item \textbf{ LICENCE. }Fichero descriptivo caracterizando la aplicación como Open Source 
 \item \textbf{ Makefile.} Herramienta  de construcción, permite realizar operacionales básicas a nivel de proyecto software ( make build, make run, make test, make push, make pull)
 
   \begin{enumerate}[label*=\arabic*.]
@@ -332,7 +331,7 @@ La entidad de propósito general \textbf{aplicación} es definida por el siguien
   
 \item \textbf{ Codigo Fuente.}Representa el software en si, contiene la lógica de la aplicación.  
 \item \textbf{ Configuración.} Representa la configuración necesaria para ejecutar la aplicación. 
-\item \textbf{ Dockerfile.} Representa al artefacto necesario para ejecutar la aplicación 
+\item \textbf{ Dockerfile.} Define al artefacto necesario para ejecutar la aplicación. Dicho artefacto es una Imagen docker. 
 \end{enumerate}
 
 
@@ -432,7 +431,7 @@ Estas son algunas de las ventajas o características de una implementación basa
 
 \section{Programación Generativa}
 
-Tal y como se presenta en el articulo "Generative Programming"\cite{gp} la programación generativa consiste en diseñar e implementar módulos software que pueden ser combinados para generar sistemas especializados y  optimizados en cumplir requisitos específicos de dominio. Los objetivos de la programación generativa son:
+Tal y como se presenta en el articulo Generative Programming\cite{gp} la programación generativa consiste en diseñar e implementar módulos software que pueden ser combinados para generar sistemas especializados y  optimizados en cumplir requisitos específicos de dominio. Los objetivos de la programación generativa son:
 
 \begin{enumerate}
 \item Disminuir la desviación conceptual entre el código software y los conceptos de dominio.
@@ -442,7 +441,7 @@ Tal y como se presenta en el articulo "Generative Programming"\cite{gp} la progr
 \end{enumerate}
 
 
-Para alcanzar estos objetivos, la programación generativa ha de cumplir los siguientes principios tratados en el articulo "Generative Programming and Active Libraries" \cite{gpl}
+Para alcanzar estos objetivos, la programación generativa ha de cumplir los siguientes principios tratados en el articulo Generative Programming and Active Libraries \cite{gpl}
 
 \begin{enumerate}
 \item Separation of concerns (SoC): La separación de preocupaciones pone de manifiesto la importancia de lidiar con los problemas de una manera atómica. Es decir, crear pequeños fragmentos de código que cumplan con una funcionalidad muy especifica e integrarlos para dar lugar al componente deseado.
@@ -453,26 +452,57 @@ Para alcanzar estos objetivos, la programación generativa ha de cumplir los sig
 \end{enumerate}
 
 
-\section{Ciclo de Vida del Desarrollo Software (SDLC)}
+\section{Desarrollo Software}
+
+\subsection{Ciclo de Vida del Desarrollo Software (SDLC) }
 
 El ciclo de vida del desarrollo software es un procedimiento sistemático para construir software.  El objetivo de este procedimiento es el de garantizar la calidad y las exactitud del software a desarrollar, haciendo que cumpla con las expectativas del usuario. 
-
-Normalmente este procedimiento es aprovechado por las figuras encargadas de gestionar proyectos informáticos ya que les permite concretar el tiempo de desarrollo y los costes que supondrá la realización del mismo.   
-
-\subsection{Etapas SDLC}
-
+   
+\subsubsection{Etapas SDLC}
 
 \begin{enumerate}
-\item 
-\item
-\item
+\item  Planificación: Etapa inicial donde se define el software a implementar, determinando el alcance que se quiere lograr. Esta etapa permite discernir el presupuesto, el tiempo y los recursos necesarios para el proyecto. 
+\item Ingeniería de requisitos: Etapa en la que se pone de manifiesto cuales son los requisitos que el proyecto software ha de cumplir para ser aceptado por el cliente. 
+\item Diseño: Etapa que consiste en trasformas los requisitos de alto nivel solicitados por el cliente a una realidad técnica que los equipos de expertos puedan llevar a cabo. 
+\item Desarrollo: Etapa en la que los desarrolladores materializan el diseño técnico en producto software. 
+\item Pruebas: Etapa en la que el equipo de calidad valida y verifica que el software desarrollado cumple los requisitos esperados por el cliente. 
+\item Productivización:  Etapa en la que el equipo de operaciones disponibiliza el software para que el cliente comience a utilizarlo.
+\item Mantenimiento: Etapa en la que se corrigen fallos percibidos tras un uso real del software. 
+\item Disposición: Etapa en la que se contempla como será la retirada del software una vez que haya alcanzado su vida útil. 
 \end{enumerate}
+
+\subsection{Desarrollo Software y Buenas Prácticas }
+
+En esta sección se profundiza en buenas practicas relativas al desarrollo software.
+
+\subsubsection{Integración Continua}
+ 
+La integración continua consiste en un modelo informático orientado al desarrollo software que propone la integración de nuevas funcionalidades y la ejecución de pruebas de manera constante para así detectar posibles problemas o regresiones en el software que se está desarrollando así como mejorar su calidad de una manera automatizada. En el artículo \textbf{Continuous Integration}\cite{ci} ,  Martin Fowler ejemplifica este modelo mediante la implementación de una funcionalidad mediante integración continua. 
+
+\subsubsection{Entrega Continua}
+
+La entrega continua es un procedimiento informático que consiste en realzar entregas continuas de versiones del software que se está construyendo. Está íntimamente ligado al modelo de Integración Continua , permite a los desarrolladores liberar versiones del producto software para que sean validadas por los responsables de calidad o integradas en entornos productivos mientras continúan desarrollando nuevas funcionalidades. El objetivo de este procedimiento es el de disponer de un artefacto listo para ser probado, ejecutado y distribuido.  En este procedimiento, la automatización llega hasta el punto de generar dicho artefacto, su despliegue o distribución requiere de intervención humana. En el articulo \textbf{Continuous Delivery: Overcoming adoption challenges}\cite{cd}, se proponen diversas estrategias para adoptar procedimientos de entrega continua  en el mundo empresarial así como retos en materia de investigación propuestos a la comunidad científica. 
+
+\subsubsection{Despliegue Continuo}
+
+El despliegue continuo consiste en un procedimiento automatizado similar a la entrega continua con la diferencia de que en este caso el artefacto implementado es distribuido o ejecutado sobre un entorno virtual sin interacción humana, en otras palabras, es desplegado.  De esta forma los tiempos de entrega y operación de nuevas funcionalidades software se ven notablemente reducidos. En el artículo \textbf{Problems and Solutions of Continuous Deployment: A Systematic Review}\cite{cdpl} se realiza un repaso sobre numerosos artículos relativos al despliegue continuo  poniendo de manifiesto problemas o retos encontrados al intentar adoptar este procedimiento en el mundo empresarial y que  
+solución se adecua mas a cada uno de los problemas presentados. 
+
+\subsection{En este Proyecto}
+
+Este proyecto ha sido desarrollando siguiendo con mayor o menor rigos las etapas del cliclo de vida del desarrollo software. El sistema software  sintetiza el proceso de desarrollo y la operación software  en una serie de etapas automatizadas o pipeline, agilizando  las producción de aplicaciones modernas.
+
+En linea con las buenas practicas a la hora de desarrollar software presentadas en la sección anterior, este proyecto las implementa todas ellas. 
+
+
+Como se verá en la siguiente sección relativa a la programación generativa, como parte del proceso generativo implementado para crea aplicaciones, se incluye la creación de un repositorio de código fuente donde albergar el código generado. El sistema de gestión de repositorios de código fuente elegido par ello ha sido github debido a su caracter 
+En el artículo \textbf{Continuous Integration and Continuous Delivery Pipeline Automation for Agile Software Project Management}\cite{ci}
+
+
+
 
 
 \chapter{Planificación y Análisis}
-
-
-
 
 \section{Planificación}
 
