@@ -1,4 +1,4 @@
-name: Test and Push Docker Imagen
+name: Continuous Integration Workflow
 on:
   push:
     branches:
@@ -20,6 +20,6 @@ jobs:
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v1
-      - name: Push image
+      - name: Build and Push Artifact - Docker Image
         run: |
           make push user=${{ github.actor }} token=${{ secrets.GITHUB_TOKEN }}

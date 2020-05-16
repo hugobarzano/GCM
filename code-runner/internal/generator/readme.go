@@ -9,7 +9,8 @@ import (
 
 func (app *GenApp) generateReadme(){
 	readmeDoc:="# "+app.App.Name+"\n\n" +
-		"## Description\n"+app.App.Des+"\n"
+	"\n \n ![CI workflow](https://github.com/"+app.App.Owner+"/"+app.App.Name+"/workflows/Continuous%20Integration%20Workflow/badge.svg) \n"+
+	"## Description\n"+app.App.Des+"\n"
 	readmeDoc=readmeDoc+constants.GeneratedBanner
 	app.Readme=[]byte(readmeDoc)
 }

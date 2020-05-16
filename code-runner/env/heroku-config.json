@@ -6,5 +6,5 @@
   "deployAddress": "35.233.23.148",
   "apiAddress": "0.0.0.0",
   "apiPort": "heroku provider as $PORT",
-  "apiDns": "https://chbc.herokuapp.com"
+  "apiDns": "https://coderunner.herokuapp.com"
 }

@@ -10,7 +10,7 @@ import (
 
 func (app *GenApp)generateCI(){
 	app.CI = make(map[string][]byte)
-	app.CI[".github/workflows/fastci.yml"]=ci.FastImageBuilder()
+	//app.CI[".github/workflows/fastci.yml"]=ci.FastImageBuilder()
 	app.CI[".github/workflows/ci.yml"]=ci.ImageBuilder()
 }
 

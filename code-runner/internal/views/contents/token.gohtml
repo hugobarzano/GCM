@@ -5,7 +5,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            font-size: 50px;
+            font-size: 25px;
             color: white;
             transform: translate(-50%,-50%);
             -ms-transform: translate(-50%,-50%);
@@ -39,17 +39,31 @@
 <div class="container">
     <div className="col-xs-8 col-xs-offset-2 jumbotron text-center">
         <h1>Use this token to work with your app locally!</h1>
-        <p>Token: {{.Key}}</p>
-
+        <br>
+        <br>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success align-items-center d-flex">
+                <strong>Token: </strong>&nbsp; {{.Key}}
+            </li>
+        </ul>
     </div>
-
-
 </div>
 
-    <!--https://www.w3schools.com/howto/howto_css_overlay.aspa-->
     <div id="help">
         <div id="text">
-            make build </div>
+            <h3>Clone your repository to work with locally:</h3>
+                $~ git clone https://repository.git <br>
+                $~ cd repository/ <br>
+            <hr>
+
+            <h3>Use makefile to performs operations:</h3>
+                $~ make setup <br>
+                $~ make build <br>
+                $~ make test <br>
+                $~ make run <br>
+                $~ make push user="username"  token="this token" <br>
+                $~ make pull user="username"  token="this token" <br>
+        </div>
         <a href="javascript:void(0)" class="closeHelp" onclick="hideHelp()">&times;</a>
 
     </div>
