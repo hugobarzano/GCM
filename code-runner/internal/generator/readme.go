@@ -15,8 +15,8 @@ func (app *GenApp) generateReadme(){
 	app.Readme=[]byte(readmeDoc)
 }
 
-func (app *GenApp) pushReadme(ctx context.Context,user string)error{
-	readmeFileOptions := BuildFileOptions("Starting app...", user, app.Readme)
+func (app *GenApp) pushReadme(ctx context.Context,user,mail string)error{
+	readmeFileOptions := BuildFileOptions("Starting app...", user, mail,app.Readme)
 	_, err := app.CommitFile(ctx, "README.md", readmeFileOptions)
 	return err
 }

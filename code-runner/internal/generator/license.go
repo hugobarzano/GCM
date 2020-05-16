@@ -4,8 +4,8 @@ import (
 	"context"
 )
 
-func (app *GenApp) pushLicense(ctx context.Context,user string)error{
-	licenceFileOptions := BuildFileOptions("Adding licence...", user, app.License)
+func (app *GenApp) pushLicense(ctx context.Context,user,mail string)error{
+	licenceFileOptions := BuildFileOptions("Adding licence...", user, mail,app.License)
 	_, err := app.CommitFile(ctx, "LICENSE", licenceFileOptions)
 	return err
 }

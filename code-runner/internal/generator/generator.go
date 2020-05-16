@@ -21,36 +21,36 @@ type GenApp struct {
 	Local      map[string][]byte
 }
 
-func (app *GenApp) InitializeCode(user string, token string) {
+func (app *GenApp) InitializeCode(user string, token string, mail string) {
 
 	ctx := context.Background()
 	app.InitGit(ctx, token)
 	app.generateReadme()
-	if err := app.pushReadme(ctx, user); err != nil {
+	if err := app.pushReadme(ctx, user,mail); err != nil {
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
 
 	app.generateLicense()
-	if err := app.pushLicense(ctx, user); err != nil {
+	if err := app.pushLicense(ctx, user,mail); err != nil {
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
 
 	app.generateSourceCode()
-	if err := app.pushSourceCode(ctx, user); err != nil {
+	if err := app.pushSourceCode(ctx, user,mail); err != nil {
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
 	app.generateDockerfile()
-	if err := app.pushDockerfile(ctx, user); err != nil {
+	if err := app.pushDockerfile(ctx, user,mail); err != nil {
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
 
 	app.generateLocalTools()
-	if err := app.pushLocalTools(ctx, user); err != nil {
+	if err := app.pushLocalTools(ctx, user,mail); err != nil {
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
 
 	app.generateCI()
-	if err := app.pushCI(ctx, user); err != nil {
+	if err := app.pushCI(ctx, user,mail); err != nil {
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
 
@@ -94,7 +94,7 @@ func (app *GenApp) generateSourceCode() {
 	}
 }
 
-func (app *GenApp) pushSourceCode(ctx context.Context, user string) error {
+func (app *GenApp) pushSourceCode(ctx context.Context, user,mail string) error {
 
 	var commitMsg string
 	var fileOptions *googleGithub.RepositoryContentFileOptions
@@ -102,7 +102,7 @@ func (app *GenApp) pushSourceCode(ctx context.Context, user string) error {
 
 	for file, content := range app.Data {
 		commitMsg = "Generating " + file
-		fileOptions = BuildFileOptions(commitMsg, user, content)
+		fileOptions = BuildFileOptions(commitMsg, user, mail,content)
 		_, err = app.CommitFile(ctx, file, fileOptions)
 		if err != nil {
 			return err

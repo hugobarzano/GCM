@@ -17,7 +17,7 @@ func (app *GenApp) generateLocalTools() {
 }
 
 
-func (app *GenApp) pushLocalTools(ctx context.Context,user string)error {
+func (app *GenApp) pushLocalTools(ctx context.Context,user,mail string)error {
 
 	var commitMsg string
 	var fileOptions *googleGithub.RepositoryContentFileOptions
@@ -25,7 +25,7 @@ func (app *GenApp) pushLocalTools(ctx context.Context,user string)error {
 
 	for file,content := range app.Data{
 		commitMsg="Generating "+file
-		fileOptions = BuildFileOptions(commitMsg, user, content)
+		fileOptions = BuildFileOptions(commitMsg, user, mail,content)
 		_, err = app.CommitFile(ctx, file, fileOptions)
 		if err !=nil{
 			return err

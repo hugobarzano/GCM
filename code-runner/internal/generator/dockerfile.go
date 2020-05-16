@@ -155,8 +155,8 @@ func (app *GenApp)generateDockerfile(){
 	}
 }
 
-func (app *GenApp)pushDockerfile(ctx context.Context,user string)error  {
-	dockerfileOptions := BuildFileOptions("Generating Dockerfile...", user, app.Dockerfile)
+func (app *GenApp)pushDockerfile(ctx context.Context,user,mail string)error  {
+	dockerfileOptions := BuildFileOptions("Generating Dockerfile...", user, mail,app.Dockerfile)
 	_, err := app.CommitFile(ctx, "Dockerfile", dockerfileOptions)
 	return err
 }

@@ -36,6 +36,7 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
+		mail := session.Values[constants.SessionUserMail].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
 		reqApp.App.Owner = user
 
@@ -68,7 +69,7 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		go genApp.InitializeCode(user, accessToken)
+		go genApp.InitializeCode(user, accessToken,mail)
 
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	default:

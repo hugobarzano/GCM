@@ -4,11 +4,11 @@ import "time"
 
 const (
 	SessionName          = "code-runner"
-	UserData             = "user-data"
 	SessionSecret        = "ed5173116fcb6eea062bf86d464fd697badffa9c"
 	SessionUserKey       = "githubID"
 	SessionUserName      = "githubNAME"
 	SessionUserToken     = "githubTOKEN"
+	SessionUserMail      = "githubMAIL"
 	Database             = "gcm"
 	WorkspacesCollection = "workspaces"
 	AppsCollection = "apps"
