@@ -6,5 +6,8 @@
   "deployAddress": "34.76.179.1",
   "apiAddress": "0.0.0.0",
   "apiPort": "80",
-  "apiDns": "http://34.76.179.1"
+  "apiDns": "http://34.76.179.1",
+  "enableTls": true,
+  "tlsCertFile": "env/google/tls/server-cert.pem",
+  "tlsKeyFile": "env/google/tls/server-key.pem"
 }

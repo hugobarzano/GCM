@@ -31,10 +31,19 @@ func main() {
 		Addr:         apiAddr,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
+
 	}
-	log.Printf("Starting Server listening on http://%s\n", apiAddr)
-	err := server.ListenAndServe()
+
+	var err error
+	if config.GetConfig().EnableTls {
+		log.Printf("Starting TLS Server listening on https://%s\n", apiAddr)
+		err = server.ListenAndServeTLS(config.GetConfig().TlsCertFile,config.GetConfig().TlsKeyFile)
+	} else {
+		log.Printf("Starting Server listening on http://%s\n", apiAddr)
+		err = server.ListenAndServe()
+	}
+
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		log.Fatal("ListenAndServe: ", err.Error())
 	}
 }

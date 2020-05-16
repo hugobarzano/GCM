@@ -25,6 +25,10 @@ type Config struct {
 	ApiAddress        string  `json:"apiAddress"`
 	ApiPort           string  `json:"apiPort"`
 	ApiDns 			  string  `json:"apiDns"`
+	EnableTls         bool    `json:"enableTls"`
+	TlsKeyFile            string  `json:"tlsKeyFile"`
+	TlsCertFile            string  `json:"tlsCertFile"`
+
 }
 
 func GetConfig() *Config {
@@ -45,7 +49,8 @@ func read() *Config {
 		MongoUri:           "mongodb://localhost:27017",
 		DeployAddress:      "localhost",
 		ApiAddress:        "0.0.0.0",
-		ApiPort:           "8081",
+		ApiPort:           "80",
+		EnableTls:         false,
 	}
 
 	goconfig.Read(c)

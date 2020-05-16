@@ -6,6 +6,9 @@
   "mongoUri_": "mongodb://user:user1234@ds033986.mlab.com:33986/gcm?retryWrites=false",
   "deployAddress": "35.233.23.148",
   "apiAddress": "0.0.0.0",
-  "apiPort": "80",
-  "apiDns": "http://localhost"
+  "apiPort": "443",
+  "apiDns": "https://localhost",
+  "enableTls": true,
+  "tlsCertFile": "env/local/tls/server-cert.pem",
+  "tlsKeyFile": "env/local/tls/server-key.pem"
 }
