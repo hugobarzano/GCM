@@ -8,7 +8,7 @@ Full integrated with Github as source code control system, Code-Runner
 provides to developers all resources needed to build and deploy web 
 applications or cloud services cleanly and quickly. 
 
-## How it works?
+## How it works
 
 Code-Runner use a high-level specification as input to generate a
 completely application ( Repository, CI/CD workflow, Source Code,
