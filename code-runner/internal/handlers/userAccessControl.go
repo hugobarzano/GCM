@@ -5,7 +5,6 @@ import (
 	"code-runner/internal/store"
 	"github.com/dghubble/gologin/v2/github"
 	oauth2Login "github.com/dghubble/gologin/v2/oauth2"
-	"log"
 	"net/http"
 )
 
@@ -74,7 +73,6 @@ func setupSession() http.Handler {
 
 	fn := func(w http.ResponseWriter, req *http.Request) {
 		ctx := req.Context()
-		log.Println(ctx)
 		githubUser, err := github.UserFromContext(ctx)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -88,7 +86,6 @@ func setupSession() http.Handler {
 		}
 
 		session := sessionStore.New(constants.SessionName)
-		log.Println(githubUser)
 		session.Values[constants.SessionUserKey] = *githubUser.ID
 		session.Values[constants.SessionUserName] = *githubUser.Login
 		session.Values[constants.SessionUserToken] = githubToken.AccessToken
