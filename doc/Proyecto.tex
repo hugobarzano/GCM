@@ -397,10 +397,10 @@ solución se adecua mas a cada uno de los problemas presentados.
 Este proyecto considera que las etapas que forman parte del ciclo de vida del desarrollo software están altamente segmentadas. Es cierto que a la hora de llevar a cabo proyectos informáticos a gran escala como los encontrados en el sector espacial o energético, los cuales involucran a diversas organizaciones,  cada una de estas etapas es necesaria ya que el volumen y la dimensión de dichos proyectos así lo requieren pero en el ámbito del desarrollo software orientado a las aplicaciones modernas, estas etapas pueden ser sintetizadas y reducidas, mejorando notablemente los tiempos de desarrollo y abaratando costes.  En las últimas 2 décadas, tras la publicación del Agile Manifesto\cite{agile} la industria del software ha dado un giro orientando sus procesos hacia el cambio y mejora continua en lugar de intentar evitar o contemplar errores a priori mediante un diseño extenso y una planificación estricta.  En el articulo A decade of agile methodologies: Towards explaining agile software developmen\cite{decada} se recogen  diversas publicaciones relacionadas con el desarrollo ágil así como las aportaciones realizadas al campo fruto de la investigación software. 
 
 
-En linea con las buenas practicas a la hora de desarrollar software presentadas en la sección anterior,  así como las ventajas que aporta las metodologías ágiles este proyecto sintetiza el proceso de de desarrollo software mediante un enfoque generativo, materializando una especificación de usuario en código fuente funcional.  Para implementar las buenas prácticas de Integración Continua y Entrega Continua este proyecto hace uso de Github como sistema gestor de repositorios de código así como de las herramientas que ofrece. En el capitulo 4 titulado Implementación y Pruebas, sección~\ref{repo}  Repositorio de Código se profundiza en esta cuestión. 
+En linea con las buenas practicas a la hora de desarrollar software presentadas en la sección anterior,  así como las ventajas que aporta las metodologías ágiles, este proyecto sintetiza el proceso de de desarrollo software mediante un enfoque generativo, materializando una especificación de usuario en código fuente funcional.  Para implementar las buenas prácticas de Integración Continua y Entrega Continua este proyecto hace uso de Github como sistema gestor de repositorios de código así como de las herramientas que ofrece. En el capitulo 4 titulado Implementación y Pruebas, sección~\ref{repo}  Repositorio de Código se profundiza en esta cuestión. 
 
 Por otra parte, para implementar la buena práctica de Despliegue Continuo se ha decidido utilizar como tecnología de virtualización  Docker, lo que permite aplicar el mismo tratamiento a las diversas aplicaciones generadas por el sistema, independientemente de de su naturaleza o dominio. En la sección ~\ref{infra} 
-Infraestructura Virtual de las Aplicaciones se profundiza y justifica el uso de esta tecnología para cumplir con el objetivo de desplegar y disponibilizar las aplicaciones generadas a través de Internet. 
+Infraestructura Virtual de las Aplicaciones se profundiza y justifica el uso de esta tecnología para cumplir con el objetivo de desplegar y disponibilizar las aplicaciones generadas a través de Internet. De manera adicional, en la sección ~\ref{mercado} Tecnología en el Mercado se repasan las principales soluciones orientadas al problema aquí planteado que ofrece tanto la comunidad Open-Source como los proveedores de soluciones en la nube.   
 
 \section{Programación Generativa}
 
@@ -436,9 +436,11 @@ Para alcanzar sus objetivos, la programación generativa ha de cumplir los sigui
 
 \subsection{En este proyecto}
 
-Este proyecto se apoya en la programación generativa para sintetizar el ciclo de vida del desarrollo software, abstrayendo al usuario de los detalles internos de programación y permitiendo generar aplicaciones mediante una especificación de alto nivel. En este sistema el objetivo  de generar aplicaciones no se limita al código fuente, si no que involucra otros aspectos como creación y configuración de recursos virtuales como por ejemplo el repositorio de código donde contener el código fuente, la configuración necesaria para dotar a las aplicaciones generadas de un ciclo de integración continua para evolucionar el código generado si fuera necesario, configuración necesaria para compilar, distribuir y disponer de artefactos ejecutables, así como  la configuración y recursos virtuales necesarios para el despliegue continuo de las aplicaciones.
+Resulta imperativo presentar como ejemplo  la produción en cadena o la produción en escala que Henry Ford aplicó en 1908 en el sector del automóvil. Este proceso de producción industrial revoluciono el mercado ya que mejoraba los tiempos de entrega, abarataba precio de producción y garantizaba un nivel de calidad similar a lo largo de toda la linea de productos fabricados. La idea de la cadena de producción se basa en que dado un diseño, por ejemplo un coche, en cada etapa de la cadena de producción  se agrega un determinado componente y que la suma de N etapas con sus correspondientes componentes dan lugar a un producto completo y funcional, en el caso de este ejemplo un Ford T. 
+
+En linea con este concepto de producción en cadena, el cual es aplicado hoy en día en numerosos sectores, el objetivo de este proyecto es construir una cadena de producción software que sea capaz de generar y desplegar aplicaciones, para ello este proyecto se apoya en la programación generativa para sintetizar el ciclo de vida del desarrollo software, abstrayendo al usuario de los detalles internos de programación y permitiendo generar aplicaciones mediante una especificación de alto nivel. En este sistema el objetivo  de generar aplicaciones no se limita al código fuente, si no que involucra otros aspectos como creación y configuración de recursos virtuales como por ejemplo el repositorio de código donde contener el código fuente, la configuración necesaria para dotar a las aplicaciones generadas de un ciclo de integración continua para evolucionar el código generado si fuera necesario, configuración necesaria para compilar, distribuir y disponer de artefactos ejecutables, así como  la configuración y recursos virtuales necesarios para el despliegue continuo de las aplicaciones.
  
-En el libro Code Generation in Action (In Action Series)\cite{codeg} se presentan diversos ejemplos prácticos que han sido usados como referente en la implementación de este sistema para cubrir aspectos tales como:
+En el libro Code Generation in Action (In Action Series)\cite{codeg} se presentan diversos ejemplos prácticos que han sido utilizados como referente en la implementación de este sistema para cubrir aspectos tales como:
 
 \begin{enumerate}
 \item Generación de Interfaces de usuario. 
@@ -448,7 +450,7 @@ En el libro Code Generation in Action (In Action Series)\cite{codeg} se presenta
 \end{enumerate}
 
 
-El sistema aquí propuesto entra en la categoría generativa de model driven design, donde la especificación de alto nivel proporcionada por el usuario define el modelo de aplicación o servicio web  que se va a generar. Para el proceso generativo se ha construido un motor de plantillas capaz de producir aplicaciones de diversa naturaleza o dominio a partir del modelo de aplicación definido como entrada por el usuario.  En el libro Code generation with templates\cite{templates} se presenta por una parte un enfoque matemático para justificar el uso y mejora de plantillas y por otro un enfoque práctico y aplicado de como trabajar con plantillas o como definir el meta-lenguaje necesario para las plantillas.  
+El sistema aquí propuesto entra en la categoría generativa de model driven design, donde la especificación de alto nivel proporcionada por el usuario define el modelo de aplicación o servicio web  que se va a generar. Para el proceso generativo se ha construido un motor de plantillas capaz de producir aplicaciones de diversa naturaleza o dominio a partir del modelo de aplicación definido como entrada por el usuario.  En el libro Code generation with templates\cite{templates} se presenta por una parte un enfoque matemático para justificar el uso y mejora de plantillas y por otro un enfoque práctico y aplicado de como trabajar con plantillas o como definir el meta-lenguaje necesario para las plantillas.  Como trabajo previo relacionado se hace referencia al proyecto Apigena\cite{apigena} donde de aborda la producción de APIs-REST mediante un enfoque generativo. 
 
 \section{Cloud Computing}
 
@@ -526,17 +528,28 @@ Estas son algunas de las ventajas o características de una implementación basa
 \item Seguridad física en los centros de datos.
 \end{enumerate}
 
-\subsection{En el Mercado}
+\subsection{Tecnología en el Mercado}\label{mercado}
 
-Actualmente en el mercado existen soluciones cloud que ofrecen parte de la funcionalidad que este proyecto intenta cubrir, las mas destacadas son: 
+Actualmente en el mercado existen soluciones cloud que ofrecen parte de la funcionalidad que este proyecto intenta cubrir, las más destacadas son: 
+
+
+\subsubsection{Github}
+
+GitHub\cite{github} es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja el código en repositorios y brinda herramientas muy útiles para trabajar de forma colaborativa. Github\cite{github2} ofrece varias herramientas:
+
+\begin{enumerate}
+\item Una wiki para el mantenimiento de las distintas versiones de las aplicaciones.
+\item Un sistema de seguimiento de problemas que permiten a los miembros de un equipo de desarrollo detallar problemas software.
+\item Una herramienta de revisión de código, donde se pueden añadir anotaciones en cualquier punto de un fichero y debatir sobre determinados cambios realizados en un commit específico.
+\item Un visor de ramas donde se pueden comparar los progresos realizados en las distintas ramas de un repositorio.
+\end{enumerate}
 
 \subsubsection{Heroku}
 
 Heroku es  plataforma en la nube basada en un sistema de contenedores gestionados, con servicios de datos integrados y un potente ecosistema para implementar y ejecutar aplicaciones. Heroku presenta una fácil integración con diversos servicios web como por ejemplo Github. Heroku se caracteriza por el fichero de configuración denominado Procfile depositado junto al repositorio de código definiendo comportamientos relativos a como ese código fuente ha de ser ejecutado o desplegado.  Heroku proporciona una herramienta de linea de comandos que facilita la automatización de tareas y despliegues.
 
 \subsubsection{Kubernetes}
-https://www.redhat.com/es/topics/containers/what-is-kubernetes
-
+Kubernetes\cite{kube} es una plataforma de código abierto que automatiza y orquesta las operaciones con contenedores Docker. Kubernetes permite agrupar conjuntos de contenedores para ejecutar aplicaciones o montar ecosistemas cloud de una manera rápida y sencilla a lo largo de las distintas tipos de cloud: públicas, privadas o híbridas. Su objetivo es el de mejorar el despliegue y operación de aplicaciones software que utilicen contenedores como motor de virtualización ligera.  
 
 \subsubsection{GCP: Cloud Code}
 
@@ -549,12 +562,20 @@ Google Cloud Platform\cite{gcp} presenta Cloud Code\cite{gcpcode} como un conjun
 
 El objetivo de Cloud Code es el de mejorar el ciclo de vida de desarrollo software de aplicaciones cloud  nativas orientadas a kubernetes,  la implementación del orquestador de contenedores en su propia plataforma cloud. 
 
+\subsubsection{Travis CI}
+
+Travis-CI\cite{travis} es una plataforma de código abierto orientada a la Integración, Entrega y despliegue continuo, mejorando el ciclo de vida del desarrollo software al integrarse con servicios de terceros. Travis-CI permite definir las etapas del pipeline al que el software en cuestión ha de someterse mejorando notablemente el proceso de integración y testing. 
+
+\subsubsection{Docker Hub}
+
+Docker Hub\cite{dhub} es un repositorio de artefactos alojado en la nube. Pone a disposición de los usuarios un entorno virtual donde crear, probar, almacenar y distribuir imágenes Docker. El objetivo de Docker Hub es el de mejorar el proceso de entrega y despliegue continuo al disponibilizar su repositorio a través de Internet facilitando la automatización de estas buenas prácticas. 
+
 \subsubsection{AWS:CodeDeploy}
 
 Amazon Web Services\cite{aws} presenta  CodeDeploy\cite{awscode} como servicio gestionado para automatizar tareas de despliegue software sobre diversos recursos virtuales de su propia nube como máquinas virtuales ( EC2), contenedores docker (Fargate), funciones cloud ( Lambda) o servidores locales. Este tipo de servicios optimizan el ciclo de vida del desarrollo software y permiten aplicar buenas prácticas como el despliegue continuo de software. 
 
-\subsubsection{CodePipeline}
-
+\subsubsection{AWS: CodePipeline}
+Amazon Web Services\cite{aws} presenta  CodePipeline\cite{awspipe} como servicio administrado para la implementación de entrega continua en proyectos software. Este servicio automatiza las actualizaciones de infraestructura y de aplicación. Su objetivo es el de mejorar el ciclo de vida del desarrollo software reduciendo las tareas manuales relativas al desarrollo y operaciones. Aunque inicialmente fue pensado para servicios de la propia nube de AWS sus últimas actualizaciones permiten su integración con servicios de terceros.  
 
 \subsection{En este Proyecto}
 
@@ -562,9 +583,11 @@ Como se ha comentado en la introducción, las aplicaciones generadas por este si
 
 En este proyecto se ha de diferenciar por una parte la infraestructura virtual y los recursos de la nube utilizados para poner a disposición de los usuarios  a través de Internet las aplicaciones generadas y por otra parte los recursos virtuales y de computación propios del sistema software necesarios para su correcto funcionamiento. 
 
-Este sistema software pone a disposición de los usuarios un marco de trabajo generativo para crear y desplegar aplicaciones, está actividad de negocio entra dentro del tipo de servicio en la nube clasificado como Software as a Service\ref{secsaas} puesto que el usuario hace uso del sistema para consumir las aplicaciones que decide generar pero es abstraído del entorno virtual donde estas aplicaciones corren, es decir, el usuario trabaja a nivel de aplicación o servicio software. En la sección ~\ref{infra}  Infraestructura Virtual de las Aplicaciones se profundiza en estos conceptos y en la tecnología utilizada para su implementación. 
+Como se puede observar en las herramientas y tecnologías que están actualmente presentes en el mercado, es notable la necesidad de integrar y automatizar tareas relacionadas con el ciclo de vida del desarrollo software y las buenas prácticas. Aunque las herramientas presentadas tienen un gran alcance, ninguna presenta una solución completa como la que se presenta en este proyecto. Este sistema software pone a disposición de los usuarios un marco de trabajo generativo para crear y desplegar aplicaciones en unos sencillos pasos con el único requisito de poseer un perfil en Github. Para ello se integran diversas funcionalidades de servicios cloud como Github, Heroku y máquinas virtuales proporcionadas por la nube pública de Google  junto con Docker para construir un pipeline que permita generar y desplegar aplicaciones haciendo uso de las buenas prácticas anteriormente mencionadas.
 
-Por otra parte, para garantizar el correcto funcionamiento de este sistema software se requieren de los otros dos tipos de servicios en la nube. En la sección ~\ref{iv} Infraestructura Virtual se profundiza en los recursos de computación en la nube utilizados pero de manera resumida indicar que por una parte se hace uso de un proveedor de Plataforma como Servicio\ref{secpaas} para ejecutar el código fuente del proyecto y  maquinas virtuales correspondientes al tipo Infraestructura como Servicio que ofrece la nube pública de Google Cloud. 
+Está actividad de negocio entra dentro del tipo de servicio en la nube clasificado como Software as a Service\ref{secsaas} puesto que el usuario hace uso del sistema para consumir las aplicaciones que decide generar pero es abstraído del entorno virtual donde estas aplicaciones corren, es decir, el usuario trabaja a nivel de aplicación o servicio software. En la sección ~\ref{infra}  Infraestructura Virtual de las Aplicaciones se profundiza en estos conceptos y en la tecnología utilizada para su implementación. 
+
+Por otra parte, para garantizar el correcto funcionamiento de este sistema software se requieren de los otros dos tipos de servicios en la nube. En la sección ~\ref{iv} Infraestructura Virtual se profundiza en los recursos de computación en la nube utilizados presentando los distintos entornos virtuales disponibles para que los usuarios puedan utilizar el sistema generativo.
 
 
 \chapter{Planificación y Análisis}
@@ -738,11 +761,9 @@ Los diagramas de secuencia especifican las interacciones temporales entre las pi
 \chapter{ Implementación y Pruebas}
 
 
-\section{Implementación}
+\section{Implementación y Desarrollo}
 
-\section{Desarrollo}
-
-En el proceso de desarrollo del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y escalabilidad del software resultante.
+En el proceso de desarrollo e implementación del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y escalabilidad del software resultante.
 
 \begin{figure}[H]
 \centering
@@ -760,18 +781,18 @@ Los componentes\cite{mvc3} del Modelo-Vista-Controlador se pueden definir en:
 \item \textbf{Controlador:} Responde a eventos invocando peticiones al modelo cuando se hace alguna solicitud de la información (por ejemplo, editar un documento o un registro en base de datos). El controlador interactúa con su vista asociada para realizar cambios en la forma de representar el modelo.
 \end{enumerate}
 
-Como parte del desarrollo del proyecto también se ha utilizado la metodología de ingeniería del software conocida como desarrollo basado en test o TDD. Dicha metodología consiste en escribir los test necesarios para cubrir las funcionalidades del sistema y a partir de ellos, escribir el código necesario para que dichas pruebas sean superadas, cumpliendo así la funcionalidad que se esta poniendo a prueba.  En las siguientes sub-secciones se detallan las partes que forman el sistema así como las tecnologías utilizadas. 
+Como parte del desarrollo del proyecto también se ha utilizado la metodología de ingeniería del software conocida como desarrollo basado en test o TDD. Dicha metodología consiste en escribir los test necesarios para cubrir las funcionalidades del sistema y a partir de ellos, escribir el código necesario para que dichas pruebas sean superadas, cumpliendo así la funcionalidad que se esta poniendo a prueba.  En las siguientes secciones se detallan las partes que forman el sistema así como las tecnologías utilizadas. 
 
 \subsection{Back-End}
 
-El Back-End o servidor se refiere a la parte trasera del sistema, donde ocurre toda la lógica y funcionalidad pero que es transparente para el usuario final que consume el sistema. Para facilitar la comprensión de las partes que forman  el back-end del proyecto se van a desglosar en las siguientes sub-secciones.
+El Back-End o servidor se refiere a la parte trasera del sistema, donde ocurre toda la lógica y funcionalidad pero que es transparente para el usuario final que consume el sistema. Para facilitar la comprensión de las partes que forman  el Back-End del proyecto se van a desglosar en las siguientes secciones.
 
 \subsubsection{Servidor}
 
-El servidor es la entidad principal del Back-End, contiene la lógica del sistema y es el responsable de la comunicación entre el resto de partes del back-end y de servir o renderizar las vistas al cliente.
+El servidor es la entidad principal del Back-End, contiene la lógica del sistema y es el responsable de la comunicación entre el resto de componentes del sistema y de servir o renderizar las vistas al cliente.
 El servidor ha sido desarrollado utilizando Golang\cite{go} como lenguaje de programación. Inicialmente se pensó en utilizar JavaScript bajo el framework Node.JS, ya que dicho marco de trabajo funciona de manera asíncrona, lo que facilita muchas de las operaciones en segundo plano que este sistema ha de realizar, ademas Node.JS facilita la integración del servidor con diversas tecnologías cliente basadas también en JavaScript. Una de las principales deficiencias  observadas en el uso de JavaScript para el desarrollo del servidor de este proyecto es el manejo de plantillas para el generador de código por lo que este lenguaje fue descartado.
 
-En la etapa de generación de código la templatización de los modelos de datos necesarios para producir aplicaciones es vital, no solo en su implementación si no también en la eficiencia de estas operaciones y es aquí donde Golang destaca, ya que permite serializar estructuras de datos complejas y utilizar dicha representación para crear contenido. Otra ventaja que proporciona utilizar Golang en este proyecto es el uso de Go-Routinas, es decir, la capacidad de ejecutar funcionalidad en segundo plano de una manera sencilla y controlada junto con la generalización que se alcanza al usar interfaces hacen que Golang sea el lenguaje de programación adecuado para el desarrollo de este proyecto.  Es interesante destacar que Golang ha sido diseñado para optimizar el uso concurrente de las aplicaciones creadas con él, lo que mejora considerablemente los tiempos de respuesta y la experiencia de usuario de cara a que el proyecto sea utilizado por numerosos clientes a través de Internet.
+En la etapa de generación de código la templatización de los modelos de datos necesarios para producir aplicaciones es vital, no solo en su implementación si no también en la eficiencia de estas operaciones y es aquí donde Golang destaca, ya que permite serializar estructuras de datos complejas y utilizar dicha representación para crear contenido. Otra ventaja que proporciona utilizar Golang en este proyecto es el uso de Go-Routinas, es decir, la capacidad de ejecutar funcionalidad en segundo plano de una manera sencilla y controlada junto con la generalización que se alcanza al usar interfaces. Estos motivos hacen que Golang sea el lenguaje de programación adecuado para el desarrollo de este proyecto.  Es interesante destacar que Golang ha sido diseñado para optimizar el uso concurrente de las aplicaciones creadas con él, lo que mejora considerablemente los tiempos de respuesta y la experiencia de usuario de cara a que el proyecto sea utilizado por numerosos clientes a través de Internet.
 
 \subsubsection{Persistencia de Datos}
 
@@ -792,24 +813,12 @@ En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen
 
 \subsubsection{Repositorio de Código}\label{repo}
 
-Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros ( README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros producidos por el sistema son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github\cite{github}.
-
-GitHub\cite{github} es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja el código en repositorios y brinda herramientas muy útiles para trabajar de forma colaborativa. Github\cite{github2} ofrece varias herramientas:
+Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros ( README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros producidos por el sistema son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github\cite{github} aprovechando de este gestor de repositorios las siguientes funcionalidades: 
 
 \begin{enumerate}
-\item Una wiki para el mantenimiento de las distintas versiones de las aplicaciones.
-\item Un sistema de seguimiento de problemas que permiten a los miembros de un equipo de desarrollo detallar problemas software.
-\item Una herramienta de revisión de código, donde se pueden añadir anotaciones en cualquier punto de un fichero y debatir sobre determinados cambios realizados en un commit específico.
-\item Un visor de ramas donde se pueden comparar los progresos realizados en las distintas ramas de un repositorio.
-\end{enumerate}
+\item \textbf{ Autenticación.} El usuario final que utilice este sistema para generar aplicaciones necesita una cuenta de Github, ya que la autenticación mediante usuario y contraseña corresponde con el las credenciales  de su perfil de Github. Esto permite al sistema crear repositorios y subir el código generado a dichos repositorios bajo el perfil del usuario registrado. El proceso de autenticación contra Github proporciona una Token  de acceso el cual es aprovechado por una parte por el sistema generativo para realizar llamadas a la API  de Github y automatizar ciertas operaciones en nombre del usuario final y por otra parte los usuarios finales del sistema  pueden utilizar este Token para trabajar localmente con las aplicaciones generadas por el sistema.
 
-
-Este proyecto aprovecha principalmente las siguientes funcionalidades ofertadas por Github:
-
-\begin{enumerate}
-\item \textbf{ Autenticación.} El usuario final que utilice este sistema para generar aplicaciones necesita una cuenta de Github, ya que la autenticación mediante user/pass corresponde con el user/pass de su cuenta de github. Esto permite al sistema crear repositorios y subir el código generado a dichos repositorios bajo el perfil del usuario registrado. El proceso de autenticación contra Github proporciona una Token  de acceso el cual es aprovechado por una parte por el sistema generativo para realizar llamadas a la API  de Github y automatizar ciertas operaciones en nombre del usuario final y por otra parte los usuarios finales del sistema  pueden utilizar este Token para trabajar localmente con las aplicaciones generadas por el sistema.
-
-\item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions\cite{github3}  que permiten automatizar, customizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generatión este sistema produce un fichero  en el path  <repositorio>/.github/workflows/ci.yml donde se describe el proceso o etapas de compilación, testing y empaquetado del la aplicación contenida en el repositorio, independientemente de la naturaleza de la aplicación, dando lugar a un artefacto auto-contenido listo para ser desplegado sobre un entorno virtual. Esto garantiza el uso de las buenas prácticas  de integración y entrega continua relativas al desarrollo software en todas las aplicaciones generadas. 
+\item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions\cite{github3}  que permiten automatizar, personalizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generatión este sistema produce un fichero  en el path  \textit{<repositorio>/.github/workflows/ci.yml} donde se describe el proceso o etapas de compilación, testing y empaquetado del la aplicación contenida en el repositorio, independientemente de la naturaleza de la aplicación, dando lugar a un artefacto auto-contenido listo para ser desplegado sobre un entorno virtual. Esto garantiza el uso de las buenas prácticas  de integración y entrega continua relativas al desarrollo software en todas las aplicaciones generadas. 
 
 \item \textbf{Gestión de Artefactos} Github proporciona los denominados GitHub-Packages\cite{github4} que permiten publicar y consumir paquetes o artefactos resultado de la compilación y empaquetado de las aplicaciones software albergadas en un repositorio de código. GitHub-Packages es capaz de gestionar paquetes de diversa naturaleza, siendo las imágenes docker las utilizadas en este proyecto.
 \end{enumerate}
@@ -829,7 +838,7 @@ Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicacione
 
 La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores disponen de recursos similares pero de manera compartida con el núcleo  del sistema operativo anfitrion y junto con otros contenedores los cuales se ejecutan  como procesos asilados en el espacio de usuario del sistema operativo. No están vinculados con ninguna infraestructura especifica.
 
-Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se produce un fichero denominado Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración y entrega continua de la aplicación  para producir una imagen docker como artefacto. Este artefacto es utilizado para crear un contenedor docker en un entorno virtual acesible a internet, habilitando el puerto necesario para garantizar que el trafico es re-direccionando al contenedor correspondiente y de esta manera permitir que el usuario del sistema generativo consuma a través de Internet la aplicación generada, siendo todo esto trasparente para él. 
+Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se produce un fichero denominado Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración y entrega continua de la aplicación  para producir una imagen docker como artefacto. Este artefacto es utilizado para crear un contenedor docker en un entorno virtual accesible a Internet( máquina virtual), habilitando el puerto necesario para garantizar que el trafico es re-direccionamiento al contenedor correspondiente y de esta manera permitir que el usuario del sistema generativo consuma a través de Internet la aplicación generada, siendo todo esto trasparente para él. 
 
 
 \subsection{Front-end}
@@ -849,17 +858,95 @@ WebSocket es un tecnología basada en JavaScript que permite la comunicación bi
 Por último destacar que para los estilos de la capa cliente se ha utilizado la librería CSS Bootstrap\cite{boot}
 
 \subsection{Infraestructura Virtual}\label{iv}
-Heroku ( plataforma as a service) para ejecutar code-runner.go + Maquina expuesta a internet en google cloud ccon un demonio docker expuesto por el puerto 5555 comunicada con el servidor mediant TLS.
+
+Para que el sistema software sea consumido por los clientes se han disponibilizado dos entornos independientes con las siguientes características:
+
+\subsubsection{Entorno de Desarrollo}
+
+El entorno\url{https://coderunner.herokuapp.com/} ha estado disponible en todo momento desde el comienzo del proyecto. El objetivo de este entorno es el de facilitar el proceso de desarrollo ya que  como se ha visto en los diagramas de caso de uso y en la sección anterior dedicada al Back-End, el sistema esta compuesto por 4 piezas principales y ha sido necesario disponer de ellas para trabajar en su integración y comportamiento de cara a cumplir con los requisitos propuestos. Este entorno se caracteriza por la siguiente distribución: 
+
+
+\begin{enumerate}
+\item Servidor principal (code-runner.go): Desplegado en Heroku\cite{hero}
+\item Capa de persistencia (MongoDB): Consumido desde el servicio de bases de datos gestionadas \url{https://mlab.com}
+\item Gestor de repositorios: Github\cite{github}
+\item Demonio Docker: Maquina virtual expuesta a Internet con TLS sobre el proveedor de nube publica Google Cloud\cite{gcp}
+\end{enumerate}
+
+El objetivo de esta configuración ha sido el de conseguir el conjunto de recursos virtuales necesarios para el proyecto con el menor gasto posible (0€)
+
+\subsubsection{Entorno de Producción}
+
+El entorno\url{https://apps.gcm-coderunner.com/} ha sido creado en las ultimas etapas del proyecto, teniendo claras las necesidades a cubrir y prestando especial atención a los posibles cuellos de botella, como puede ser la capacidad de la máquina virtual expuesta a Internet para instanciar contenedores.  Tambien se ha prestado especial atención en implementar medidas de seguridad como es el uso de certificados (TLS) o el no consumir servicios de terceros para la capa de persistencia. Este entorno se caracteriza por la siguiente distribución: 
+
+\begin{enumerate}
+\item Servidor principal (code-runner.go): Desplegado en VM de GoogleCloud\cite{gcp}
+\item Capa de persistencia (MongoDB): Instalada en la misma VM donde corre el servidor principal y expuesta solo para ser consumida por procesos ejecutados en localhost. 
+\item Gestor de repositorios: Github\cite{github}
+\item Demonio Docker: Ejecutado en la misma VM que el servidor principal  pero expuesto a con TLS a localhost, limitando de esta forma los posibles ataques externos que reciba el sistema, pues solo se exponen a Internet los contenedores de los usuarios, no el servicio de contenedores en si. 
+\end{enumerate}
+
+
+El objetivo de esta configuración ha sido el de conseguir el conjunto de recursos virtuales necesarios para el proyecto prestando especial atención a la seguridad y también a la capacidad, ya que el dimensionamiento de las VM de este entorno es notablemente superior al de el entorno de desarrollo lo que permite la ejecución de números contenedores por diversos usuarios concurrentes.  El mantenimiento de este entorno produce gasto directamente proporcional al dimensionamiento de las máquinas virtuales que se utilizan así como el nombre de dominio usado. 
 
 \subsection{Seguridad}
 
-mutual tls
+\subsubsection{Credenciales de Usuario}
+
+Como se indicó anteriormente, las credenciales de usuario necesarias para utilizar el sistema se corresponden con las credenciales del perfil del usuario en Github. Esto es así debido a que la autenticación (¿Quien es usted?) y la autorización (¿Qué le permite usted hacer al sistema sobre sus repositorios de código?) son delegadas a Github mediante las denominado OAuth Apps. Una aplicación OAuth consise en autenticación delegada a terceros, es decir, cuando el usuario comienza a utilizar este sistema, los servidores de Github validan sus credenciales y emiten un token de acceso con el que realizar operaciones vía API. Este token es almacenado en una sesión del servidor con un tiempo de espiración determinado. 
+
+\subsubsection{Comunicación Cliente-Servidor}
+
+Este proyecto implementa Transport Layer Security (TLS) para garantizar que la información intercambiada entre el servidor y los clientes es segura y viaja encriptada exponiendo su servicio mediante protocolo HTTPS. Por otra parte, la comunicación del servidor con el demonio docker donde se ejecutan las aplicaciones generadas por el usuario también utiliza TLS.
 
 \section{Caso de Uso}
 
-Para mostrar las capacidades del sistema software GCM:Code-Runner se presenta el siguiente caso de uso desglosado en las distintas operaciones que un usuario final es capaz de realizar sobre el sistema. 
+Para mostrar las capacidades del sistema software GCM:Code-Runner se presenta el siguiente caso de uso desglosado en las distintas operaciones que un usuario final es capaz de realizar sobre el sistema en cualquiera de los dos entornos disponibles:
+
+\begin{enumerate}
+\item \url{https://apps.gcm-coderunner.com}
+\item \url{https://coderunner.herokuapp.com}
+\end{enumerate}
+
+En este caso de uso se va a utilizar el primero de ellos por ser mas seguro y disponer de un dimensionamiento mayor (mejores prestaciones)
 
 \subsection{Autenticación y Autorización}
+
+Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realizar operaciones sobre sus repositorios de código. Para ello, desde un navegador web navegar hasta \url{https://apps.gcm-coderunner.com}
+
+Se presenta la pagina de bienvenida. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{imagenes/casouso/1.png}
+\caption{   }
+\end{figure}
+
+Para iniciar sesión, es necesario hacer click en el boton de "Login with Github" y el proceso de autenticación es delegado a este servicio:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{imagenes/casouso/2.png}
+\caption{   }
+\end{figure}
+
+Es necesario introducir Usuario y Contraseña correspondientes al perfil de Github. Haciendo Click en el botón de "Sign In" el mecanismo de autenticación continua con la autorización: 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{imagenes/casouso/3.png}
+\caption{   }
+\end{figure}
+
+La autorización consiste en conceder permisos al sistema para realizar operaciones en nombre del usuario. Haciendo Click en el botón de "Authorize" se conceden permisos para gestionar repositorios, gestionar paquetes y utilizar flujos de integración continua. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{imagenes/casouso/4.png}
+\caption{   }
+\end{figure}
+
+Finalmente se accede del "Workspace" del usuario que actualmente se encuentra vacío ya que aun no ha creado ninguna aplicación. 
 
 \subsection{Generando Aplicaciones}
 
