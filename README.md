@@ -13,7 +13,8 @@ applications or cloud services cleanly and quickly.
 Code-Runner use a high-level specification as input to generate a
 completely application ( Repository, CI/CD workflow, Source Code,
 configuration, tools and documentation) deployed and available over
-Internet using Docker technology. 
+Internet using Docker technology. All these resources are stored in
+source code repositories under the developer's Github profile.
 
 Code-Runner generation capabilities supports the following applications nature:
 
