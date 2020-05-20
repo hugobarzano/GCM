@@ -28,8 +28,8 @@ func stopApp(w http.ResponseWriter, r *http.Request) {
 		}
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
-		dao := store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, app)
+
+		appObj, err := store.ClientStore.GetApp(ctx, user, app)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error getting app:%s", err.Error()),
@@ -58,7 +58,7 @@ func stopApp(w http.ResponseWriter, r *http.Request) {
 		appObj.Url = ""
 		appObj.Spec["dockerId"] = ""
 
-		_, err = dao.UpdateApp(ctx, appObj)
+		_, err = store.ClientStore.UpdateApp(ctx, appObj)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error updating DB with stopped app:%s", err.Error()),

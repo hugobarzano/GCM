@@ -31,8 +31,7 @@ func viewApp(w http.ResponseWriter, r *http.Request) {
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 
-		dao := store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, app)
+		appObj, err := store.ClientStore.GetApp(ctx, user, app)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error getting app:%s", err.Error()),
@@ -64,8 +63,7 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dao := store.InitMongoStore(ctx)
-	appObj, err := dao.GetApp(ctx, owner, appName)
+	appObj, err := store.ClientStore.GetApp(ctx, owner, appName)
 	if err != nil {
 		http.Error(w,
 			fmt.Sprintf("error getting app:%s", err.Error()),
@@ -130,8 +128,7 @@ func getApp(w http.ResponseWriter, r *http.Request) {
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 
-		dao := store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, appName)
+		appObj, err := store.ClientStore.GetApp(ctx, user, appName)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error getting app:%s", err.Error()),

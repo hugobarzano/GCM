@@ -29,8 +29,7 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
 
-		dao:=store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, app)
+		appObj, err := store.ClientStore.GetApp(ctx, user, app)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error getting app:%s", err.Error()),
@@ -70,7 +69,7 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 				http.StatusInternalServerError)
 		}
 
-		err = dao.DeleteApp(ctx,user,app)
+		err = store.ClientStore.DeleteApp(ctx,user,app)
 		if err != nil {
 			fmt.Println("error removing app: " + err.Error())
 		}

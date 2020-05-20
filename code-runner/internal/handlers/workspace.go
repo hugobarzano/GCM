@@ -17,14 +17,13 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 	}
 	user := session.Values[constants.SessionUserName].(string)
 	ctx := req.Context()
-	dao := store.InitMongoStore(ctx)
-	workspace, err := dao.GetWorkspace(ctx, user)
+	workspace, err := store.ClientStore.GetWorkspace(ctx, user)
 	if err != nil {
 		fmt.Println("ERRRR:" + err.Error())
 	}
 	if workspace == nil {
 		fmt.Println("First login for: " + user)
-		workspace, err = dao.CreateWorkspace(ctx, &models.Workspace{
+		workspace, err = store.ClientStore.CreateWorkspace(ctx, &models.Workspace{
 			Owner: user,
 			Des:   "Base workspace to app generation.",
 		})
@@ -54,8 +53,7 @@ func getWorkspace(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	ctx := req.Context()
-	dao := store.InitMongoStore(ctx)
-	workspace, err := dao.GetWorkspace(ctx, user)
+	workspace, err := store.ClientStore.GetWorkspace(ctx, user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

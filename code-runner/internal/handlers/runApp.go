@@ -28,8 +28,7 @@ func runApp(w http.ResponseWriter, r *http.Request) {
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
 
-		dao := store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, app)
+		appObj, err := store.ClientStore.GetApp(ctx, user, app)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error getting app:%s", err.Error()),

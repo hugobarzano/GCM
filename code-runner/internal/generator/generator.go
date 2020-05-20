@@ -54,9 +54,8 @@ func (app *GenApp) InitializeCode(user string, token string, mail string) {
 		fmt.Printf("PushFile Error: %s", err.Error())
 	}
 
-	dao := store.InitMongoStore(ctx)
 	app.App.Status = models.BUILDING
-	_, err := dao.UpdateApp(ctx, app.App)
+	_, err := store.ClientStore.UpdateApp(ctx, app.App)
 	if err != nil {
 		fmt.Printf("DB Error: %s", err.Error())
 	}

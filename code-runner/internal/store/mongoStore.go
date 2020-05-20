@@ -17,6 +17,8 @@ type MongoStore struct {
 	Client *mongo.Client
 }
 
+var ClientStore *MongoStore
+
 func InitMongoStore(ctx context.Context) *MongoStore {
 	clientOptions := options.Client().ApplyURI(config.GetConfig().MongoUri)
 	client, err := mongo.NewClient(clientOptions)

@@ -60,8 +60,7 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 		}
 
 		reqApp.App.Repository = repo.GetCloneURL()
-		dao := store.InitMongoStore(ctx)
-		_, err = dao.CreateApp(ctx, reqApp.App)
+		_, err = store.ClientStore.CreateApp(ctx, reqApp.App)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("DB Error: %s", err.Error()),

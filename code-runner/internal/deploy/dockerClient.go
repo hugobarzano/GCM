@@ -92,9 +92,9 @@ func (appDocker *DockerApp) imagePull(ctx context.Context, token string) error {
 	if err != nil {
 		return err
 	}
-	dao := store.InitMongoStore(ctx)
+
 	appDocker.App.Status = models.READY
-	_, err = dao.UpdateApp(ctx, appDocker.App)
+	_, err = store.ClientStore.UpdateApp(ctx, appDocker.App)
 	if err != nil {
 		fmt.Printf("DB Error: %s", err.Error())
 		return err
@@ -254,8 +254,7 @@ func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
 	appDocker.App.Spec["dockerId"] = containerObj.ID
 	appDocker.App.Status = models.RUNNING
 	appDocker.App.SetDeployURL(availablePort)
-	dao := store.InitMongoStore(ctx)
-	_, err = dao.UpdateApp(ctx, appDocker.App)
+	_, err = store.ClientStore.UpdateApp(ctx, appDocker.App)
 
 	return err
 }
