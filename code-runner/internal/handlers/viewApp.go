@@ -100,7 +100,6 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 		scanner := bufio.NewScanner(logStream)
 		scanner.Split(bufio.ScanLines)
 		for scanner.Scan() {
-			//fmt.Println(scanner.Text())
 			err = con.WriteMessage(1, []byte(scanner.Text()))
 			if err != nil {
 				log.Println("write:", err)

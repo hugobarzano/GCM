@@ -29,52 +29,55 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
 
-		appObj, err := store.ClientStore.GetApp(ctx, user, app)
-		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error getting app:%s", err.Error()),
-				http.StatusInternalServerError)
-		}
+		go func() {
+			appObj, err := store.ClientStore.GetApp(ctx, user, app)
+			if err != nil {
+				http.Error(w,
+					fmt.Sprintf("error getting app:%s", err.Error()),
+					http.StatusInternalServerError)
+			}
 
-		dockerApp := deploy.DockerApp{
-			App: appObj,
-		}
+			dockerApp := deploy.DockerApp{
+				App: appObj,
+			}
 
-		err = dockerApp.Initialize()
-		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
-				http.StatusInternalServerError)
-		}
+			err = dockerApp.Initialize()
+			if err != nil {
+				http.Error(w,
+					fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
+					http.StatusInternalServerError)
+			}
 
-		err = dockerApp.ContainerStop(ctx)
-		if err != nil {
-			fmt.Printf("error stoping app container:%s", err.Error())
-		}
+			err = dockerApp.ContainerStop(ctx)
+			if err != nil {
+				fmt.Printf("error stoping app container:%s", err.Error())
+			}
 
-		err = dockerApp.ContainerRemove(ctx)
-		if err != nil {
-			fmt.Printf("error removing app container:%s", err.Error())
-		}
+			err = dockerApp.ContainerRemove(ctx)
+			if err != nil {
+				fmt.Printf("error removing app container:%s", err.Error())
+			}
 
-		genApp := generator.GenApp{
-			App: appObj,
-		}
+			genApp := generator.GenApp{
+				App: appObj,
+			}
 
-		genApp.InitGit(ctx,accessToken)
-		_, err = genApp.DeleteRepo(ctx)
-		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error removing code repository:%s", err.Error()),
-				http.StatusInternalServerError)
-		}
+			genApp.InitGit(ctx,accessToken)
+			_, err = genApp.DeleteRepo(ctx)
+			if err != nil {
+				http.Error(w,
+					fmt.Sprintf("error removing code repository:%s", err.Error()),
+					http.StatusInternalServerError)
+			}
 
-		err = store.ClientStore.DeleteApp(ctx,user,app)
-		if err != nil {
-			fmt.Println("error removing app: " + err.Error())
-		}
+			err = store.ClientStore.DeleteApp(ctx,user,app)
+			if err != nil {
+				fmt.Println("error removing app: " + err.Error())
+			}
+		}()
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	}
+
 	http.NotFound(w, r)
 	return
 }

@@ -19,7 +19,7 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 	ctx := req.Context()
 	workspace, err := store.ClientStore.GetWorkspace(ctx, user)
 	if err != nil {
-		fmt.Println("ERRRR:" + err.Error())
+		fmt.Println("ERROR: " + err.Error())
 	}
 	if workspace == nil {
 		fmt.Println("First login for: " + user)
@@ -32,7 +32,7 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 	} else {
-		fmt.Println(user + "Already has a workspace")
+		fmt.Println(user + ": Already has a workspace")
 	}
 
 	if err := userAccessViews["workspace"].Render(w, workspace); err != nil {
