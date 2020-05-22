@@ -8,7 +8,7 @@
                     data: {owner: "{{ .Owner}}"},
                     cache: false,
                     success: function (response) {
-                        $('#apps').html(response)
+                        $('#apps').replaceWith(response)
                         console.log(response)
                     },
                     error: function (xhr) {
