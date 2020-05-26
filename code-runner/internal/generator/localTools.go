@@ -3,8 +3,8 @@ package generator
 import (
 	"code-runner/internal/generator/local"
 	"context"
-	googleGithub "github.com/google/go-github/github")
-
+	googleGithub "github.com/google/go-github/v31/github"
+)
 
 func (app *GenApp) generateLocalTools() {
 	app.Data = make(map[string][]byte)
@@ -16,18 +16,17 @@ func (app *GenApp) generateLocalTools() {
 	app.Data["bin/_pullImage.sh"] = local.GenPullImage()
 }
 
-
-func (app *GenApp) pushLocalTools(ctx context.Context,user,mail string)error {
+func (app *GenApp) pushLocalTools(ctx context.Context, user, mail string) error {
 
 	var commitMsg string
 	var fileOptions *googleGithub.RepositoryContentFileOptions
 	var err error
 
-	for file,content := range app.Data{
-		commitMsg="Generating "+file
-		fileOptions = BuildFileOptions(commitMsg, user, mail,content)
+	for file, content := range app.Data {
+		commitMsg = "Generating " + file
+		fileOptions = BuildFileOptions(commitMsg, user, mail, content)
 		_, err = app.CommitFile(ctx, file, fileOptions)
-		if err !=nil{
+		if err != nil {
 			return err
 		}
 	}

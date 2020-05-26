@@ -4,14 +4,14 @@ import (
 	"context"
 )
 
-func (app *GenApp) pushLicense(ctx context.Context,user,mail string)error{
-	licenceFileOptions := BuildFileOptions("Adding licence...", user, mail,app.License)
+func (app *GenApp) pushLicense(ctx context.Context, user, mail string) error {
+	licenceFileOptions := BuildFileOptions("Adding licence...", user, mail, app.License)
 	_, err := app.CommitFile(ctx, "LICENSE", licenceFileOptions)
 	return err
 }
 
-func (app *GenApp) generateLicense(){
-	license:=`
+func (app *GenApp) generateLicense() {
+	license := `
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -667,11 +667,11 @@ Also add information on how to contact you by electronic and paper mail.
 notice like this when it starts in an interactive mode:
 
     <program>  Copyright (C) <year>  <name of author>
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `+"show w'."+
-	"This is free software, and you are welcome to redistribute it"+
-	"under certain conditions; type `show c' for details."+`
+    This program comes with ABSOLUTELY NO WARRANTY; for details type ` + "show w'." +
+		"This is free software, and you are welcome to redistribute it" +
+		"under certain conditions; type `show c' for details." + `
 
-The hypothetical commands `+"show w' and `show c'"+` should show the appropriate
+The hypothetical commands ` + "show w' and `show c'" + ` should show the appropriate
 parts of the General Public License.  Of course, your program's commands
 might be different; for a GUI interface, you would use an "about box".
 
@@ -687,5 +687,5 @@ the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
 `
-	app.License =[]byte(license)
+	app.License = []byte(license)
 }

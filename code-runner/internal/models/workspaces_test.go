@@ -1,4 +1,5 @@
 package models
+
 //
 //import (
 //	"code-runner/internal/config"
@@ -23,11 +24,11 @@ package models
 //		t.Errorf(err.Error())
 //		t.Fail()
 //	}
-//	fmt.Println(workspaceCreate)
+//	log.Println(workspaceCreate)
 //
 //	workspaceGet,err:=GetWorkspace( databaseClient, tesOwner)
-//	fmt.Println(err)
-//	fmt.Println(workspaceGet)
+//	log.Println(err)
+//	log.Println(workspaceGet)
 //
 //	newApp:=&App{
 //		Name:"appName",
@@ -39,14 +40,14 @@ package models
 //
 //	workspaceWithApp,err := PushApp(databaseClient,workspaceGet,newApp)
 //
-//	fmt.Println(workspaceWithApp)
-//	fmt.Println(err)
+//	log.Println(workspaceWithApp)
+//	log.Println(err)
 //
 //	newApp.Name="appNameToDele"
 //	workspaceWithApp,err = PushApp(databaseClient,workspaceGet,newApp)
 //
 //	workspaceWithoutApp,err:= PopApp(databaseClient,workspaceWithApp,newApp.Name)
 //
-//	fmt.Println(workspaceWithoutApp)
-//	fmt.Println(err)
+//	log.Println(workspaceWithoutApp)
+//	log.Println(err)
 //	}

@@ -21,27 +21,26 @@ type Generator interface {
 	WithPort(port int) Generator
 	WithInputSpec(spec string) Generator
 	GenerateApi(des string)
-	GetFiles()map[string][]byte
+	GetFiles() map[string][]byte
 }
 
 type defaultNature struct{}
 
-func (g *defaultNature) Init() Generator                          { return g }
-func (g *defaultNature) WithName(name string) Generator           { return g }
-func (g *defaultNature) WithPort(port int) Generator              { return g }
+func (g *defaultNature) Init() Generator                     { return g }
+func (g *defaultNature) WithName(name string) Generator      { return g }
+func (g *defaultNature) WithPort(port int) Generator         { return g }
 func (g *defaultNature) WithInputSpec(spec string) Generator { return g }
-func (g *defaultNature) GenerateApi(des string)                   {}
-func (g *defaultNature) GetFiles() map[string][]byte			  { return nil }
-
+func (g *defaultNature) GenerateApi(des string)              {}
+func (g *defaultNature) GetFiles() map[string][]byte         { return nil }
 
 var DefaultNature = &defaultNature{}
 
 type customNature struct {
-	name       string
-	port       int
-	spec       []byte
-	files      map[string][]byte
-	model      map[string]interface{}
+	name  string
+	port  int
+	spec  []byte
+	files map[string][]byte
+	model map[string]interface{}
 }
 
 // New builds a generator from a given kind

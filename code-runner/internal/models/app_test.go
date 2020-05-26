@@ -6,11 +6,11 @@ import (
 )
 
 func Test_GetImagenName(t *testing.T) {
-	app:=&App{
-		Name: "appName",
+	app := &App{
+		Name:  "appName",
 		Owner: "appOwner",
 	}
 
-	img:=app.GetImageName()
-	fmt.Printf(img)
-	}
+	img := app.GetImageName()
+	log.Println(img)
+}

@@ -1,8 +1,8 @@
 package views
 
 import (
-	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"path/filepath"
 )
@@ -30,15 +30,15 @@ func NewView(layout string, files ...string) *View {
 }
 
 func (v *View) Render(w http.ResponseWriter, data interface{}) error {
-	fmt.Println("Rendering...")
+	log.Println("Rendering...")
 	return v.Template.ExecuteTemplate(w, v.Layout, data)
 }
 
 func layoutFiles() []string {
-	fmt.Println("Loading...")
+	log.Println("Loading...")
 	files, err := filepath.Glob(layoutsDir + "/*.gohtml")
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 	return files
 }

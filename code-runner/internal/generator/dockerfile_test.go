@@ -2,24 +2,24 @@ package generator
 
 import (
 	"code-runner/internal/models"
-	"fmt"
+	"log"
 	"testing"
 )
 
 func TestGenerateDockerfile(t *testing.T) {
-	app:=&models.App{
-		Name:"testApp",
-		Repository:"https://github.repo.com",
-		Des:"some description",
-		Owner: "testOwner",
-		Url: "TBE",
+	app := &models.App{
+		Name:       "testApp",
+		Repository: "https://github.repo.com",
+		Des:        "some description",
+		Owner:      "testOwner",
+		Url:        "TBE",
 	}
-	properties:=[]dockerfileEntry{
-		{"FROM","httpd:2.4"},
+	properties := []dockerfileEntry{
+		{"FROM", "httpd:2.4"},
 		{"MAINTAINER", "testOwner"},
-		{"COPY","./html/ /usr/local/apache2/htdocs/"},
+		{"COPY", "./html/ /usr/local/apache2/htdocs/"},
 	}
-	dockerfile:=generateDockerfile(app,properties)
-	fmt.Println(dockerfile)
-	fmt.Println(string(dockerfile))
+	dockerfile := generateDockerfile(app, properties)
+	log.Println(dockerfile)
+	log.Println(string(dockerfile))
 }

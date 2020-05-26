@@ -3,7 +3,7 @@ package handlers
 import (
 	"bufio"
 	"code-runner/internal/constants"
-	"code-runner/internal/deploy"
+	"code-runner/internal/generator"
 	"code-runner/internal/store"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -15,6 +15,7 @@ import (
 type Log struct {
 	Data string
 }
+
 func viewApp(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		ctx := r.Context()
@@ -31,8 +32,7 @@ func viewApp(w http.ResponseWriter, r *http.Request) {
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
 
-		dao := store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, app)
+		appObj, err := store.ClientStore.GetApp(ctx, user, app)
 		if err != nil {
 			http.Error(w,
 				fmt.Sprintf("error getting app:%s", err.Error()),
@@ -47,7 +47,7 @@ func viewApp(w http.ResponseWriter, r *http.Request) {
 }
 
 func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
-	ctx:=r.Context()
+	ctx := r.Context()
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -64,8 +64,7 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dao := store.InitMongoStore(ctx)
-	appObj, err := dao.GetApp(ctx, owner, appName)
+	appObj, err := store.ClientStore.GetApp(ctx, owner, appName)
 	if err != nil {
 		http.Error(w,
 			fmt.Sprintf("error getting app:%s", err.Error()),
@@ -73,9 +72,9 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !appObj.IsRunning(){
+	if !appObj.IsRunning() {
 		http.Error(w,
-			fmt.Sprintf("app not running:%s",appObj.Status),
+			fmt.Sprintf("app not running:%s", appObj.Status),
 			http.StatusTooEarly)
 		return
 	}
@@ -87,22 +86,21 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 	}
 	defer con.Close()
 
-	appDocker:=deploy.DockerApp{
-		App:appObj,
+	appDocker := generator.DockerApp{
+		App: appObj,
 	}
-	err=appDocker.Initialize()
+	err = appDocker.Initialize()
 	if err != nil {
 		http.Error(w,
 			fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
 			http.StatusInternalServerError)
 		return
 	}
-	logStream:=appDocker.GetContainerLogReader(ctx)
+	logStream := appDocker.GetContainerLogReader(ctx)
 	for {
 		scanner := bufio.NewScanner(logStream)
 		scanner.Split(bufio.ScanLines)
 		for scanner.Scan() {
-			//fmt.Println(scanner.Text())
 			err = con.WriteMessage(1, []byte(scanner.Text()))
 			if err != nil {
 				log.Println("write:", err)
@@ -113,35 +111,32 @@ func viewAppLogSocket(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func getApp(w http.ResponseWriter, r *http.Request) {
 
-		ctx := r.Context()
-		if err := r.ParseForm(); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		appName := r.FormValue("app")
-		if appName == "" {
-			http.Error(w, "Missing app Name field", http.StatusInternalServerError)
-			return
-		}
-
-		session, _ := sessionStore.Get(r, constants.SessionName)
-		user := session.Values[constants.SessionUserName].(string)
-
-		dao := store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, appName)
-		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error getting app:%s", err.Error()),
-				http.StatusInternalServerError)
-		}
-
-		if err := appsViews["getApp"].Render(w, appObj); err != nil {
-			log.Println(err.Error())
-		}
-
+	ctx := r.Context()
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-}
+	}
+	appName := r.FormValue("app")
+	if appName == "" {
+		http.Error(w, "Missing app Name field", http.StatusInternalServerError)
+		return
+	}
 
+	session, _ := sessionStore.Get(r, constants.SessionName)
+	user := session.Values[constants.SessionUserName].(string)
+
+	appObj, err := store.ClientStore.GetApp(ctx, user, appName)
+	if err != nil {
+		http.Error(w,
+			fmt.Sprintf("error getting app:%s", err.Error()),
+			http.StatusInternalServerError)
+	}
+
+	if err := appsViews["getApp"].Render(w, appObj); err != nil {
+		log.Println(err.Error())
+	}
+
+	return
+}

@@ -6,7 +6,7 @@ import (
 )
 
 func (app *GenApp) generateApiService() {
-	tech:=app.App.Spec["tech"]
+	tech := app.App.Spec["tech"]
 	var genNature api.Nature
 	switch tech {
 	case "go":
@@ -17,11 +17,11 @@ func (app *GenApp) generateApiService() {
 		genNature = api.JS
 	}
 
-	port,_:=strconv.Atoi(app.App.Spec["port"])
-	apiGenerator:=api.New(genNature)
+	port, _ := strconv.Atoi(app.App.Spec["port"])
+	apiGenerator := api.New(genNature)
 	apiGenerator.Init().
 		WithName(app.App.Name).
 		WithPort(port).
 		WithInputSpec(app.App.Spec["modelJson"]).GenerateApi(app.App.Des)
-	app.Data=apiGenerator.GetFiles()
+	app.Data = apiGenerator.GetFiles()
 }

@@ -2,19 +2,21 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
-	"code-runner/internal/deploy"
 	"code-runner/internal/generator"
+	"code-runner/internal/models"
 	"code-runner/internal/store"
+	"context"
 	"fmt"
 	"github.com/gorilla/mux"
+	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
-func removeApp(w http.ResponseWriter, r *http.Request) {
+func removeAppHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
-		ctx := r.Context()
 		vars := mux.Vars(r)
 		app := vars["app"]
 		app = strings.Replace(app, "\"", "", -1)
@@ -29,53 +31,64 @@ func removeApp(w http.ResponseWriter, r *http.Request) {
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
 
-		dao:=store.InitMongoStore(ctx)
-		appObj, err := dao.GetApp(ctx, user, app)
-		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error getting app:%s", err.Error()),
-				http.StatusInternalServerError)
-		}
-
-		dockerApp := deploy.DockerApp{
-			App: appObj,
-		}
-
-		err = dockerApp.Initialize()
-		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error Initialize docker engine:%s", err.Error()),
-				http.StatusInternalServerError)
-		}
-
-		err = dockerApp.ContainerStop(ctx)
-		if err != nil {
-			fmt.Printf("error stoping app container:%s", err.Error())
-		}
-
-		err = dockerApp.ContainerRemove(ctx)
-		if err != nil {
-			fmt.Printf("error removing app container:%s", err.Error())
-		}
-
-		genApp := generator.GenApp{
-			App: appObj,
-		}
-
-		genApp.InitGit(ctx,accessToken)
-		_, err = genApp.DeleteRepo(ctx)
-		if err != nil {
-			http.Error(w,
-				fmt.Sprintf("error removing code repository:%s", err.Error()),
-				http.StatusInternalServerError)
-		}
-
-		err = dao.DeleteApp(ctx,user,app)
-		if err != nil {
-			fmt.Println("error removing app: " + err.Error())
-		}
+		go removeApp(user, accessToken, app)
 		http.Redirect(w, r, "/workspace", http.StatusFound)
+	} else {
+		http.NotFound(w, r)
+		return
 	}
-	http.NotFound(w, r)
-	return
+}
+
+func removeApp(user, token, app string) {
+
+	ctx := context.Background()
+	appObj, err := store.ClientStore.GetApp(ctx, user, app)
+
+	if err != nil {
+		log.Println(fmt.Sprintf("error getting app:%s", err.Error()))
+	}
+
+	dockerApp := generator.DockerApp{
+		App: appObj,
+	}
+
+	err = dockerApp.Initialize()
+
+	if err != nil {
+		log.Println(fmt.Sprintf("error Initialize docker engine:%s", err.Error()))
+	}
+
+	err = dockerApp.ContainerStop(ctx)
+	if err != nil {
+		log.Println(fmt.Sprintf("error stoping app container:%s", err.Error()))
+	}
+
+	appObj.Status = models.STOPPED
+	appObj.Url = ""
+
+	_, err = store.ClientStore.UpdateApp(ctx, appObj)
+	if err != nil {
+		log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
+	}
+
+	err = dockerApp.ContainerRemove(ctx)
+	if err != nil {
+		log.Println(fmt.Sprintf("error removing app container:%s", err.Error()))
+	}
+
+	genApp := generator.GenApp{
+		App: appObj,
+	}
+
+	time.Sleep(time.Second * 4)
+	genApp.InitGit(ctx, token)
+	_, err = genApp.DeleteRepo(ctx)
+	if err != nil {
+		log.Println(fmt.Sprintf("error removing code repository:%s", err.Error()))
+	}
+
+	err = store.ClientStore.DeleteApp(ctx, user, app)
+	if err != nil {
+		log.Println(fmt.Sprintf("error removing app: " + err.Error()))
+	}
 }

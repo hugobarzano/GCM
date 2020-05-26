@@ -1,24 +1,24 @@
 package ci
 
 import (
-	"fmt"
 	"io/ioutil"
+	"log"
 )
 
-func ImageBuilder()[]byte{
+func ImageBuilder() []byte {
 	ciFileData, err := ioutil.ReadFile("internal/resources/ci/imageBuilder.yml")
 	if err != nil {
-		fmt.Println("Error Reading")
-		fmt.Println(err)
+		log.Println("Error Reading")
+		log.Println(err)
 	}
 	return ciFileData
 }
 
-func FastImageBuilder()[]byte{
+func FastImageBuilder() []byte {
 	ciFileData, err := ioutil.ReadFile("internal/resources/ci/fastImageBuilder.yml")
 	if err != nil {
-		fmt.Println("Error Reading")
-		fmt.Println(err)
+		log.Println("Error Reading")
+		log.Println(err)
 	}
 	return ciFileData
 }

@@ -19,13 +19,13 @@ div {
 func GenIndexJs(owner string) []byte {
 	index :=
 		` 
-alert( 'Hi, this is your site `+ owner +`!' );
+alert( 'Hi, this is your site ` + owner + `!' );
 `
 	return []byte(index)
 }
 
-func GenIndexHtml(name, des string)[]byte  {
-	index:=`
+func GenIndexHtml(name, des string) []byte {
+	index := `
 <!DOCTYPE html>
 <html lang="en">
 

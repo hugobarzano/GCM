@@ -12,8 +12,7 @@ var ApiRestImg string
 var DataServiceImg string
 var DevOpsServiceImg string
 
-
-func LoadImg(path string)string{
+func LoadImg(path string) string {
 	imageFile, err := ioutil.ReadFile(path)
 
 	if err != nil {
@@ -23,7 +22,7 @@ func LoadImg(path string)string{
 	encodedString := base64.StdEncoding.EncodeToString(imageFile)
 	return encodedString
 }
-func setupImg(nature string)string{
+func setupImg(nature string) string {
 	switch nature {
 	case constants.SinglePage:
 		return SinglePageImg

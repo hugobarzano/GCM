@@ -8,8 +8,6 @@ import (
 	"net/http"
 )
 
-
-
 func index(w http.ResponseWriter, req *http.Request) {
 	if req.URL.Path != "/" {
 		http.NotFound(w, req)
@@ -21,10 +19,10 @@ func index(w http.ResponseWriter, req *http.Request) {
 	}
 
 	var data = make(map[string]interface{})
-	data["single"]=store.SinglePageImg
-	data["api"]=store.ApiRestImg
-	data["data"]=store.DataServiceImg
-	data["devops"]=store.DevOpsServiceImg
+	data["single"] = store.SinglePageImg
+	data["api"] = store.ApiRestImg
+	data["data"] = store.DataServiceImg
+	data["devops"] = store.DevOpsServiceImg
 	if err := userAccessViews["index"].Render(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -34,11 +32,11 @@ func index(w http.ResponseWriter, req *http.Request) {
 func getToken(w http.ResponseWriter, req *http.Request) {
 
 	if req.Method == http.MethodGet {
-		session,_:=sessionStore.Get(req, constants.SessionName)
-		token:= struct {
+		session, _ := sessionStore.Get(req, constants.SessionName)
+		token := struct {
 			Key string
 		}{
-			Key:session.Values[constants.SessionUserToken].(string),
+			Key: session.Values[constants.SessionUserToken].(string),
 		}
 
 		if err := userAccessViews["token"].Render(w, token); err != nil {
@@ -47,7 +45,6 @@ func getToken(w http.ResponseWriter, req *http.Request) {
 		}
 
 	}
-	//http.Redirect(w, req, "/", http.StatusFound)
 }
 
 func logout(w http.ResponseWriter, req *http.Request) {

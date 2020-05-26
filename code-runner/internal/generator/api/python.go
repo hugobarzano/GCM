@@ -19,10 +19,9 @@ func (g *python) Init() Generator {
 	return g
 }
 
-func (g *python) GetFiles() map[string][]byte			  {
+func (g *python) GetFiles() map[string][]byte {
 	return g.files
 }
-
 
 func (g *python) WithName(name string) Generator {
 	if name == "" {
@@ -51,8 +50,8 @@ func (g *python) GenerateApi(des string) {
 
 	data := make(map[string]interface{})
 	data["ui"] = `<a href="api/ui" class="navbar-brand"> Checkout API UI</a>`
-	data["name"]=g.name
-	data["des"]=des
+	data["name"] = g.name
+	data["des"] = des
 	g.files["spec/spec.yml"] = commons.GenerateApiSpecFile(
 		g.name,
 		"api.",
