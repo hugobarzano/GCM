@@ -15,7 +15,7 @@ func Test_template(t *testing.T) {
 	}
 	api := GenerateApiSpecFile("name", "", input)
 
-	fmt.Println(string(api))
+	log.Println(string(api))
 }
 
 const ExpectedProperties = `
@@ -43,5 +43,5 @@ func TestGenerateApiSpecFile(t *testing.T) {
 	assert.Equal(t, ExpectedProperties, string(spec))
 
 	model := generateModelProperties(input)
-	fmt.Println(string(model))
+	log.Println(string(model))
 }

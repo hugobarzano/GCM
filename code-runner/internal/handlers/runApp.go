@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
-	"code-runner/internal/deploy"
+	"code-runner/internal/generator"
 	"code-runner/internal/store"
 	"context"
 	"fmt"
@@ -28,21 +28,21 @@ func runAppHandler(w http.ResponseWriter, r *http.Request) {
 		user := session.Values[constants.SessionUserName].(string)
 		accessToken := session.Values[constants.SessionUserToken].(string)
 
-		go runApp(user,accessToken,app)
+		go runApp(user, accessToken, app)
 
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	}
 	return
 }
 
-func runApp(user,token,app string)  {
+func runApp(user, token, app string) {
 	ctx := context.Background()
 	appObj, err := store.ClientStore.GetApp(ctx, user, app)
 	if err != nil {
 
 		log.Println("Initialize error: " + err.Error())
 	}
-	dockerApp := deploy.DockerApp{
+	dockerApp := generator.DockerApp{
 		App: appObj,
 	}
 	err = dockerApp.Initialize()
@@ -54,7 +54,7 @@ func runApp(user,token,app string)  {
 	if err != nil {
 		log.Println("ContainerStop error: " + err.Error())
 	}
-	err=dockerApp.ContainerRemove(ctx)
+	err = dockerApp.ContainerRemove(ctx)
 	if err != nil {
 		log.Println("ContainerRemove error: " + err.Error())
 	}

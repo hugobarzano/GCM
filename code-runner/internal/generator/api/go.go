@@ -48,7 +48,7 @@ func (g *goApi) WithInputSpec(spec string) Generator {
 		log.Println(err.Error())
 	}
 
-	specReader:=strings.NewReader(spec)
+	specReader := strings.NewReader(spec)
 	modelGenerated, err := gojson.Generate(
 		specReader,
 		gojson.ParseJson,
@@ -66,10 +66,9 @@ func (g *goApi) WithInputSpec(spec string) Generator {
 func customizeModel(inputModel []byte) []byte {
 	stringModel := string(inputModel)
 	IDField := "        ID string      `json:\"id\" yml:\"id\"` \n}"
-	customModel := strings.Replace(stringModel,"}",IDField,1)
+	customModel := strings.Replace(stringModel, "}", IDField, 1)
 	return []byte(customModel)
 }
-
 
 func (g *goApi) GenerateApi(des string) {
 
@@ -77,8 +76,8 @@ func (g *goApi) GenerateApi(des string) {
 	data["api"] = strings.ToLower(g.name)
 	data["model"] = strings.ToUpper(g.name)
 	data["port"] = g.port
-	data["name"]=g.name
-	data["des"]=des
+	data["name"] = g.name
+	data["des"] = des
 	g.files["spec/spec.yml"] = commons.GenerateApiSpecFile(
 		g.name,
 		"api.",

@@ -32,13 +32,13 @@ func (app *App) IsRunning() bool {
 	return app.Status == RUNNING
 }
 
-func (app *App) GetImageName() string {
-	imageName := fmt.Sprintf("%v.%v:latest", app.Owner, app.Name)
+func (app *App) GetImageName(version string) string {
+	imageName := fmt.Sprintf("%v.%v:%v", app.Owner, app.Name, version)
 	return imageName
 }
 
-func (app *App) GetPKGName() string {
-	pkg := app.GetImageName()
+func (app *App) GetPKGName(version string) string {
+	pkg := app.GetImageName(version)
 	pkgAddr := fmt.Sprintf("%v/%v/%v/%v", constants.DockerRegistry, app.Owner, app.Name, pkg)
 	return pkgAddr
 }

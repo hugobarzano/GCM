@@ -19,7 +19,7 @@ func (g *javascript) Init() Generator {
 	return g
 }
 
-func (g *javascript) GetFiles() map[string][]byte			  {
+func (g *javascript) GetFiles() map[string][]byte {
 	return g.files
 }
 
@@ -46,13 +46,12 @@ func (g *javascript) WithInputSpec(spec string) Generator {
 	return g
 }
 
-
 func (g *javascript) GenerateApi(des string) {
 
 	data := make(map[string]interface{})
 	data["ui"] = `<a href="api/ui" class="navbar-brand"> Checkout API UI</a>`
-	data["name"]=g.name
-	data["des"]=des
+	data["name"] = g.name
+	data["des"] = des
 	g.files["spec/spec.yml"] = commons.GenerateApiSpecFile(
 		g.name,
 		"",

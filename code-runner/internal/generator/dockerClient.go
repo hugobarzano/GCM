@@ -1,4 +1,4 @@
-package deploy
+package generator
 
 import (
 	"code-runner/internal/constants"
@@ -58,7 +58,7 @@ func (appDocker *DockerApp) prepareRegistry(ctx context.Context, password string
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Status:\t", resp.Status)
+	log.Println("Status:\t", resp.Status)
 	if resp.IdentityToken != "" {
 		appDocker.AuthConfig.IdentityToken = resp.IdentityToken
 	}
@@ -74,61 +74,106 @@ func (appDocker *DockerApp) imagePull(ctx context.Context, token string) error {
 		PrivilegeFunc: registryAuthentication(appDocker.App.Owner, token),
 	}
 
-	pkgAddr := appDocker.App.GetPKGName()
+	genApp := GenApp{
+		App: appDocker.App,
+	}
+	genApp.InitGit(ctx, token)
+	pkgAddr := appDocker.App.GetPKGName(genApp.GetLastRelease(ctx))
 
 	img, err := appDocker.Client.ImagePull(ctx, pkgAddr, opts)
 	timeout := time.Duration(5 * time.Minute)
 	start := time.Now()
 	for img == nil {
-		fmt.Printf("image: %v not ready. Status: %v\n", appDocker.App.GetPKGName(),appDocker.App.Status)
+		log.Println(fmt.Sprintf("image: %v not ready. Status: %v\n", pkgAddr, appDocker.App.Status))
 		img, err = appDocker.Client.ImagePull(ctx, pkgAddr, opts)
-		time.Sleep(time.Second*5)
+		time.Sleep(time.Second * 5)
 		if time.Since(start) >= timeout {
 			return errors.New("Error pulling image after " + timeout.String())
 		}
 
 	}
 	_, _ = io.Copy(os.Stdout, img)
-	if err != nil {
-		return err
-	}
-
 	appDocker.App.Status = models.READY
 	_, err = store.ClientStore.UpdateApp(ctx, appDocker.App)
 	if err != nil {
-		fmt.Printf("DB Error: %s", err.Error())
+		log.Println(fmt.Sprintf("DB Error: %s", err.Error()))
 		return err
 	}
 	return nil
 }
 
+func (appDocker *DockerApp) imagePullOnReGenerate(ctx context.Context, token string) error {
+
+	opts := types.ImagePullOptions{
+		RegistryAuth:  appDocker.AuthConfigEncoded,
+		PrivilegeFunc: registryAuthentication(appDocker.App.Owner, token),
+	}
+
+	genApp := GenApp{
+		App: appDocker.App,
+	}
+	genApp.InitGit(ctx, token)
+	pkgAddr := appDocker.App.GetPKGName(genApp.GetNextRelease(ctx))
+
+	img, err := appDocker.Client.ImagePull(ctx, pkgAddr, opts)
+	timeout := time.Duration(8 * time.Minute)
+	start := time.Now()
+	for img == nil {
+		log.Println(fmt.Sprintf("image: %v not ready. Status: %v\n", pkgAddr, appDocker.App.Status))
+		img, err = appDocker.Client.ImagePull(ctx, pkgAddr, opts)
+		time.Sleep(time.Second * 5)
+		if time.Since(start) >= timeout {
+			return errors.New("Error pulling image after " + timeout.String())
+		}
+
+	}
+	_, _ = io.Copy(os.Stdout, img)
+	appDocker.App.Status = models.READY
+	_, err = store.ClientStore.UpdateApp(ctx, appDocker.App)
+	if err != nil {
+		log.Println("DB Error: %s", err.Error())
+		return err
+	}
+	return nil
+}
 
 func (appDocker *DockerApp) ContainerStop(ctx context.Context) error {
 
 	timeOut := 0 * time.Second
-	fmt.Println("DOCKER ID: " + appDocker.App.Spec["dockerId"])
-	err:=appDocker.Client.ContainerStop(ctx, appDocker.App.Spec["dockerId"], &timeOut)
+	log.Println("DOCKER ID: " + appDocker.App.Spec["dockerId"])
+	err := appDocker.Client.ContainerStop(ctx, appDocker.App.Spec["dockerId"], &timeOut)
 	return err
 }
 
 func (appDocker *DockerApp) ContainerRemove(ctx context.Context) error {
 
-	err:=appDocker.Client.ContainerRemove(ctx,appDocker.App.Spec["dockerId"],types.ContainerRemoveOptions{
-		Force:true,
-		RemoveLinks:false,
-		RemoveVolumes:true,
+	err := appDocker.Client.ContainerRemove(ctx, appDocker.App.Spec["dockerId"], types.ContainerRemoveOptions{
+		Force:         true,
+		RemoveLinks:   false,
+		RemoveVolumes: true,
 	})
 	return err
 }
 
-func (appDocker *DockerApp) ImageRemove(ctx context.Context) error {
+func (appDocker *DockerApp) ImageRemove(ctx context.Context, token string) error {
 
-	del,err:=appDocker.Client.ImageRemove(ctx,appDocker.App.GetPKGName(),types.ImageRemoveOptions{
-		Force:true,
-	})
+	genApp := GenApp{
+		App: appDocker.App,
+	}
+	genApp.InitGit(ctx, token)
+	pkgAddr := appDocker.App.GetPKGName(genApp.GetLastRelease(ctx))
 
-	fmt.Print(del)
-	fmt.Printf(err.Error())
+	opt := types.ImageRemoveOptions{
+		Force:         true,
+		PruneChildren: true,
+	}
+	img, err := appDocker.Client.ImageRemove(ctx, pkgAddr, opt)
+	log.Println(img)
+	log.Println(err)
+	pkgAddr = appDocker.App.GetPKGName("*")
+	img, err = appDocker.Client.ImageRemove(ctx, pkgAddr, opt)
+	log.Println(img)
+	log.Println(err)
 	return err
 }
 
@@ -137,22 +182,48 @@ func (app *DockerApp) ContainerStart(token string) {
 	var err error
 	err = app.Initialize()
 	if err != nil {
-		fmt.Println("Initialize error: " + err.Error())
+		log.Println("Initialize error: " + err.Error())
 	}
 
-	err = app.prepareRegistry(context.Background(), token)
+	ctx := context.Background()
+	err = app.prepareRegistry(ctx, token)
 	if err != nil {
-		fmt.Println("prepareRegistry error: " + err.Error())
+		log.Println("prepareRegistry error: " + err.Error())
 	}
 
-	err = app.imagePull(context.Background(), token)
+	err = app.imagePull(ctx, token)
 	if err != nil {
-		fmt.Println("imagePull error: " + err.Error())
+		log.Println("imagePull error: " + err.Error())
 	}
 
-	err = app.containerCreate(context.Background())
+	err = app.containerCreate(ctx, token)
 	if err != nil {
-		fmt.Println("containerCreate error: " + err.Error())
+		log.Println("containerCreate error: " + err.Error())
+	}
+}
+
+func (app *DockerApp) ContainerRegenerate(token string) {
+
+	var err error
+	err = app.Initialize()
+	if err != nil {
+		log.Println("Initialize error: " + err.Error())
+	}
+
+	ctx := context.Background()
+	err = app.prepareRegistry(ctx, token)
+	if err != nil {
+		log.Println("prepareRegistry error: " + err.Error())
+	}
+
+	err = app.imagePullOnReGenerate(ctx, token)
+	if err != nil {
+		log.Println("imagePull error: " + err.Error())
+	}
+
+	err = app.containerCreate(ctx, token)
+	if err != nil {
+		log.Println("containerCreate error: " + err.Error())
 	}
 }
 
@@ -196,17 +267,23 @@ func (appDocker *DockerApp) getPortBinding(tcpPort string) (nat.PortMap, error) 
 
 }
 
-func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
+func (appDocker *DockerApp) containerCreate(ctx context.Context, token string) error {
 
-	ctx=context.Background()
-	availablePort:=appDocker.App.Spec["port"]
+	ctx = context.Background()
+	availablePort := appDocker.App.Spec["port"]
 	portBinding, err := appDocker.getPortBinding(availablePort)
 	if err != nil {
 		return err
 	}
 
+	genApp := GenApp{
+		App: appDocker.App,
+	}
+	genApp.InitGit(ctx, token)
+	pkgAddr := appDocker.App.GetPKGName(genApp.GetLastRelease(ctx))
+
 	containerObj, err := appDocker.Client.ContainerCreate(ctx,
-		&container.Config{Image: appDocker.App.GetPKGName()},
+		&container.Config{Image: pkgAddr},
 		&container.HostConfig{
 			PortBindings: portBinding},
 		nil, "")
@@ -220,9 +297,9 @@ func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
 		types.ContainerStartOptions{})
 
 	if err != nil {
-		fmt.Println("Unable to start with client port")
-		err:=appDocker.Client.ContainerRemove(ctx,containerObj.ID,types.ContainerRemoveOptions{
-			Force:true,
+		log.Println("Unable to start with client port")
+		err := appDocker.Client.ContainerRemove(ctx, containerObj.ID, types.ContainerRemoveOptions{
+			Force: true,
 		})
 		if err != nil {
 			return err
@@ -235,7 +312,7 @@ func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
 		}
 
 		containerObj, err = appDocker.Client.ContainerCreate(ctx,
-			&container.Config{Image: appDocker.App.GetPKGName()},
+			&container.Config{Image: pkgAddr},
 			&container.HostConfig{
 				PortBindings: portBinding},
 			nil, "")
@@ -245,7 +322,7 @@ func (appDocker *DockerApp) containerCreate(ctx context.Context) error {
 			types.ContainerStartOptions{})
 
 		if err != nil {
-			fmt.Println("Unable to start with available port")
+			log.Println("Unable to start with available port")
 			return err
 		}
 	}

@@ -25,6 +25,3 @@ func (app *GenApp) generateNodeSinglePageCode() {
 
 	app.Data["server.js"] = single.GenServerJs(app.App.Spec["port"])
 }
-
-
-

@@ -11,11 +11,10 @@ const (
 	SessionUserMail      = "githubMAIL"
 	Database             = "gcm"
 	WorkspacesCollection = "workspaces"
-	AppsCollection = "apps"
+	AppsCollection       = "apps"
 	SourceCode           = "https://github.com/hugobarzano/GCM"
 	DockerRegistry       = "docker.pkg.github.com"
 )
-
 
 const (
 	SinglePage    string = "Single-Page"
@@ -24,11 +23,11 @@ const (
 	DevOpsService string = "DevOps-Service"
 )
 
-
 var (
-	Version = "0.0.0"
-	GeneratedBanner =  `
-***This App has been generated***`+"\n"+`
-***Timestamp*** `+ time.Now().String()+ ``+"\n"+`
-gcm/`+Version+``+"\n"+`[source-code](`+SourceCode+`)`+"\n"+`
-***Powered by CesarCorp***`+"\n"+``)
+	Version         = "0.0.0"
+	GeneratedBanner = `
+***This App has been generated***` + "\n" + `
+***Timestamp*** ` + time.Now().String() + `` + "\n" + `
+gcm/` + Version + `` + "\n" + `[source-code](` + SourceCode + `)` + "\n" + `
+***Powered by CesarCorp***` + "\n" + ``
+)

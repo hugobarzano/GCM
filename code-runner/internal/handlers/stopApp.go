@@ -2,11 +2,10 @@ package handlers
 
 import (
 	"code-runner/internal/constants"
-	"code-runner/internal/deploy"
+	"code-runner/internal/generator"
 	"context"
 	"log"
 
-	//"code-runner/internal/deploy"
 	"code-runner/internal/models"
 	"code-runner/internal/store"
 	"fmt"
@@ -29,22 +28,23 @@ func stopAppHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		session, _ := sessionStore.Get(r, constants.SessionName)
 		user := session.Values[constants.SessionUserName].(string)
+		accessToken := session.Values[constants.SessionUserToken].(string)
 
-		stopApp(user,app)
+		go stopApp(user, accessToken, app)
 
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	}
 	return
 }
 
-func stopApp(user,app string)  {
-	ctx:= context.Background()
+func stopApp(user, token, app string) {
+	ctx := context.Background()
 	appObj, err := store.ClientStore.GetApp(ctx, user, app)
 	if err != nil {
 		log.Println(fmt.Sprintf("error getting app:%s", err.Error()))
 	}
 
-	dockerApp := deploy.DockerApp{
+	dockerApp := generator.DockerApp{
 		App: appObj,
 	}
 
@@ -61,6 +61,11 @@ func stopApp(user,app string)  {
 	err = dockerApp.ContainerRemove(ctx)
 	if err != nil {
 		log.Println(fmt.Sprintf("error removing app container: %s", err.Error()))
+	}
+
+	err = dockerApp.ImageRemove(ctx, token)
+	if err != nil {
+		log.Println(fmt.Sprintf("error removing image: %s", err.Error()))
 	}
 
 	appObj.Status = models.STOPPED

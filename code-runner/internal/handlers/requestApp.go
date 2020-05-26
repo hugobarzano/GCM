@@ -32,36 +32,36 @@ func getAppFromRequest(req *http.Request) (*requestApp, error) {
 
 	app := &models.App{
 		Name: strings.ToLower(
-				strings.Replace(
-					appName, "\"", "", -1)),
+			strings.Replace(
+				appName, "\"", "", -1)),
 		Des: strings.Replace(
 			req.FormValue("description"), "\"", "", -1),
 		Spec: appSpec,
 	}
 	reqApp := &requestApp{
-		App:    app,
+		App: app,
 	}
 	return reqApp, nil
 }
 
 func (appRequest *requestApp) validateRequest() bool {
-	appRequest.Errors=make(map[string]string)
+	appRequest.Errors = make(map[string]string)
 
-	if appRequest.App.Name == ""{
+	if appRequest.App.Name == "" {
 		appRequest.Errors["Name"] = "Name is mandatory. Lowercase."
 	}
 
-	if len(appRequest.App.Name) > 20{
+	if len(appRequest.App.Name) > 20 {
 		appRequest.Errors["Name"] = "Name too long. It has to be less than 20 chars."
 	}
 
 	re := regexp.MustCompile("^[a-zA-Z_]*$")
-	if ok := re.Match([]byte(appRequest.App.Name)); !ok{
+	if ok := re.Match([]byte(appRequest.App.Name)); !ok {
 		appRequest.Errors["Name"] = "Name must contains only alphabetic lowercase chars and _ "
 	}
 
 	re = regexp.MustCompile("^[a-zA-Z0-9@_.,\\s\\w]*$")
-	if ok := re.Match([]byte(appRequest.App.Des)); !ok{
+	if ok := re.Match([]byte(appRequest.App.Des)); !ok {
 		appRequest.Errors["Des"] = "Description must contains only alphanumeric chars, \"@\",\"_\",\".\" and \",\""
 	}
 
@@ -69,13 +69,12 @@ func (appRequest *requestApp) validateRequest() bool {
 		appRequest.Errors["Des"] = "Description too long. It has to be less than 512 chars."
 	}
 
-
 	if appRequest.App.Spec["port"] == "" {
 		appRequest.Errors["Port"] = "Port is mandatory."
 	}
 
 	re = regexp.MustCompile("^[0-9]*$")
-	if ok := re.Match([]byte(appRequest.App.Spec["port"])); !ok{
+	if ok := re.Match([]byte(appRequest.App.Spec["port"])); !ok {
 		appRequest.Errors["Port"] = "Port must contains only numeric chars."
 	}
 
@@ -91,8 +90,8 @@ func (appRequest *requestApp) validateRequest() bool {
 	}
 	if appRequest.App.Spec["tech"] == constants.ApiRest {
 		var jsonModel map[string]interface{}
-		err:=json.Unmarshal([]byte(appRequest.App.Spec["modelJson"]), &jsonModel)
-		if err!=nil{
+		err := json.Unmarshal([]byte(appRequest.App.Spec["modelJson"]), &jsonModel)
+		if err != nil {
 			appRequest.Errors["Model"] = err.Error()
 		}
 	}

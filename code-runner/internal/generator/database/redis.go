@@ -1,6 +1,5 @@
 package database
 
-
 func GenRedisConf(port string) []byte {
 	data := `
 # Redis configuration file example.
@@ -94,7 +93,7 @@ protected-mode no
 
 # Accept connections on the specified port, default is 6379 (IANA #815344).
 # If port 0 is specified Redis will not listen on a TCP socket.
-port `+port+`
+port ` + port + `
 
 # TCP listen() backlog.
 #
@@ -1377,4 +1376,3 @@ rdb-save-incremental-fsync yes
 `
 	return []byte(data)
 }
-

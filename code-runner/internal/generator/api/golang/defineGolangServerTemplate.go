@@ -39,6 +39,6 @@ func main() {
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "DELETE", "PUT"})
 
-	fmt.Println("Listening on http://0.0.0.0:{{.port}} !")
+	log.Println("Listening on http://0.0.0.0:{{.port}} !")
 	log.Fatal(http.ListenAndServe("0.0.0.0:{{.port}}", handlers.CORS(allowedOrigins, allowedMethods)(router)))
 }`

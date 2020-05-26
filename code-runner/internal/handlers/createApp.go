@@ -5,6 +5,7 @@ import (
 	"code-runner/internal/generator"
 	"code-runner/internal/store"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -68,10 +69,10 @@ func createApp(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		go genApp.InitializeCode(user, accessToken,mail)
+		go genApp.InitializeCode(user, accessToken, mail)
 
 		http.Redirect(w, r, "/workspace", http.StatusFound)
 	default:
-		fmt.Println("not supported")
+		log.Println("not supported")
 	}
 }

@@ -1,7 +1,7 @@
 package local
 
 func GenMakefile() []byte {
-	makefile:=` 
+	makefile := ` 
 user=
 token=
 setup:

@@ -9,17 +9,15 @@ import (
 
 func TestGen(t *testing.T) {
 
-
 	file := strings.NewReader(`{"foo" : "bar", "baz" : null}`)
-	model, err := gojson.Generate(file, gojson.ParseJson, "Cat", "model", []string{"json","yml"}, true, true)
+	model, err := gojson.Generate(file, gojson.ParseJson, "Cat", "model", []string{"json", "yml"}, true, true)
 
-	if err !=nil{
-		fmt.Println(err.Error())
+	if err != nil {
+		log.Println(err.Error())
 	}
 
 	res := strings.LastIndex("{a{}}", "}")
-	fmt.Println(res)
+	log.Println(res)
 
-
-	fmt.Println(string(model))
+	log.Println(string(model))
 }

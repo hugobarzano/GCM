@@ -3,7 +3,6 @@ package config
 import (
 	"code-runner/internal/constants"
 	"encoding/json"
-	"fmt"
 	"github.com/fulldump/goconfig"
 	"log"
 	"os"
@@ -21,14 +20,13 @@ type Config struct {
 	GithubClientID     string `json:"githubClientID"`
 	GithubClientSecret string `json:"githubClientSecret"`
 	MongoUri           string `usage:"Standard MongoDB Hostname"`
-	DeployAddress      string  `json:"deployAddress"`
-	ApiAddress        string  `json:"apiAddress"`
-	ApiPort           string  `json:"apiPort"`
-	ApiDns 			  string  `json:"apiDns"`
-	EnableTls         bool    `json:"enableTls"`
-	TlsKeyFile            string  `json:"tlsKeyFile"`
-	TlsCertFile            string  `json:"tlsCertFile"`
-
+	DeployAddress      string `json:"deployAddress"`
+	ApiAddress         string `json:"apiAddress"`
+	ApiPort            string `json:"apiPort"`
+	ApiDns             string `json:"apiDns"`
+	EnableTls          bool   `json:"enableTls"`
+	TlsKeyFile         string `json:"tlsKeyFile"`
+	TlsCertFile        string `json:"tlsCertFile"`
 }
 
 func GetConfig() *Config {
@@ -48,15 +46,15 @@ func read() *Config {
 		GithubClientSecret: "ggg",
 		MongoUri:           "mongodb://localhost:27017",
 		DeployAddress:      "localhost",
-		ApiAddress:        "0.0.0.0",
-		ApiPort:           "80",
-		EnableTls:         false,
+		ApiAddress:         "0.0.0.0",
+		ApiPort:            "80",
+		EnableTls:          false,
 	}
 
 	goconfig.Read(c)
 
 	if c.Version {
-		fmt.Println(constants.Version)
+		log.Println(constants.Version)
 		os.Exit(0)
 	}
 

@@ -2,12 +2,12 @@ package generator
 
 import (
 	"code-runner/internal/constants"
-	"code-runner/internal/deploy"
 	"code-runner/internal/models"
 	"code-runner/internal/store"
 	"context"
 	"fmt"
-	googleGithub "github.com/google/go-github/github"
+	googleGithub "github.com/google/go-github/v31/github"
+	"log"
 )
 
 type GenApp struct {
@@ -26,44 +26,89 @@ func (app *GenApp) InitializeCode(user string, token string, mail string) {
 	ctx := context.Background()
 	app.InitGit(ctx, token)
 	app.generateReadme()
-	if err := app.pushReadme(ctx, user,mail); err != nil {
-		fmt.Printf("PushFile Error: %s", err.Error())
+	if err := app.pushReadme(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
 	}
 
 	app.generateLicense()
-	if err := app.pushLicense(ctx, user,mail); err != nil {
-		fmt.Printf("PushFile Error: %s", err.Error())
+	if err := app.pushLicense(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
 	}
 
 	app.generateSourceCode()
-	if err := app.pushSourceCode(ctx, user,mail); err != nil {
-		fmt.Printf("PushFile Error: %s", err.Error())
+	if err := app.pushSourceCode(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
 	}
 	app.generateDockerfile()
-	if err := app.pushDockerfile(ctx, user,mail); err != nil {
-		fmt.Printf("PushFile Error: %s", err.Error())
+	if err := app.pushDockerfile(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
 	}
 
 	app.generateLocalTools()
-	if err := app.pushLocalTools(ctx, user,mail); err != nil {
-		fmt.Printf("PushFile Error: %s", err.Error())
+	if err := app.pushLocalTools(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
 	}
 
 	app.generateCI()
-	if err := app.pushCI(ctx, user,mail); err != nil {
-		fmt.Printf("PushFile Error: %s", err.Error())
+	if err := app.PushCI(ctx, user, mail); err != nil {
+		log.Println(fmt.Sprintf("PushFile Error: %s", err.Error()))
 	}
 
 	app.App.Status = models.BUILDING
 	_, err := store.ClientStore.UpdateApp(ctx, app.App)
 	if err != nil {
-		fmt.Printf("DB Error: %s", err.Error())
+		log.Println(fmt.Sprintf("DB Error: %s", err.Error()))
 	}
 
-	dockerApp := deploy.DockerApp{
+	dockerApp := DockerApp{
 		App: app.App,
 	}
 	go dockerApp.ContainerStart(token)
+}
+
+func (app *GenApp) ReGenerateCode(user string, token string, mail string) {
+
+	ctx := context.Background()
+	app.InitGit(ctx, token)
+	app.generateReadme()
+	if err := app.pushReadme(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
+	}
+
+	app.generateLicense()
+	if err := app.pushLicense(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
+	}
+
+	app.generateSourceCode()
+	if err := app.pushSourceCode(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
+	}
+	app.generateDockerfile()
+	if err := app.pushDockerfile(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
+	}
+
+	app.generateLocalTools()
+	if err := app.pushLocalTools(ctx, user, mail); err != nil {
+		log.Println("PushFile Error: %s", err.Error())
+	}
+
+	app.generateCI()
+	if err := app.PushCI(ctx, user, mail); err != nil {
+		log.Println(fmt.Sprintf("PushFile Error: %s", err.Error()))
+	}
+
+	app.App.Status = models.BUILDING
+	_, err := store.ClientStore.UpdateApp(ctx, app.App)
+	if err != nil {
+		log.Println(fmt.Sprintf("DB Error: %s", err.Error()))
+	}
+
+	dockerApp := DockerApp{
+		App: app.App,
+	}
+	go dockerApp.ContainerRegenerate(token)
 }
 
 func (app *GenApp) generateSourceCode() {
@@ -82,18 +127,18 @@ func (app *GenApp) generateSourceCode() {
 	case "jenkins":
 		app.generateJenkinsService()
 	default:
-		fmt.Printf("NOT SUPPORTED")
+		log.Println("NOT SUPPORTED")
 	}
 
 	switch app.App.Spec["nature"] {
 	case constants.ApiRest:
 		app.generateApiService()
 	default:
-		fmt.Printf("NOT SUPPORTED")
+		log.Println("NOT SUPPORTED")
 	}
 }
 
-func (app *GenApp) pushSourceCode(ctx context.Context, user,mail string) error {
+func (app *GenApp) pushSourceCode(ctx context.Context, user, mail string) error {
 
 	var commitMsg string
 	var fileOptions *googleGithub.RepositoryContentFileOptions
@@ -101,7 +146,7 @@ func (app *GenApp) pushSourceCode(ctx context.Context, user,mail string) error {
 
 	for file, content := range app.Data {
 		commitMsg = "Generating " + file
-		fileOptions = BuildFileOptions(commitMsg, user, mail,content)
+		fileOptions = BuildFileOptions(commitMsg, user, mail, content)
 		_, err = app.CommitFile(ctx, file, fileOptions)
 		if err != nil {
 			return err

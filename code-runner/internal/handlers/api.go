@@ -11,7 +11,6 @@ import (
 	"net/http"
 )
 
-
 func NewApi() *mux.Router {
 	mux := mux.NewRouter()
 	mux.HandleFunc("/", index)
@@ -20,16 +19,17 @@ func NewApi() *mux.Router {
 	mux.HandleFunc("/token", getToken).Methods(http.MethodGet)
 	mux.HandleFunc("/logout", logout)
 	mux.HandleFunc("/createApp", createApp)
-	mux.HandleFunc("/remove/{app}", removeApp)
+	mux.HandleFunc("/remove/{app}", removeAppHandler)
 	mux.HandleFunc("/stop/{app}", stopAppHandler)
 	mux.HandleFunc("/run/{app}", runAppHandler)
+	mux.HandleFunc("/regenerate/{app}", reGenerateAppHandler)
 	mux.HandleFunc("/view/{app}", viewApp)
 	mux.Handle("/getApp", http.HandlerFunc(getApp))
 	mux.HandleFunc("/logsSocket", viewAppLogSocket)
 	oauth2Config := &oauth2.Config{
 		ClientID:     config.GetConfig().GithubClientID,
 		ClientSecret: config.GetConfig().GithubClientSecret,
-		RedirectURL:  	fmt.Sprintf("%v/%v",config.GetConfig().ApiDns,"github/callback"),
+		RedirectURL:  fmt.Sprintf("%v/%v", config.GetConfig().ApiDns, "github/callback"),
 		Endpoint:     githubOAuth2.Endpoint,
 		Scopes: []string{
 			"repo",

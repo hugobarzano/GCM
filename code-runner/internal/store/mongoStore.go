@@ -5,7 +5,6 @@ import (
 	"code-runner/internal/constants"
 	"code-runner/internal/models"
 	"context"
-	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -88,7 +87,7 @@ func (dao *MongoStore) GetApp(ctx context.Context, owner, name string) (*models.
 	if err := documentReturned.Decode(&app); err != nil {
 		return nil, err
 	}
-	app.Img=setupImg(app.Spec["nature"])
+	app.Img = setupImg(app.Spec["nature"])
 	return app, nil
 }
 
@@ -106,20 +105,20 @@ func (dao *MongoStore) GetApps(ctx context.Context, owner string) ([]models.App,
 	filter := bson.M{"owner": owner}
 	cursor, err := collection.Find(ctx, filter, nil)
 	if err != nil {
-		fmt.Println("Error finding")
+		log.Println("Error finding")
 		return nil, err
 	}
 	for cursor.Next(ctx) {
 		err := cursor.Decode(&app)
 		if err != nil {
-			fmt.Println("Error decoding from cursor")
+			log.Println("Error decoding from cursor")
 			return nil, err
 		}
-		app.Img=setupImg(app.Spec["nature"])
+		app.Img = setupImg(app.Spec["nature"])
 		apps = append(apps, app)
 	}
 	if err := cursor.Err(); err != nil {
-		fmt.Println("Error cursor")
+		log.Println("Error cursor")
 		return nil, err
 	}
 	defer cursor.Close(ctx)
@@ -140,9 +139,9 @@ func (dao *MongoStore) UpdateApp(ctx context.Context, app *models.App) (*models.
 	res := collection.FindOneAndUpdate(ctx, query, change, &opt)
 	err := res.Decode(&updated)
 	if err != nil {
-		fmt.Println("Error decoding updated app")
+		log.Println("Error decoding updated app")
 		return nil, err
 	}
-	updated.Img=setupImg(updated.Spec["nature"])
+	updated.Img = setupImg(updated.Spec["nature"])
 	return updated, nil
 }

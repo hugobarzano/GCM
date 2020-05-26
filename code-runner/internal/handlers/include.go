@@ -10,33 +10,33 @@ import (
 var (
 	sessionStore    = sessions.NewCookieStore([]byte(constants.SessionSecret), nil)
 	contentsDir     = "internal/views/contents"
-	jsDir     		= "internal/views/js"
+	jsDir           = "internal/views/js"
 	userAccessViews = map[string]*views.View{
 		"index": views.NewView(
-			"base", contentsDir+"/index.gohtml",jsDir+"/noJs.gohtml",
-			contentsDir + "/navbar/indexNavbar.gohtml"),
+			"base", contentsDir+"/index.gohtml", jsDir+"/noJs.gohtml",
+			contentsDir+"/navbar/indexNavbar.gohtml"),
 		"workspace": views.NewView(
 			"base",
-			contentsDir +"/workspace.gohtml",
+			contentsDir+"/workspace.gohtml",
 			jsDir+"/workspaceJs.gohtml",
-			contentsDir + "/navbar/workspaceNavbar.gohtml"),
+			contentsDir+"/navbar/workspaceNavbar.gohtml"),
 		"token": views.NewView(
-			"base", contentsDir+"/token.gohtml",jsDir+"/tokenJs.gohtml",
-			contentsDir + "/navbar/tokenNavbar.gohtml"),
+			"base", contentsDir+"/token.gohtml", jsDir+"/tokenJs.gohtml",
+			contentsDir+"/navbar/tokenNavbar.gohtml"),
 		"getWs": views.NewView(
 			"emptyBase", contentsDir+"/workspace.gohtml"),
 	}
 	appsViews = map[string]*views.View{
 		"createApp": views.NewView(
-			"base", contentsDir+"/createApp.gohtml",jsDir+"/createAppJs.gohtml",contentsDir + "/navbar/createAppNavbar.gohtml"),
+			"base", contentsDir+"/createApp.gohtml", jsDir+"/createAppJs.gohtml", contentsDir+"/navbar/createAppNavbar.gohtml"),
 		"viewApp": views.NewView(
-			"base", contentsDir+"/viewApp.gohtml",jsDir+"/viewJs.gohtml",contentsDir + "/navbar/viewAppNavbar.gohtml"),
+			"base", contentsDir+"/viewApp.gohtml", jsDir+"/viewJs.gohtml", contentsDir+"/navbar/viewAppNavbar.gohtml"),
 		"getApp": views.NewView(
-			"emptyBase", contentsDir+"/getApp.gohtml",contentsDir + "/navbar/noNavbar.gohtml"),
+			"emptyBase", contentsDir+"/getApp.gohtml", contentsDir+"/navbar/noNavbar.gohtml"),
 	}
 
- 	upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
+	upgrader = websocket.Upgrader{
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
 	}
 )

@@ -1,13 +1,12 @@
 package single
 
-
-func GenPackageJson(name,des,owner string) []byte {
+func GenPackageJson(name, des, owner string) []byte {
 	pk := `
 {
-  "name": "`+name+`",
+  "name": "` + name + `",
   "version": "1.0.0",
-  "description": "`+des+`",
-  "author": "`+owner+`",
+  "description": "` + des + `",
+  "author": "` + owner + `",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -28,7 +27,7 @@ const express = require('express');
 const fs = require('fs');
 
 // Constants
-const PORT = `+port+`;
+const PORT = ` + port + `;
 const HOST = '0.0.0.0';
 
 // App
@@ -53,4 +52,3 @@ console.log("Running on http://"+HOST+":"+PORT);
 `
 	return []byte(index)
 }
-

@@ -3,160 +3,158 @@ package generator
 import (
 	"code-runner/internal/models"
 	"context"
-	"fmt"
+	"log"
 )
 
-type  dockerfileEntry struct {
+type dockerfileEntry struct {
 	Action string
-	Data string
+	Data   string
 }
 
-func generateDockerfile(app *models.App,properties []dockerfileEntry)[]byte{
+func generateDockerfile(app *models.App, properties []dockerfileEntry) []byte {
 
-	dockerfile:="# Dockerfile from "+app.Repository+"\n"
-	for iterator :=range properties{
-		dockerfile=dockerfile+properties[iterator].Action+"    "+properties[iterator].Data+"  \n"
+	dockerfile := "# Dockerfile from " + app.Repository + "\n"
+	for iterator := range properties {
+		dockerfile = dockerfile + properties[iterator].Action + "    " + properties[iterator].Data + "  \n"
 	}
 	return []byte(dockerfile)
 }
 
-func GenerateApacheDockerfile(app *models.App) 	[]byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","httpd:2.4"},
+func GenerateApacheDockerfile(app *models.App) []byte {
+	properties := []dockerfileEntry{
+		{"FROM", "httpd:2.4"},
 		{"MAINTAINER", app.Owner},
-		{"RUN","sed 's/^Listen 80/Listen "+app.Spec["port"]+"/g' /usr/local/apache2/conf/httpd.conf > httpd.new"},
-		{"RUN","mv httpd.new /usr/local/apache2/conf/httpd.conf"},
-		{"COPY","html/ /usr/local/apache2/htdocs/"},
+		{"RUN", "sed 's/^Listen 80/Listen " + app.Spec["port"] + "/g' /usr/local/apache2/conf/httpd.conf > httpd.new"},
+		{"RUN", "mv httpd.new /usr/local/apache2/conf/httpd.conf"},
+		{"COPY", "html/ /usr/local/apache2/htdocs/"},
 		{"EXPOSE", app.Spec["port"]},
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
-func GenerateMongoDockerfile(app *models.App) 	[]byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","mongo:3.6"},
+func GenerateMongoDockerfile(app *models.App) []byte {
+	properties := []dockerfileEntry{
+		{"FROM", "mongo:3.6"},
 		{"MAINTAINER", app.Owner},
-		{"COPY","./config/mongod.conf /etc/mongod.conf"},
+		{"COPY", "./config/mongod.conf /etc/mongod.conf"},
 		{"EXPOSE", app.Spec["port"]},
 		{"ENTRYPOINT", "[\"mongod\", \"-f\", \"/etc/mongod.conf\"]"},
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
-func GenerateMysqlDockerfile(app *models.App) 	[]byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","mysql:8.0"},
+func GenerateMysqlDockerfile(app *models.App) []byte {
+	properties := []dockerfileEntry{
+		{"FROM", "mysql:8.0"},
 		{"MAINTAINER", app.Owner},
 		{"ENV", "MYSQL_ALLOW_EMPTY_PASSWORD=1"},
-		{"COPY","./config/mysql.cnf /etc/mysql/conf.d/mysql.cnf"},
+		{"COPY", "./config/mysql.cnf /etc/mysql/conf.d/mysql.cnf"},
 		{"EXPOSE", app.Spec["port"]},
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
-func GenerateRedisDockerfile(app *models.App) 	[]byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","redis:6.0-rc"},
+func GenerateRedisDockerfile(app *models.App) []byte {
+	properties := []dockerfileEntry{
+		{"FROM", "redis:6.0-rc"},
 		{"MAINTAINER", app.Owner},
-		{"COPY","./config/redis.conf /usr/local/etc/redis/redis.conf"},
+		{"COPY", "./config/redis.conf /usr/local/etc/redis/redis.conf"},
 		{"EXPOSE", app.Spec["port"]},
 		{"ENTRYPOINT", "[\"redis-server\", \"/usr/local/etc/redis/redis.conf\"]"},
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
-func GenerateJenkinsDockerfile(app *models.App) 	[]byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","jenkins/jenkins:lts-alpine"},
+func GenerateJenkinsDockerfile(app *models.App) []byte {
+	properties := []dockerfileEntry{
+		{"FROM", "jenkins/jenkins:lts-alpine"},
 		{"MAINTAINER", app.Owner},
-		{"ENV","JENKINS_OPTS=\"--httpListenAddress=0.0.0.0 --httpPort="+app.Spec["port"]+"\""},
-		{"ENV","JENKINS_SLAVE_AGENT_PORT=6661"},
-		{"ENV","JAVA_OPTS=\"-Djenkins.install.runSetupWizard=false\""},
+		{"ENV", "JENKINS_OPTS=\"--httpListenAddress=0.0.0.0 --httpPort=" + app.Spec["port"] + "\""},
+		{"ENV", "JENKINS_SLAVE_AGENT_PORT=6661"},
+		{"ENV", "JAVA_OPTS=\"-Djenkins.install.runSetupWizard=false\""},
 		{"COPY", "config/plugins.txt /usr/share/jenkins/ref/plugins.txt"},
 		{"COPY", "config/init.groovy /usr/share/jenkins/ref/init.groovy.d/initJenkins.groovy"},
 		{"RUN", "/usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt"},
 		{"EXPOSE", app.Spec["port"]},
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
-
-func GenerateNodeDockerfile(app *models.App) 	[]byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","node:13"},
+func GenerateNodeDockerfile(app *models.App) []byte {
+	properties := []dockerfileEntry{
+		{"FROM", "node:13"},
 		{"MAINTAINER", app.Owner},
-		{"WORKDIR","/usr/src/app"},
+		{"WORKDIR", "/usr/src/app"},
 		{"COPY", ". /usr/src/app"},
 		{"RUN", "npm install"},
 		{"EXPOSE", app.Spec["port"]},
 		{"ENTRYPOINT", "[\"node\", \"server.js\"]"},
-
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
 func GeneratePython3Dockerfile(app *models.App) []byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","python:3"},
+	properties := []dockerfileEntry{
+		{"FROM", "python:3"},
 		{"MAINTAINER", app.Owner},
-		{"WORKDIR","/usr/src/app"},
+		{"WORKDIR", "/usr/src/app"},
 		{"COPY", ". /usr/src/app"},
 		{"RUN", "pip install -r requirements.txt"},
 		{"EXPOSE", app.Spec["port"]},
 		{"ENTRYPOINT", "[\"python\", \"server.py\"]"},
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
 func GenerateGo13Dockerfile(app *models.App) []byte {
-	properties:=[]dockerfileEntry{
-		{"FROM","golang:1.13"},
+	properties := []dockerfileEntry{
+		{"FROM", "golang:1.13"},
 		{"MAINTAINER", app.Owner},
-		{"WORKDIR","/usr/src/app"},
+		{"WORKDIR", "/usr/src/app"},
 		{"COPY", ". /usr/src/app"},
 		{"RUN", "go get -d -v ./..."},
 		{"EXPOSE", app.Spec["port"]},
 		{"ENTRYPOINT", "[\"go\", \"run\", \"server.go\"]"},
 	}
-	dockerfile:=generateDockerfile(app,properties)
+	dockerfile := generateDockerfile(app, properties)
 	return []byte(dockerfile)
 }
 
-func (app *GenApp)generateDockerfile(){
+func (app *GenApp) generateDockerfile() {
 
 	switch nature := app.App.Spec["tech"]; nature {
 	case "apacheStatic":
-		app.Dockerfile=GenerateApacheDockerfile(app.App)
+		app.Dockerfile = GenerateApacheDockerfile(app.App)
 	case "mongodb":
-		app.Dockerfile=GenerateMongoDockerfile(app.App)
+		app.Dockerfile = GenerateMongoDockerfile(app.App)
 	case "mysql":
-		app.Dockerfile=GenerateMysqlDockerfile(app.App)
+		app.Dockerfile = GenerateMysqlDockerfile(app.App)
 	case "redis":
-		app.Dockerfile=GenerateRedisDockerfile(app.App)
+		app.Dockerfile = GenerateRedisDockerfile(app.App)
 	case "jenkins":
-		app.Dockerfile=GenerateJenkinsDockerfile(app.App)
+		app.Dockerfile = GenerateJenkinsDockerfile(app.App)
 	case "nodeStatic":
-		app.Dockerfile=GenerateNodeDockerfile(app.App)
+		app.Dockerfile = GenerateNodeDockerfile(app.App)
 	case "js":
-		app.Dockerfile=GenerateNodeDockerfile(app.App)
+		app.Dockerfile = GenerateNodeDockerfile(app.App)
 	case "python":
-		app.Dockerfile=GeneratePython3Dockerfile(app.App)
+		app.Dockerfile = GeneratePython3Dockerfile(app.App)
 	case "go":
-		app.Dockerfile=GenerateGo13Dockerfile(app.App)
+		app.Dockerfile = GenerateGo13Dockerfile(app.App)
 	default:
-		fmt.Println("NOT SUPPORTED")
+		log.Println("NOT SUPPORTED")
 	}
 }
 
-func (app *GenApp)pushDockerfile(ctx context.Context,user,mail string)error  {
-	dockerfileOptions := BuildFileOptions("Generating Dockerfile...", user, mail,app.Dockerfile)
+func (app *GenApp) pushDockerfile(ctx context.Context, user, mail string) error {
+	dockerfileOptions := BuildFileOptions("Generating Dockerfile...", user, mail, app.Dockerfile)
 	_, err := app.CommitFile(ctx, "Dockerfile", dockerfileOptions)
 	return err
 }
