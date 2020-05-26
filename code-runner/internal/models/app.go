@@ -15,6 +15,7 @@ const (
 	READY    AppStatus = "ready"
 	RUNNING  AppStatus = "running"
 	STOPPED  AppStatus = "stopped"
+	DELETING  AppStatus = "deleting"
 )
 
 type App struct {

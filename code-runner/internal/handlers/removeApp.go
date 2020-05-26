@@ -11,7 +11,6 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"time"
 )
 
 func removeAppHandler(w http.ResponseWriter, r *http.Request) {
@@ -52,6 +51,13 @@ func removeApp(user, token, app string) {
 		App: appObj,
 	}
 
+	appObj.Status = models.DELETING
+	appObj.Url = ""
+	_, err = store.ClientStore.UpdateApp(ctx, appObj)
+	if err != nil {
+		log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
+	}
+
 	err = dockerApp.Initialize()
 
 	if err != nil {
@@ -63,14 +69,6 @@ func removeApp(user, token, app string) {
 		log.Println(fmt.Sprintf("error stoping app container:%s", err.Error()))
 	}
 
-	appObj.Status = models.STOPPED
-	appObj.Url = ""
-
-	_, err = store.ClientStore.UpdateApp(ctx, appObj)
-	if err != nil {
-		log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
-	}
-
 	err = dockerApp.ContainerRemove(ctx)
 	if err != nil {
 		log.Println(fmt.Sprintf("error removing app container:%s", err.Error()))
@@ -80,7 +78,6 @@ func removeApp(user, token, app string) {
 		App: appObj,
 	}
 
-	time.Sleep(time.Second * 4)
 	genApp.InitGit(ctx, token)
 	_, err = genApp.DeleteRepo(ctx)
 	if err != nil {
