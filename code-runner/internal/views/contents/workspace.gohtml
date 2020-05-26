@@ -44,17 +44,19 @@
                             <input type="submit" value="View" class="btn btn-outline-warning">
                         </form>
                     </div>
+
+                    <div class="btn-group" role="group">
+                        <form action="/regenerate/{{$element.Name}}" method="post">
+                            <input type="submit" value="Re-Generate" class="btn btn-outline-danger">
+                        </form>
+                    </div>
+
                     <div class="btn-group" role="group">
                         <form action="/remove/{{$element.Name}}" method="post">
                             <input type="submit" value="Delete" class="btn btn-outline-danger">
                         </form>
                     </div>
 
-                    <div class="btn-group" role="group">
-                        <form action="/regenerate/{{$element.Name}}" method="post">
-                            <input type="submit" value="Re-Generate" class="btn btn-outline-warning">
-                        </form>
-                    </div>
                 </div>
 
             </div>

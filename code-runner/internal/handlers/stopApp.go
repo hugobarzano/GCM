@@ -3,10 +3,10 @@ package handlers
 import (
 	"code-runner/internal/constants"
 	"code-runner/internal/generator"
+	"code-runner/internal/models"
 	"context"
 	"log"
 
-	"code-runner/internal/models"
 	"code-runner/internal/store"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -44,6 +44,13 @@ func stopApp(user, token, app string) {
 		log.Println(fmt.Sprintf("error getting app:%s", err.Error()))
 	}
 
+	appObj.Status = models.STOPPED
+	appObj.Url = ""
+	_, err = store.ClientStore.UpdateApp(ctx, appObj)
+	if err != nil {
+		log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
+	}
+
 	dockerApp := generator.DockerApp{
 		App: appObj,
 	}
@@ -66,15 +73,6 @@ func stopApp(user, token, app string) {
 	err = dockerApp.ImageRemove(ctx, token)
 	if err != nil {
 		log.Println(fmt.Sprintf("error removing image: %s", err.Error()))
-	}
-
-	appObj.Status = models.STOPPED
-	appObj.Url = ""
-	appObj.Spec["dockerId"] = ""
-
-	_, err = store.ClientStore.UpdateApp(ctx, appObj)
-	if err != nil {
-		log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
 	}
 
 }
