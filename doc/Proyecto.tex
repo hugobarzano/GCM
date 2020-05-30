@@ -51,7 +51,7 @@
 \newcommand{\myUni}{\protect{ Universidad Nacional de Educación a Distancia}\xspace}
 \newcommand{\myLocation}{Madrid\xspace}
 \newcommand{\myTime}{\today\xspace}
-\newcommand{\myVersion}{Version 0.1\xspace}
+\newcommand{\myVersion}{Versión 0.1\xspace}
 
 
 \hypersetup{
@@ -234,16 +234,6 @@ pdfproducer = {pdflatex}
 \tableofcontents
 \listoffigures
 \bibliographystyle{elsarticle-num}
-%\bibliography{ref/references}
-%\listoftables
-
-%
-%\mainmatter
-%\setlength{\parskip}{5pt}
-
-%\input{capitulos/01_Introduccion}
-
-
 
 \chapter{Introducción}
 
@@ -281,7 +271,7 @@ A continuación se va a describir de manera literaria el problema planteado por 
 \section{Problema}
 
 Como se verá en el capítulo dedicado a los trabajos relacionados, el conjunto de soluciones que ofrece la nube es muy variado. Para cada una de las soluciones cloud, se pueden encontrar diversas implementaciones con diversas tecnologías, lo que incrementa
-de manera significativa el conjunto final de productos software disponibles para ser consumidos por internet. Este es el primer problema que intenta abordar este proyecto, ¿Como manejar la diversidad tecnológica que produce trabajar en entornos de computación
+de manera significativa el conjunto final de productos software disponibles para ser consumidos por Internet. Este es el primer problema que intenta abordar este proyecto, ¿Como manejar la diversidad tecnológica que produce trabajar en entornos de computación
 en la nube? ¿Qué solución es mas adecuada para un problema concreto de negocio? ¿Con qué tecnología implementar la solución elegida? Este proyecto aborda este problema dotando a los desarrolladores de una plataforma Open Source donde probar la tecnología que desean construir.\\
 
 El conjunto de soluciones ofrecidas por los diversos proveedores de soluciones cloud aumenta día a día en función de las necesidades de negocio de los consumidores lo que obliga a los profesionales a estar continuamente renovando y certificando sus conocimientos. A raíz de esto han surgido muchas plataformas de aprendizaje o E-learning para que los profesionales adquieran conocimientos en las consideras tecnologías de vanguardia,  en otras palabras, tecnologías altamente demandadas por el mundo empresarial. Algunas de esta plataformas son:
@@ -1531,9 +1521,13 @@ En esta sección se presentan ciertas mejoras a integrar en el proyecto mejorand
 \subsection{Proceso Generativo}
 
 Actualmente el motor de plantillas encargado de generar las aplicaciones está completamente integrado en el código fuente de Code-Runner. Se propone como mejora la externalización de dichas plantillas a un repositorio de código ajeno al proyecto. De esta manera se podría trabajar en nuevas versiones de las aplicaciones generadas sin necesidad de liberar y desplegar una nueva versión del sistema software en si. Como punto de partida para la mejora se propone por ejemplo que Code-Runner sea capaz de cargar en memoria el contenido del repositorio de plantillas y utilizar dicho contenido para la producción de código. Adicionalmente este mecanismo debería refrescar periódicamente la copia en memoria del repositorio, de esta forma el sistema sería capaz de integrar nuevas versiones a generar sin perdida de servicio. 
-\subsubsection{DSL Especificación de Aplicación}
+\subsubsection{Especificación de Aplicación}
 
 Se propone como mejora adicional la actualización del la especificación de aplicación solicitada al usuario para cubrir escenarios mas complejos, como por ejemplo para la  generación de aplicaciones  Api-Rest podrían definirse diversos modelos de datos junto con las relaciones u operaciones que existan entre ellos. Los servicios de datos también puede mejorar si la especificación soportara configuración de credenciales(contraseñas).
+
+\subsubsection{Importar Aplicaciones}
+
+Se propone como mejora la capacidad de importar aplicaciones ya existentes en repositorios del usuario. La idea es la de inferir desde el repositorio de código lo necesario para categorizar la aplicación y  poder generar los elementos software (configuración, scripts, código fuente, documentación) necesarios para que la aplicación forme parte del ecosistema de Code-Runner.  
 
 \subsection{Naturaleza y Tecnología}
 
@@ -1613,8 +1607,6 @@ on:
   push:
     branches:
       - master
-    tags:
-      - v*
 jobs:
   test:
     runs-on: ubuntu-latest
