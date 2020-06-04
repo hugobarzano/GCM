@@ -247,7 +247,7 @@ A continuación se van a definir los objetivos propuestos a alcanzar siguiendo e
 
 \section{Objetivos}
 
-El principal objetivo de este proyecto es el de sintetizar y automatizar el proceso de desarrollo y operación de software, concrétamente el de aplicaciones web o servicios de datos en la nube mediante un enfoque generativo. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación.
+El principal objetivo de este proyecto es el de sintetizar y automatizar el proceso de desarrollo y operación de software, concretamente el de aplicaciones web o servicios de datos en la nube mediante un enfoque generativo. Dicha síntesis consiste en generalizar la naturaleza de los distintos sistemas de información que pueden ser consumidos a través de Internet en una única entidad denominada comúnmente como aplicación.
 
 Para alcanzar el principal objetivo, este proyecto ha de identificar, modelar y automatizar las principales etapas del ciclo de vida de proyectos software, y construir un mecanismo genérico con el que producir aplicaciones. Las aplicaciones producidas por el proyecto han de ser auto-contenidas y auto-consumibles, es decir, han te contener todo lo necesario para ser ejecutadas y usadas fuera del marco de este proyecto.
 
@@ -282,10 +282,10 @@ El conjunto de soluciones ofrecidas por los diversos proveedores de soluciones c
 \item \href{https://www.udemy.com}{Udemi}
 \end{itemize}
 
-Estas plataformas cuentan con diversos recursos virtuales para el aprendizaje ( videos, tutoriales, laboratorios virtuales, ejercicios, test) pero ninguna de ellas materializa el tipo de software que el desarrollador desea aprender en una aplicación o servicio consumible a través de Internet siendo este uno de los objetivos a alcanzar por el proyecto aquí planteado. \\
+Estas plataformas cuentan con diversos recursos virtuales para el aprendizaje (vídeos, tutoriales, laboratorios virtuales, ejercicios, test) pero ninguna de ellas materializa el tipo de software que el desarrollador desea aprender en una aplicación o servicio consumible a través de Internet siendo este uno de los objetivos a alcanzar por el proyecto aquí planteado. \\
 
 
-Normalmente en los proyectos informáticos las etapas que forman el ciclo de vida del desarrollo software están altamente segmentadas y debido a esto el tiempo y recursos necesarios para diseñar, implementar y desplegar un producto software es elevado.  Este proyecto intenta mejorar esto dando un enfoque reducido, generativo y automatizado para la especificación, producción y despliegue de software en entornos de computación en la nube.  
+Normalmente, las etapas que forman el ciclo de vida del desarrollo software están altamente segmentadas y debido a esto el tiempo y recursos necesarios para diseñar, implementar y desplegar un producto software es elevado.  Este proyecto intenta mejorar esto dando un enfoque reducido, generativo y automatizado para la especificación, producción y despliegue de software en entornos de computación en la nube.  
 
 A continuación, se va a describir la solución alcanzada por este proyecto. 
 
@@ -293,7 +293,7 @@ A continuación, se va a describir la solución alcanzada por este proyecto.
 
 Este proyecto muestra como el uso de la programación generativa y las tecnologías de la información mejoran el proceso desarrollo y despliegue software en el ámbito de las soluciones orientadas a la web 2.0. Se pretende proporcionar al desarrollador software de un sistema web orientado a la generación, construcción y despliegue de aplicaciones web o servicios de datos de diversa naturaleza partiendo de una definición especifica de dominio. Con esta solución se intenta que el desarrollador adquiera conceptos y conocimientos relativos a las tecnologías de la información y el ciclo de vida del desarrollo software.  \\
 
-Como solución se propone realizar las siguientes síntesis o generalidades.  Por una parte, ante la gran diversidad de soluciones cloud: 
+Como solución se propone realizar las siguientes síntesis o generalidades.  Por una parte, existe una gran diversidad de soluciones cloud: 
 
 \begin{enumerate}
 \item \textbf{ Aplicaciones web estáticas }
@@ -334,30 +334,37 @@ La entidad de propósito general \textbf{aplicación} es definida por el siguien
 
 
 
-Por otra parte, sintetizar el proceso de desarrollo y despliegue de software de manera automatizada y generativa  este proyecto define las siguientes etapas: 
+Por otra parte, para sintetizar el proceso de desarrollo y despliegue de software de manera automatizada y generativa, este proyecto define las siguientes etapas: 
 
 \begin{enumerate}
-\item \textbf{ Code Generation }  Etapa inicial donde se sintetiza el proceso de desarrollo software, es decir se produce el código necesario para la solución especificada por el desarrollador.
-\item \textbf{ Artefact Generation }  El objetivo de esta etapa es aprovechar el código fuente generado en la etapa Code Generation para producir un artefacto auto-contenido junto con la configuración necesaria para su ejecución en un entorno virtual.
-\item \textbf{ Deploy Generation } En esta etapa se aprovecha el producto de la etapa Artefact Generation para disponibilizar la solución en Internet.
+\item \textbf{ Code Generation. }  Etapa inicial donde se sintetiza el proceso de desarrollo software, es decir, se produce el código necesario para la solución especificada por el desarrollador.
+\item \textbf{ Artefact Generation. }  El objetivo de esta etapa es aprovechar el código fuente generado en la etapa Code Generation para producir un artefacto auto-contenido junto con la configuración necesaria para su ejecución en un entorno virtual.
+\item \textbf{ Deploy Generation. } En esta etapa se aprovecha el producto de la etapa Artefact Generation para disponibilizar la solución en Internet.
 \end{enumerate}
 
-Toda aplicación generada por el sistema es sometida a estas etapas, independientemente de su naturaleza, dominio o tecnología. Con ellas se consigue que dada una especificación de aplicación se genere y publique el código fuente que materializa la definición en producto software, transformando problemas especifico de dominio en soluciones generalizadas, la construcción de artefactos auto-contenidos que permita la distribución y ejecución del software generado, así como la disponibilización de  las aplicaciones en Internet para que pueda ser consumida por los usuarios del sistema. 
+Toda aplicación generada por el sistema es sometida a estas etapas, independientemente de su naturaleza, dominio o tecnología. Con ellas se consigue que dada una especificación de aplicación se genere y publique el código fuente que materializa la definición en producto software, transformando problemas específicos de dominio en soluciones generalizadas, la construcción de artefactos auto-contenidos que permita la distribución y ejecución del software generado, así como la disponibilización de  las aplicaciones en Internet para que pueda ser consumida por los usuarios del sistema. 
 
+El resto del documento se organiza de la siguiente manera:
 
-En los siguientes capítulos se mostraran trabajos, publicaciones y tecnologías relacionadas con el campo de estudio aquí propuesto. Con el objetivo de facilitar la comprensión del sistema software a construir, se planifica y analiza el problema  a resolver mediante ingeniería de requisitos. Tras el análisis se detalla la implementación realizada y la consecución de los objetivos propuesto mediante un caso de uso funcional.
+\begin{enumerate}
+\item \textbf{Capítulo 2: Trabajos Relacionados.} Donde se tratan trabajos, publicaciones y tecnologías relacionadas con el campo de estudio aquí propuesto. 
+\item \textbf{Capítulo 3: Planificación y Análisis.} Donde se planifica y analiza el problema  a resolver mediante ingeniería de requisitos. 
+\item \textbf{Capítulo 4: Implementación  y Pruebas.} Donde se profundiza en los detalles técnicos y se muestra la consecución de los objetivos mediante un caso de uso funcional.  
+\item \textbf{Capítulo 5: Conclusiones.} 
+\end{enumerate}
+
 
 
 \chapter{Trabajos Relacionados}
 
-En las siguientes secciones se presenta a modo de introducción conceptos relativos a Programación Generativa, Cloud Computing y conceptos relacionados con el proceso de desarrollo software y el ciclo de vida de productos software, conceptos como la Integración Continua y el Despliegue Continuo. Se pretende con esto dotar al lector de un contexto o conocimiento básico para abordar el proyecto. De manera adicional se abordan tecnologías, trabajos y publicaciones relacionadas para mostrar el estado actual del arte. 
+En las siguientes secciones se presenta a modo de introducción conceptos relativos a Programación Generativa, Cloud Computing y buenas prácticas en el desarrollo software. Se pretende con esto dotar al lector de un contexto o conocimiento básico para abordar el proyecto. De manera adicional se comparan tecnologías, trabajos y publicaciones relacionadas para mostrar el estado actual del arte. 
 
 
 \section{Desarrollo Software}
 
-\subsection{Ciclo de Vida del Desarrollo Software (SDLC) }
+\subsection{Ciclo de Vida del Desarrollo Software}
 
-El ciclo de vida del desarrollo software es un procedimiento sistemático para construir software.  El objetivo de este procedimiento es el de garantizar la calidad y las exactitud del software a desarrollar, haciendo que cumpla con las expectativas del usuario. 
+El ciclo de vida del desarrollo software (Software Development Life Cycle, SDLC) es un procedimiento sistemático para construir software.  El objetivo de este procedimiento es el de garantizar la calidad y las exactitud del software a desarrollar, haciendo que cumpla con las expectativas del usuario. 
    
 \subsubsection{Etapas SDLC}
 
@@ -378,30 +385,29 @@ En esta sección se profundiza en buenas practicas relativas al desarrollo softw
 
 \subsubsection{Integración Continua}
  
-La integración continua consiste en un modelo informático orientado al desarrollo software que propone la integración de nuevas funcionalidades y la ejecución de pruebas de manera constante para así detectar posibles problemas o regresiones en el software que se está desarrollando así como mejorar su calidad de una manera automatizada. En el artículo \textbf{Continuous Integration}\cite{ci}   Martin Fowler ejemplifica este modelo mediante la implementación de una funcionalidad mediante integración continua. 
+La integración continua consiste en un modelo informático orientado al desarrollo software que propone la integración de nuevas funcionalidades y la ejecución de pruebas de manera constante para así detectar posibles problemas o regresiones en el software que se está desarrollando así como mejorar su calidad de una manera automatizada. En el artículo \textbf{Continuous Integration}~\cite{ci}   Martin Fowler ejemplifica este modelo mediante la implementación de una funcionalidad mediante integración continua. 
 
 \subsubsection{Entrega Continua}
 
-La entrega continua es un procedimiento informático que consiste en realzar entregas continuas de versiones del software que se está construyendo. Está íntimamente ligado al modelo de Integración Continua, permite a los desarrolladores liberar versiones del producto software para que sean validadas por los responsables de calidad o integradas en entornos productivos mientras continúan desarrollando nuevas funcionalidades. El objetivo de este procedimiento es el de disponer de un artefacto listo para ser probado, ejecutado y distribuido.  En este procedimiento, la automatización llega hasta el punto de generar dicho artefacto, su despliegue o distribución requiere de intervención humana. En el articulo \textbf{Continuous Delivery: Overcoming adoption challenges}\cite{cd}, se proponen diversas estrategias para adoptar procedimientos de entrega continua  en el mundo empresarial así como retos en materia de investigación propuestos a la comunidad científica. 
+La entrega continua es un procedimiento informático que consiste en realizar entregas continuas de versiones del software que se está construyendo. Está íntimamente ligado al modelo de Integración Continua y permite a los desarrolladores liberar versiones del producto software para que sean validadas por los responsables de calidad o integradas en entornos productivos mientras continúan desarrollando nuevas funcionalidades. El objetivo de este procedimiento es el de disponer de un artefacto listo para ser probado, ejecutado y distribuido.  En este procedimiento, la automatización llega hasta el punto de generar dicho artefacto, su despliegue o distribución requiere de intervención humana. En el articulo \textbf{Continuous Delivery: Overcoming adoption challenges}~\cite{cd}, se proponen diversas estrategias para adoptar procedimientos de entrega continua  en el mundo empresarial así como retos en materia de investigación propuestos a la comunidad científica. 
 
 \subsubsection{Despliegue Continuo}
 
-El despliegue continuo consiste en un procedimiento automatizado similar a la entrega continua con la diferencia de que en este caso el artefacto implementado es distribuido o ejecutado sobre un entorno virtual sin interacción humana, en otras palabras, es desplegado.  De esta forma los tiempos de entrega y operación de nuevas funcionalidades software se ven notablemente reducidos. En el artículo \textbf{Problems and Solutions of Continuous Deployment: A Systematic Review}\cite{cdpl} se realiza un repaso sobre numerosos artículos relativos al despliegue continuo  poniendo de manifiesto problemas o retos encontrados al intentar adoptar este procedimiento en el mundo empresarial y que  
-solución se adecua mas a cada uno de los problemas presentados. 
+El despliegue continuo consiste en un procedimiento automatizado similar a la entrega continua con la diferencia de que en este caso el artefacto implementado es distribuido o ejecutado sobre un entorno virtual sin interacción humana, en otras palabras, es desplegado.  De esta forma los tiempos de entrega y operación de nuevas funcionalidades software se ven notablemente reducidos. En el artículo \textbf{Problems and Solutions of Continuous Deployment: A Systematic Review}~\cite{cdpl} se realiza un repaso sobre numerosos artículos relativos al despliegue continuo  poniendo de manifiesto problemas o retos encontrados al intentar adoptar este procedimiento en el mundo empresarial y que solución se adecua mas a cada uno de los problemas presentados. 
 
 \subsection{En este Proyecto}
 
-Este proyecto considera que las etapas que forman parte del ciclo de vida del desarrollo software están altamente segmentadas. Es cierto que a la hora de llevar a cabo proyectos informáticos a gran escala como los encontrados en el sector espacial o energético, los cuales involucran a diversas organizaciones,  cada una de estas etapas es necesaria ya que el volumen y la dimensión de dichos proyectos así lo requieren pero en el ámbito del desarrollo software orientado a las aplicaciones modernas, estas etapas pueden ser sintetizadas y reducidas, mejorando notablemente los tiempos de desarrollo y abaratando costes.  En las últimas 2 décadas, tras la publicación del \textbf{ Agile Manifesto}\cite{agile} la industria del software ha dado un giro orientando sus procesos hacia el cambio y mejora continua en lugar de intentar evitar o contemplar errores a priori mediante un diseño extenso y una planificación estricta.  En el articulo \textbf{ A decade of agile methodologies: Towards explaining agile software developmen}\cite{decada} se recogen  diversas publicaciones relacionadas con el desarrollo ágil así como las aportaciones realizadas al campo fruto de la investigación software. 
+Este proyecto considera que las etapas que forman parte del ciclo de vida del desarrollo software están altamente segmentadas. Es cierto que a la hora de llevar a cabo proyectos informáticos a gran escala como los encontrados en el sector espacial o energético, los cuales involucran a diversas organizaciones,  cada una de estas etapas es necesaria ya que el volumen y la dimensión de dichos proyectos así lo requieren pero en el ámbito del desarrollo software orientado a las aplicaciones modernas, estas etapas pueden ser sintetizadas y reducidas, mejorando notablemente los tiempos de desarrollo y abaratando costes.  En las últimas 2 décadas, tras la publicación del \textbf{ Agile Manifesto}~\cite{agile} la industria del software ha dado un giro orientando sus procesos hacia el cambio y mejora continua en lugar de intentar evitar o contemplar errores a priori mediante un diseño extenso y una planificación estricta.  En el articulo \textbf{ A decade of agile methodologies: Towards explaining agile software development}~\cite{decada} se recogen  diversas publicaciones relacionadas con el desarrollo ágil así como las aportaciones realizadas al campo fruto de la investigación software. 
 
 
-En linea con las buenas practicas a la hora de desarrollar software presentadas en la sección anterior,  así como las ventajas que aporta las metodologías ágiles, este proyecto sintetiza el proceso de de desarrollo software mediante un enfoque generativo, materializando una especificación de usuario en código fuente funcional.  Para implementar las buenas prácticas de Integración Continua y Entrega Continua este proyecto hace uso de \textbf{Github}\cite{github} como sistema gestor de repositorios de código así como de las herramientas que ofrece. En el capitulo 4 titulado Implementación y Pruebas, sección~\ref{repo}  Repositorio de Código se profundiza en esta cuestión. 
+En linea con las buenas prácticas a la hora de desarrollar software presentadas en la sección anterior,  así como las ventajas que aporta las metodologías ágiles, este proyecto sintetiza el proceso de de desarrollo software mediante un enfoque generativo, materializando una especificación de usuario en código fuente funcional.  Para implementar las buenas prácticas de Integración Continua y Entrega Continua este proyecto hace uso de \textbf{Github}~\cite{github} como sistema gestor de repositorios de código así como de las herramientas que ofrece. En el capitulo 4 titulado Implementación y Pruebas, sección~\ref{repo}  Repositorio de Código se profundiza en esta cuestión. 
 
-Por otra parte, para implementar la buena práctica de Despliegue Continuo se ha decidido utilizar como tecnología de virtualización  \textbf{Docker}\cite{dk}, lo que permite aplicar el mismo tratamiento a las diversas aplicaciones generadas por el sistema, independientemente de de su naturaleza o dominio. En la sección ~\ref{infra} 
+Por otra parte, para implementar la buena práctica de Despliegue Continuo se ha decidido utilizar como tecnología de virtualización  \textbf{Docker}~\cite{dk}, lo que permite aplicar el mismo tratamiento a las diversas aplicaciones generadas por el sistema, independientemente de de su naturaleza o dominio. En la sección ~\ref{infra} 
 Infraestructura Virtual de las Aplicaciones se profundiza y justifica el uso de esta tecnología para cumplir con el objetivo de desplegar y disponibilizar las aplicaciones generadas a través de Internet. De manera adicional, en la sección ~\ref{mercado} Tecnología en el Mercado se repasan las principales soluciones orientadas al problema aquí planteado que ofrece tanto la comunidad Open-Source como los proveedores de soluciones en la nube.   
 
 \section{Programación Generativa}
 
-La programación generativa (Generative Programaing) de manera directa trata de << Escribir programas que escriban programas. >>  para aportar beneficios al ciclo de vida del desarrollo software en aspectos tales como: 
+La programación generativa (Generative Programming) de manera directa trata de << Escribir programas que escriban programas. >>  para aportar beneficios al ciclo de vida del desarrollo software en aspectos tales como: 
 
 \begin{enumerate}
 \item \textbf{Productividad}:  Las técnicas de programación generativa pueden ahorrar numerosas horas de codificación.  
@@ -410,7 +416,7 @@ La programación generativa (Generative Programaing) de manera directa trata de 
 \item \textbf{Abstracción}: En algunos casos, los generadores de código utilizan como entrada un modelo abstracto del sistema que van a producir. Este modelo abstracto representa las reglas de negocio de alto nivel que el sistema producido ha de cumplir y permite que el generador sea portable ya que la misma entrada puede ser aprovechada para producir código en distintos lenguajes o tecnologías. 
 \end{enumerate}
 
-Tal y como se presenta en el articulo \textbf{Generative Programming}\cite{gp} la programación generativa consiste en diseñar e implementar módulos software que pueden ser combinados para generar sistemas especializados y  optimizados en cumplir requisitos específicos de dominio. Los objetivos de la programación generativa son:
+Tal y como se presenta en el articulo \textbf{Generative Programming}~\cite{gp} la programación generativa consiste en diseñar e implementar módulos software que pueden ser combinados para generar sistemas especializados y  optimizados en cumplir requisitos específicos de dominio. Los objetivos de la programación generativa son:
 
 \begin{enumerate}
 \item Disminuir la desviación conceptual entre el código software y los conceptos de dominio.
@@ -421,7 +427,7 @@ Tal y como se presenta en el articulo \textbf{Generative Programming}\cite{gp} l
 
 \subsection{Principios}
 
-Para alcanzar sus objetivos, la programación generativa ha de cumplir los siguientes principios tratados en el articulo \textbf{Generative Programming and Active Libraries}\cite{gpl}
+Para alcanzar sus objetivos, la programación generativa ha de cumplir los siguientes principios tratados en el articulo \textbf{Generative Programming and Active Libraries}~\cite{gpl}
 
 \begin{enumerate}
 \item \textbf{Separation of concerns (SoC)}. La separación de preocupaciones pone de manifiesto la importancia de lidiar con los problemas de una manera atómica. Es decir, crear pequeños fragmentos de código que cumplan con una funcionalidad muy especifica e integrarlos para dar lugar al componente deseado.
@@ -437,28 +443,28 @@ Resulta imperativo presentar como ejemplo  la produción en cadena o la produci�
 
 En linea con este concepto de producción en cadena, el cual es aplicado hoy en día en numerosos sectores, el objetivo de este proyecto es construir una cadena de producción software que sea capaz de generar y desplegar aplicaciones, para ello este proyecto se apoya en la programación generativa para sintetizar el ciclo de vida del desarrollo software, abstrayendo al usuario de los detalles internos de programación y permitiendo generar aplicaciones mediante una especificación de alto nivel. En este sistema el objetivo  de generar aplicaciones no se limita al código fuente, si no que involucra otros aspectos como creación y configuración de recursos virtuales como por ejemplo el repositorio de código donde contener el código fuente, la configuración necesaria para dotar a las aplicaciones generadas de un ciclo de integración continua para evolucionar el código generado si fuera necesario, configuración necesaria para compilar, distribuir y disponer de artefactos ejecutables, así como  la configuración y recursos virtuales necesarios para el despliegue continuo de las aplicaciones.
  
-En el libro \textbf{Code Generation in Action (In Action Series)}\cite{codeg} se presentan diversos ejemplos prácticos que han sido utilizados como referente en la implementación de este sistema para cubrir aspectos tales como:
+En el libro \textbf{Code Generation in Action (In Action Series)}~\cite{codeg} se presentan diversos ejemplos prácticos que han sido utilizados como referente en la implementación de este sistema para cubrir aspectos tales como:
 
 \begin{enumerate}
 \item Generación de Interfaces de usuario. 
-\item Generación de documentación
-\item Generación de servicios web basados en capas
+\item Generación de documentación.
+\item Generación de servicios web basados en capas.
 \item Generación de lógica de negocio. 
 \end{enumerate}
 
 
-El sistema aquí propuesto entra en la categoría generativa de \textbf{model driven design}, donde la especificación de alto nivel proporcionada por el usuario define el modelo de aplicación o servicio web  que se va a generar. Para el proceso generativo se ha construido un motor de plantillas capaz de producir aplicaciones de diversa naturaleza o dominio a partir del modelo de aplicación definido como entrada por el usuario.  En el libro \textbf{Code generation with templates}\cite{templates} se presenta por una parte un enfoque matemático para justificar el uso y mejora de plantillas y por otro un enfoque práctico y aplicado de como trabajar con plantillas o como definir el meta-lenguaje necesario para las plantillas.  Como trabajo previo relacionado se hace referencia al proyecto \textbf{Apigena}\cite{apigena} donde de aborda la producción de APIs-REST mediante un enfoque generativo. 
+El sistema aquí propuesto entra en la categoría generativa de \textbf{model driven design}, donde la especificación de alto nivel proporcionada por el usuario define el modelo de aplicación o servicio web  que se va a generar. Para el proceso generativo se ha construido un motor de plantillas capaz de producir aplicaciones de diversa naturaleza o dominio a partir del modelo de aplicación definido como entrada por el usuario.  En el libro \textbf{Code generation with templates}~\cite{templates} se presenta por una parte un enfoque matemático para justificar el uso y mejora de plantillas y por otro un enfoque práctico y aplicado de como trabajar con plantillas o como definir el meta-lenguaje necesario para las plantillas.  Como trabajo previo relacionado se hace referencia al proyecto \textbf{Apigena}~\cite{apigena} donde de aborda la producción de APIs-REST mediante un enfoque generativo. 
 
 \section{Cloud Computing}
 
-La real academia de la ingeniería, define la computación en la nube o Cloud Computing\citep{realacademia}  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.” La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión ya que la computación en la nube juega un papel fundamental en la resolución  del problema planteado.
+La real academia de la ingeniería, define la computación en la nube o Cloud Computing\citep{realacademia}  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.” La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios~\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión, ya que la computación en la nube juega un papel fundamental en la resolución  del problema planteado.
 
-La nube  o el cloud computing  puede definirse  como el conjunto de tecnologías que permiten acceder a servicios información a través de Internet, es decir, sin necesidad de instalar programas software, el usuario puede acceder a estos servicios mediante Internet. No hay que entender a la nube como una entidad física, sino como una red de servidores distribuidos en todo el mundo, que inter-conectados entre si funcionan como un único ecosistema.  El paradigma que presenta la nube se basa en que en lugar de acceder a archivos y datos desde un equipo personal o local, se accede a ellos en línea desde cualquier dispositivo conectado a Internet. La siguiente imagen muestra los beneficios de la computación en la nube:
+La nube  o el cloud computing  puede definirse  como el conjunto de tecnologías que permiten acceder a servicios información a través de Internet, es decir, sin necesidad de instalar programas software. No hay que entender a la nube como una entidad física, sino como una red de servidores distribuidos en todo el mundo, que inter-conectados entre si funcionan como un único ecosistema.  El paradigma que presenta la nube se basa en que en lugar de acceder a archivos y datos desde un equipo personal o local, se accede a ellos en línea desde cualquier dispositivo conectado a Internet. La siguiente imagen muestra los beneficios de la computación en la nube:
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{imagenes/beneficiosCC.jpg}
-\caption{ Beneficios Cloud Computing\cite{beneficios} }
+\caption{ Beneficios Cloud Computing~\cite{beneficios} }
 \end{figure}
 
 
@@ -468,7 +474,7 @@ La nube puede clasificarse en distintos modelos en función del tipo de solució
 
 \subsubsection{Nube Pública}
 
-Las nubes públicas son propiedad de los proveedores de servicio, es decir, hardware, software y todos los componentes necesarios para la infraestructura virtual subyacente son propiedad del proveedor de servicio cuya tarea es administrarlos. El consumidor accede y administra los recursos que va a consumir desde un explorador web.  Algunos ejemplos de proveedores de nube pública son GoogleCloud\cite{gcp} , Amazon Web Services\cite{aws} o Microsoft Azure\cite{azure}
+Las nubes públicas son propiedad de los proveedores de servicio, es decir, el hardware, el software y todos los componentes necesarios para la infraestructura virtual subyacente son propiedad del proveedor de servicio cuya tarea es administrarlos. El consumidor accede y administra los recursos que va a consumir desde un explorador web.  Algunos ejemplos de proveedores de nube pública son GoogleCloud~\cite{gcp} , Amazon Web Services~\cite{aws} o Microsoft Azure~\cite{azure}
 
 \subsubsection{Nube Privada}
 Las nubes privadas se caracterizan por que sus servicios e infraestructura subyacente se mantiene en una red privada, utilizados exclusivamente por una empresa u organización. Por ejemplo, una nube privada puede encontrarse físicamente en el centro de datos de una compañía o de un banco.
@@ -480,23 +486,23 @@ Las nubes híbridas se caracterizan por combinar los modelos de nube pública y 
 
 \subsection{Tipos de Servicios en la Nube}
 
-La computación en la nube permite la integración de servicios en Red a nivel mundial y además contribuye al uso eficiente de la energía aunque la centralización de las aplicaciones y el almacenamiento de los datos origina una interdependencia con los proveedores de servicios. La disponibilidad de estos servicios necesita de conexión a Internet.  En el articulo \textbf{Comparison Among Cloud Technologies and Cloud Performance}\cite{cloudtech} se revisan las distintas tecnologías que configuran la nube comparando distintas herramientas para trabajar con este tipo de servicios.
+La computación en la nube permite la integración de servicios en red a nivel mundial y además contribuye al uso eficiente de la energía aunque la centralización de las aplicaciones y el almacenamiento de los datos origina una interdependencia con los proveedores de servicios. La disponibilidad de estos servicios necesita de conexión a Internet.  En el artículo \textbf{Comparison Among Cloud Technologies and Cloud Performance}~\cite{cloudtech} se revisan las distintas tecnologías que configuran la nube comparando distintas herramientas para trabajar con este tipo de servicios.
 
 Los servicios proporcionados por la nube pueden clasificarse en las siguientes categorías:
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{imagenes/arquitecturaCC.jpg}
-\caption{ Arquitectura Cloud Computing\cite{arquitecturaCC} }
+\caption{ Arquitectura Cloud Computing~\cite{arquitecturaCC} }
 \end{figure}
 
-\subsubsection{Software como servicio (SaaS)}\label{secsaas}
+\subsubsection{Software como servicio}\label{secsaas}
 
-El Software como Servicio\cite{saas} (SaaS, Software as a Service) ofrece el consumo de una gran variedad de aplicaciones o servicios proporcionadas por los proveedores del servicio y que se ejecutan en la infraestructura de la nube. Las aplicaciones en la nube son accesibles por distintos dispositivos del cliente a través de una interfaz sencilla, como por ejemplo un navegador web. El cliente no gestiona la infraestructura del servicio, que incluye la red de comunicaciones, los servidores, los sistemas operativos y el almacenamiento, simplemente utiliza el servicio como es el caso de este proyecto.
+El Software como Servicio~\cite{saas} (Software as a Service, SaaS) ofrece el consumo de una gran variedad de aplicaciones o servicios proporcionadas por los proveedores del servicio y que se ejecutan en la infraestructura de la nube. Las aplicaciones en la nube son accesibles por distintos dispositivos del cliente a través de una interfaz sencilla, como por ejemplo un navegador web. El cliente no gestiona la infraestructura del servicio, que incluye la red de comunicaciones, los servidores, los sistemas operativos y el almacenamiento, simplemente utiliza el servicio como es el caso de este proyecto.
 
-\subsubsection{Plataforma como servicio (PaaS)}\label{secpaas}
+\subsubsection{Plataforma como servicio}\label{secpaas}
 
-La Plataforma como Servicio\cite{paas} (PaaS, Platform as a Service) es una categoría de servicios cloud que proporciona un entorno a los desarrolladores crear aplicaciones y servicios que funcionen a través de internet. Los servicios PaaS se alojan en la nube, y los usuarios pueden acceder a ellos a través de un navegador web. Este tipo de servicios consisten en funcionalidades pre-configuradas a las que los clientes puedan suscribirse, eligiendo las características que deseen integrar en función de sus necesidades. Algunas de las funcionalidades PaaS son:
+La Plataforma como Servicio~\cite{paas} (Platform as a Service, PaaS) es una categoría de servicios cloud que proporciona un entorno a los desarrolladores para crear aplicaciones y servicios que funcionen a través de Internet. Los servicios PaaS se alojan en la nube, y los usuarios pueden acceder a ellos a través de un navegador web. Este tipo de servicios consisten en funcionalidades pre-configuradas a las que los clientes puedan suscribirse, eligiendo las características que deseen integrar en función de sus necesidades. Algunas de las funcionalidades PaaS son:
 
 \begin{enumerate}
 \item Sistema operativo.
@@ -510,27 +516,27 @@ La Plataforma como Servicio\cite{paas} (PaaS, Platform as a Service) es una cate
 \item Hosting.
 \end{enumerate}
 
-\subsubsection{Infraestructura como servicio (IaaS)}
+\subsubsection{Infraestructura como servicio}
 
-La Infraestructura como Servicio\cite{iaas} (IaaS, Infrastructure as a Service) es un servicio cloud, que proporciona acceso a recursos informáticos situados en un entorno virtualizado, a través de una conexión pública. Los recursos informáticos ofrecidos  son básicamente infraestructura de procesamiento. Físicamente, el repertorio de recursos hardware disponibles procede de multitud de servidores y redes, generalmente distribuidos entre numerosos centros de datos, de cuyo mantenimiento se encarga el proveedor del servicio cloud. El cliente, por su parte, obtiene acceso a los componentes virtualizados para construir con ellos su propia plataforma informática.
+La Infraestructura como Servicio~\cite{iaas} (Infrastructure as a Service, IaaS) es un servicio cloud, que proporciona acceso a recursos informáticos situados en un entorno virtualizado, a través de una conexión pública. Los recursos informáticos ofrecidos  son básicamente infraestructura de procesamiento. Físicamente, el repertorio de recursos hardware disponibles procede de multitud de servidores y redes, generalmente distribuidos entre numerosos centros de datos, de cuyo mantenimiento se encarga el proveedor del servicio cloud. El cliente, por su parte, obtiene acceso a los componentes virtualizados para construir con ellos su propia plataforma informática.
 
 Estas son algunas de las ventajas o características de una implementación basada en el modelo de Infraestructura como Servicio:
 
 \begin{enumerate}
 \item Escalabilidad.
-\item Sin necesidad de invertir en hardware.
+\item Ausencia de la necesidad de invertir en hardware.
 \item Independencia de la localización.
 \item Seguridad física en los centros de datos.
 \end{enumerate}
 
-\subsection{Tecnología en el Mercado}\label{mercado}
+\subsection{Tecnologías en el Mercado}\label{mercado}
 
-Actualmente en el mercado existen soluciones cloud que ofrecen parte de la funcionalidad que este proyecto intenta cubrir, las más destacadas son: 
+Actualmente existen soluciones cloud que ofrecen parte de la funcionalidad que este proyecto intenta cubrir, las más destacadas son: 
 
 
 \subsubsection{Github}
 
-GitHub\cite{github} es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja el código en repositorios y brinda herramientas muy útiles para trabajar de forma colaborativa. Github\cite{github2} ofrece varias herramientas:
+GitHub~\cite{github} es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja el código en repositorios y brinda herramientas muy útiles para trabajar de forma colaborativa. Github~\cite{github2} ofrece varias herramientas:
 
 \begin{enumerate}
 \item Una wiki para el mantenimiento de las distintas versiones de las aplicaciones.
@@ -541,14 +547,14 @@ GitHub\cite{github} es una plataforma de desarrollo colaborativo de software par
 
 \subsubsection{Heroku}
 
-Heroku\cite{hero} es  plataforma en la nube basada en un sistema de contenedores gestionados, con servicios de datos integrados y un potente ecosistema para implementar y ejecutar aplicaciones. Heroku presenta una fácil integración con diversos servicios web como por ejemplo Github. Heroku se caracteriza por el fichero de configuración denominado Procfile depositado junto al repositorio de código definiendo comportamientos relativos a como ese código fuente ha de ser ejecutado o desplegado.  Heroku proporciona una herramienta de linea de comandos que facilita la automatización de tareas y despliegues.
+Heroku~\cite{hero} es  plataforma en la nube basada en un sistema de contenedores gestionados, con servicios de datos integrados y un potente ecosistema para implementar y ejecutar aplicaciones. Heroku presenta una fácil integración con diversos servicios web como por ejemplo Github. Heroku se caracteriza por el fichero de configuración denominado Procfile depositado junto al repositorio de código definiendo comportamientos relativos a como ese código fuente ha de ser ejecutado o desplegado.  Heroku proporciona una herramienta de linea de comandos que facilita la automatización de tareas y despliegues.
 
 \subsubsection{Kubernetes}
-Kubernetes\cite{kube} es una plataforma de código abierto que automatiza y orquesta las operaciones con contenedores Docker. Kubernetes permite agrupar conjuntos de contenedores para ejecutar aplicaciones o montar ecosistemas cloud de una manera rápida y sencilla a lo largo de las distintas tipos de cloud: públicas, privadas o híbridas. Su objetivo es el de mejorar el despliegue y operación de aplicaciones software que utilicen contenedores como motor de virtualización ligera.  
+Kubernetes~\cite{kube} es una plataforma de código abierto que automatiza y orquesta las operaciones con contenedores Docker. Kubernetes permite agrupar conjuntos de contenedores para ejecutar aplicaciones o montar ecosistemas cloud de una manera rápida y sencilla a lo largo de las distintas tipos de cloud: públicas, privadas o híbridas. Su objetivo es el de mejorar el despliegue y operación de aplicaciones software que utilicen contenedores como motor de virtualización ligera.  
 
 \subsubsection{GCP: Cloud Code}
 
-Google Cloud Platform\cite{gcp} presenta Cloud Code\cite{gcpcode} como un conjunto de herramientas y plugins para complementar entornos de desarrollo integrado (IDEs)  tales como: 
+Google Cloud Platform~\cite{gcp} presenta Cloud Code~\cite{gcpcode} como un conjunto de herramientas y plugins para complementar entornos de desarrollo integrado (IDEs)  tales como: 
 
 \begin{enumerate}
 \item IntelliJ 
@@ -559,23 +565,23 @@ El objetivo de Cloud Code es el de mejorar el ciclo de vida de desarrollo softwa
 
 \subsubsection{Travis CI}
 
-Travis-CI\cite{travis} es una plataforma de código abierto orientada a la Integración, Entrega y despliegue continuo, mejorando el ciclo de vida del desarrollo software al integrarse con servicios de terceros. Travis-CI permite definir las etapas del pipeline al que el software en cuestión ha de someterse mejorando notablemente el proceso de integración y testing. 
+Travis-CI~\cite{travis} es una plataforma de código abierto orientada a la integración, entrega y despliegue continuo, mejorando el ciclo de vida del desarrollo software al integrarse con servicios de terceros. Travis-CI permite definir las etapas del pipeline al que el software en cuestión ha de someterse mejorando notablemente el proceso de integración y testing. 
 
 \subsubsection{Docker Hub}
 
-Docker Hub\cite{dhub} es un repositorio de artefactos alojado en la nube. Pone a disposición de los usuarios un entorno virtual donde crear, probar, almacenar y distribuir imágenes Docker. El objetivo de Docker Hub es el de mejorar el proceso de entrega y despliegue continuo al disponibilizar su repositorio a través de Internet facilitando la automatización de estas buenas prácticas. 
+Docker Hub~\cite{dhub} es un repositorio de artefactos alojado en la nube. Pone a disposición de los usuarios un entorno virtual donde crear, probar, almacenar y distribuir imágenes Docker. El objetivo de Docker Hub es el de mejorar el proceso de entrega y despliegue continuo al disponibilizar su repositorio a través de Internet facilitando la automatización de estas buenas prácticas. 
 
 \subsubsection{AWS:CodeDeploy}
 
-Amazon Web Services\cite{aws} presenta  CodeDeploy\cite{awscode} como servicio gestionado para automatizar tareas de despliegue software sobre diversos recursos virtuales de su propia nube como máquinas virtuales ( EC2), contenedores docker (Fargate), funciones cloud ( Lambda) o servidores locales. Este tipo de servicios optimizan el ciclo de vida del desarrollo software y permiten aplicar buenas prácticas como el despliegue continuo de software. 
+Amazon Web Services~\cite{aws} presenta  CodeDeploy~\cite{awscode} como servicio gestionado para automatizar tareas de despliegue software sobre diversos recursos virtuales de su propia nube como máquinas virtuales ( EC2), contenedores docker (Fargate), funciones cloud ( Lambda) o servidores locales. Este tipo de servicios optimizan el ciclo de vida del desarrollo software y permiten aplicar buenas prácticas como el despliegue continuo de software. 
 
 \subsubsection{AWS: CodePipeline}
-Amazon Web Services\cite{aws} presenta  CodePipeline\cite{awspipe} como servicio administrado para la implementación de entrega continua en proyectos software. Este servicio automatiza las actualizaciones de infraestructura y de aplicación. Su objetivo es el de mejorar el ciclo de vida del desarrollo software reduciendo las tareas manuales relativas al desarrollo y operaciones. Aunque inicialmente fue pensado para servicios de la propia nube de AWS sus últimas actualizaciones permiten su integración con servicios de terceros.  
+Amazon Web Services~\cite{aws} presenta  CodePipeline~\cite{awspipe} como servicio administrado para la implementación de entrega continua en proyectos software. Este servicio automatiza las actualizaciones de infraestructura y de aplicación. Su objetivo es el de mejorar el ciclo de vida del desarrollo software reduciendo las tareas manuales relativas al desarrollo y operaciones. Aunque inicialmente fue pensado para servicios de la propia nube de AWS sus últimas actualizaciones permiten su integración con servicios de terceros.  
 
 
 \subsubsection{Comparativa}
 
-En la siguiente tabla se comparan las tecnologías del mercado prestando especial atención al tipo de funcionalidad que cubren en términos de los objetivos de este proyecto. 
+En la siguiente tabla se comparan las tecnologías del mercado prestando especial atención al tipo de funcionalidad que cubren en términos de los objetivos de este proyecto. La idea es mostrar como GCM:Coode-Runner cubre las funcionalidades propuestas.
 
 \begin{figure}[H]
 \centering
@@ -601,7 +607,7 @@ Por otra parte, para garantizar el correcto funcionamiento de este sistema softw
 
 \section{Planificación}
 
-La planificación temporal muestra mediante el uso de diagramas de Gant la distribución en el tiempo de las tareas necesarias para cumplir con los objetivos de este proyecto. Los siguientes diagramas han sido confeccionados con la herramienta online Tom's Planner\cite{tom}
+La planificación temporal muestra mediante el uso de diagramas de Gant la distribución en el tiempo de las tareas necesarias para cumplir con los objetivos de este proyecto. Los siguientes diagramas han sido confeccionados con la herramienta online Tom's Planner~\cite{tom}
 
 \begin{figure}[H]
 \centering
@@ -722,19 +728,19 @@ Los diagramas de casos de uso, son diagramas UML que representan gráficamente a
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.50]{imagenes/casosUso1.jpg}
-\caption{ Casos de uso - Gestión Aplicaciones I\cite{diagrama}  }
+\caption{ Casos de uso - Gestión Aplicaciones I~\cite{diagrama}  }
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.50]{imagenes/casosUso2.jpg}
-\caption{ Casos de uso - Gestión Aplicaciones II\cite{diagrama}  }
+\caption{ Casos de uso - Gestión Aplicaciones II~\cite{diagrama}  }
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.50]{imagenes/casosUso3.jpg}
-\caption{ Casos de uso - Gestión Credenciales\cite{diagrama}  }
+\caption{ Casos de uso - Gestión Credenciales~\cite{diagrama}  }
 \end{figure}
 
 \subsection{Diagramas de Secuencia}
@@ -744,26 +750,26 @@ Los diagramas de secuencia especifican las interacciones temporales entre las pi
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.45]{imagenes/secuencia1.jpg}
-\caption{ Diagramas de Secuencia - Inicio sesión \cite{diagrama}  }
+\caption{ Diagramas de Secuencia - Inicio sesión ~\cite{diagrama}  }
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.43]{imagenes/secuencia2.jpg}
-\caption{ Diagramas de Secuencia - Crear Aplicación\cite{diagrama}  }
+\caption{ Diagramas de Secuencia - Crear Aplicación~\cite{diagrama}  }
 \end{figure}
 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.43]{imagenes/secuencia3.jpg}
-\caption{ Diagramas de Secuencia - Ejecutar, Inspeccionar y Detener Aplicación\cite{diagrama}  }
+\caption{ Diagramas de Secuencia - Ejecutar, Inspeccionar y Detener Aplicación~\cite{diagrama}  }
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.43]{imagenes/secuencia4.jpg}
-\caption{ Diagramas de Secuencia - Eliminar Aplicación\cite{diagrama}  }
+\caption{ Diagramas de Secuencia - Eliminar Aplicación~\cite{diagrama}  }
 \end{figure}
 
 
@@ -775,15 +781,15 @@ Los diagramas de secuencia especifican las interacciones temporales entre las pi
 
 \section{Implementación y Desarrollo}\label{secid}
 
-En el proceso de desarrollo e implementación del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y escalabilidad del software resultante.
+En el proceso de desarrollo e implementación del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)~\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y escalabilidad del software resultante.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.20]{imagenes/mvc.png}
-\caption{ Modelo-Vista-Controlador\cite{mvc2}  }
+\caption{ Modelo-Vista-Controlador~\cite{mvc2}  }
 \end{figure}
 
-Los componentes\cite{mvc3} del Modelo-Vista-Controlador se pueden definir en:
+Los componentes~\cite{mvc3} del Modelo-Vista-Controlador se pueden definir en:
 
 \begin{enumerate}
 \item \textbf{Modelo:} Representa la información, gestionando los accesos a ella, la base de datos  o capa de persistencia es un componente del modelo.
@@ -802,7 +808,7 @@ El Back-End o servidor se refiere a la parte trasera del sistema, donde ocurre t
 \subsubsection{Servidor}
 
 El servidor es la entidad principal del Back-End, contiene la lógica del sistema y es el responsable de la comunicación entre el resto de componentes del sistema y de servir o renderizar las vistas al cliente.
-El servidor ha sido desarrollado utilizando Golang\cite{go} como lenguaje de programación. Inicialmente se pensó en utilizar JavaScript bajo el framework Node.JS, ya que dicho marco de trabajo funciona de manera asíncrona, lo que facilita muchas de las operaciones en segundo plano que este sistema ha de realizar, ademas Node.JS facilita la integración del servidor con diversas tecnologías cliente basadas también en JavaScript. Una de las principales deficiencias  observadas en el uso de JavaScript para el desarrollo del servidor de este proyecto es el manejo de plantillas para el generador de código por lo que este lenguaje fue descartado.
+El servidor ha sido desarrollado utilizando Golang~\cite{go} como lenguaje de programación. Inicialmente se pensó en utilizar JavaScript bajo el framework Node.JS, ya que dicho marco de trabajo funciona de manera asíncrona, lo que facilita muchas de las operaciones en segundo plano que este sistema ha de realizar, ademas Node.JS facilita la integración del servidor con diversas tecnologías cliente basadas también en JavaScript. Una de las principales deficiencias  observadas en el uso de JavaScript para el desarrollo del servidor de este proyecto es el manejo de plantillas para el generador de código por lo que este lenguaje fue descartado.
 
 En la etapa de generación de código la templatización de los modelos de datos necesarios para producir aplicaciones es vital, no solo en su implementación si no también en la eficiencia de estas operaciones y es aquí donde Golang destaca, ya que permite serializar estructuras de datos complejas y utilizar dicha representación para crear contenido. Otra ventaja que proporciona utilizar Golang en este proyecto es el uso de Go-Routinas, es decir, la capacidad de ejecutar funcionalidad en segundo plano de una manera sencilla y controlada junto con la generalización que se alcanza al usar interfaces. Estos motivos hacen que Golang sea el lenguaje de programación adecuado para el desarrollo de este proyecto.  Es interesante destacar que Golang ha sido diseñado para optimizar el uso concurrente de las aplicaciones creadas con él, lo que mejora considerablemente los tiempos de respuesta y la experiencia de usuario de cara a que el proyecto sea utilizado por numerosos clientes a través de Internet.
 
@@ -810,12 +816,12 @@ En la etapa de generación de código la templatización de los modelos de datos
 
 La parte imprescindible para la capa de acceso a datos es el sistema gestor de bases de datos, encargado de almacenar los modelos del sistema. Como propuesta inicial para el desarrollo del sistema, se pensó en utilizar un esquema relacional utilizando sistemas gestores de bases de datos relacionales como MySQL o PostgreSQL  por la facilidad de diseño e implementación basada en entidad-relación.
 
-La principal desventaja de modelar el problema mediante entidad-relación es la perdida en la flexibilidad de los modelos de datos ya que este esquema tradicional obliga a que todas las filas de una tabla representativa de un modelo tengan los mismos campos para mantener la entidad referencial y debido a la diversidad de aplicaciones que este sistema es capaz de generar se requiere que el modelo de datos sea flexible. Debido a esto, se ha decido utilizar MongoDB\cite{mg} como sistema gestor de bases de datos no-relaciones también denominadas bases de datos documentales, con el objetivo de conseguir un esquema interno flexible y eficiente. Es decir, el modelo de aplicación que el usuario define para generar aplicaciones podría ser evolucionado y mejorado sin romper el esquema actual. 
+La principal desventaja de modelar el problema mediante entidad-relación es la perdida en la flexibilidad de los modelos de datos ya que este esquema tradicional obliga a que todas las filas de una tabla representativa de un modelo tengan los mismos campos para mantener la entidad referencial y debido a la diversidad de aplicaciones que este sistema es capaz de generar se requiere que el modelo de datos sea flexible. Debido a esto, se ha decido utilizar MongoDB~\cite{mg} como sistema gestor de bases de datos no-relaciones también denominadas bases de datos documentales, con el objetivo de conseguir un esquema interno flexible y eficiente. Es decir, el modelo de aplicación que el usuario define para generar aplicaciones podría ser evolucionado y mejorado sin romper el esquema actual. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.30]{imagenes/mongo.jpg}
-\caption{ Arquitectura MongoDB\cite{mongoA}  }
+\caption{ Arquitectura MongoDB~\cite{mongoA}  }
 \end{figure}
 
 MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON. Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
@@ -825,15 +831,15 @@ En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen
 
 \subsubsection{Repositorio de Código}\label{repo}
 
-Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros ( README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros producidos por el sistema son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github\cite{github} aprovechando de este gestor de repositorios las siguientes funcionalidades: 
+Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros ( README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros producidos por el sistema son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github~\cite{github} aprovechando de este gestor de repositorios las siguientes funcionalidades: 
 
 \begin{enumerate}
 \item \textbf{ Autenticación.} El usuario final que utilice este sistema para generar aplicaciones necesita una cuenta de Github, ya que la autenticación mediante usuario y contraseña corresponde con el las credenciales  de su perfil de Github. Esto permite al sistema crear repositorios y subir el código generado a dichos repositorios bajo el perfil del usuario registrado. El proceso de autenticación contra Github proporciona una Token  de acceso el cual es aprovechado por una parte por el sistema generativo para realizar llamadas a la API  de Github y automatizar ciertas operaciones en nombre del usuario final y por otra parte los usuarios finales del sistema  pueden utilizar este Token para trabajar localmente con las aplicaciones generadas por el sistema.
 
-\item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions\cite{github3}  que permiten automatizar, personalizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generatión este sistema produce un fichero  en la ruta:\\
+\item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions~\cite{github3}  que permiten automatizar, personalizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generatión este sistema produce un fichero  en la ruta:\\
 \textbf{repositorio/.github/workflows/ci.yml}\ref{anexci} donde se describe el proceso o etapas de compilación, testing y empaquetado del la aplicación contenida en el repositorio, independientemente de la naturaleza de la aplicación, dando lugar a un artefacto auto-contenido listo para ser desplegado sobre un entorno virtual. Esto garantiza el uso de las buenas prácticas  de integración y entrega continua relativas al desarrollo software en todas las aplicaciones generadas.
 
-\item \textbf{Gestión de Artefactos} Github proporciona los denominados GitHub-Packages\cite{github4} que permiten publicar y consumir paquetes o artefactos resultado de la compilación y empaquetado de las aplicaciones software albergadas en un repositorio de código. GitHub-Packages es capaz de gestionar paquetes de diversa naturaleza, siendo las imágenes docker las utilizadas en este proyecto.
+\item \textbf{Gestión de Artefactos} Github proporciona los denominados GitHub-Packages~\cite{github4} que permiten publicar y consumir paquetes o artefactos resultado de la compilación y empaquetado de las aplicaciones software albergadas en un repositorio de código. GitHub-Packages es capaz de gestionar paquetes de diversa naturaleza, siendo las imágenes docker las utilizadas en este proyecto.
 \end{enumerate}
 
 \subsubsection{Infraestructura Virtual de las Aplicaciones}\label{infra}
@@ -841,12 +847,12 @@ Las entidades generadas por este sistema ( aplicaciones) están compuestas por u
 La infraestructura virtual de las aplicaciones  representa al entorno de computación en la nube que cuenta con los recursos necesarios para ejecutar o desplegar las aplicaciones generadas por el proyecto, permitiendo a los usuarios utilizar las aplicaciones generadas vía Internet.
 Con el objetivo de generalizar la gestión de aplicaciones  se ha decidido utilizar Docker como tecnología de virtualización ligera.
 
-Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de sistemas Unix  para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales completas.
+Docker~\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de sistemas Unix  para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales completas.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.35]{imagenes/docker.png}
-\caption{ Virtualización Docker\cite{dkw}}
+\caption{ Virtualización Docker~\cite{dkw}}
 \end{figure}
 
 La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores disponen de recursos similares pero de manera compartida con el núcleo  del sistema operativo anfitrion y junto con otros contenedores los cuales se ejecutan  como procesos asilados en el espacio de usuario del sistema operativo. No están vinculados con ninguna infraestructura especifica.
@@ -861,14 +867,14 @@ El Front-End, capa de presentación o capa de cliente es la encargada de control
 \subsubsection{Tecnología Cliente}
 
 
-JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a la web. Jquery funciona en múltiples navegadores y es compatible con CSS3.
+JQuery~\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a la web. Jquery funciona en múltiples navegadores y es compatible con CSS3.
 
-Ajax\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador.
+Ajax~\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador.
 
 
 WebSocket es un tecnología basada en JavaScript que permite la comunicación bidireccional entre cliente y servidor mediante un único enlace TCP. Los WebSockets pueden entenderse como una evolución de Ajax, ya que permiten recopilar información del servidor sin tener que solicitarla expresamente, es decir, la información del servidor fluye hasta el cliente cuando esta es producida por lo que es ideal para implementar la consola de inspección en tiempo real. Para ello, desde la capa cliente se abre un socket TCP con el servidor, el cual emite por este canal toda la información que el docker de la aplicación produce al atender peticiones.  
 
-Por último destacar que para los estilos de la capa cliente se ha utilizado la librería CSS Bootstrap\cite{boot}
+Por último destacar que para los estilos de la capa cliente se ha utilizado la librería CSS Bootstrap~\cite{boot}
 
 \subsection{Infraestructura Virtual}\label{iv}
 
@@ -880,10 +886,10 @@ El entorno\url{https://coderunner.herokuapp.com/} ha estado disponible desde el 
 
 
 \begin{enumerate}
-\item Servidor principal (code-runner.go): Desplegado en Heroku\cite{hero}
+\item Servidor principal (code-runner.go): Desplegado en Heroku~\cite{hero}
 \item Capa de persistencia (MongoDB): Consumido desde el servicio de bases de datos gestionadas \url{https://mlab.com}
-\item Gestor de repositorios: Github\cite{github}
-\item Demonio Docker: Maquina virtual expuesta a Internet con TLS sobre el proveedor de nube publica Google Cloud(trial)\cite{gcp}
+\item Gestor de repositorios: Github~\cite{github}
+\item Demonio Docker: Maquina virtual expuesta a Internet con TLS sobre el proveedor de nube publica Google Cloud(trial)~\cite{gcp}
 \end{enumerate}
 
 El objetivo de esta configuración ha sido el de conseguir el conjunto de recursos virtuales necesarios para el proyecto con el menor gasto posible (0€)
@@ -893,9 +899,9 @@ El objetivo de esta configuración ha sido el de conseguir el conjunto de recurs
 El entorno\url{https://apps.gcm-coderunner.com/} ha sido creado en las últimas etapas del proyecto, teniendo claras las necesidades a cubrir y prestando especial atención a los posibles cuellos de botella, como puede ser la capacidad de las máquinas virtuales expuestas a Internet para instanciar contenedores.  También se ha prestado especial atención en implementar medidas de seguridad como es el uso de certificados (TLS) o el no consumir servicios de terceros para la capa de persistencia y servir MongoDB de manera asilada. Este entorno se caracteriza por la siguiente distribución: 
 
 \begin{enumerate}
-\item Servidor principal (code-runner.go): Desplegado en VM de GoogleCloud\cite{gcp}
+\item Servidor principal (code-runner.go): Desplegado en VM de GoogleCloud~\cite{gcp}
 \item Capa de persistencia (MongoDB): Instalada en la misma VM donde corre el servidor principal y expuesta solo para ser consumida por procesos ejecutados en localhost. 
-\item Gestor de repositorios: Github\cite{github}
+\item Gestor de repositorios: Github~github
 \item Demonio Docker: Ejecutado en la misma VM que el servidor principal  pero expuesto con TLS a localhost, limitando de esta forma los posibles ataques externos que reciba el sistema, pues solo se exponen a Internet los contenedores de los usuarios, no el servicio de contenedores en si. 
 \end{enumerate}
 
@@ -1531,11 +1537,11 @@ Se propone como mejora la capacidad de importar aplicaciones ya existentes en re
 
 \subsection{Naturaleza y Tecnología}
 
-Se ha demostrado que el  uso de Docker como motor de virtualización ligera permite generalizar el despliegue y operación de aplicaciones de distinta naturaleza y de distinta tecnología. Se propone como mejora categorizar nuevas naturalezas de aplicación así como integrar aplicaciones basadas en otras tecnologías. Para ello se presenta como referencia el conjunto de imágenes docker disponibles públicamente en Docker Hub:\cite{dhub}   \url{https://hub.docker.com/search?q=&type=image}
+Se ha demostrado que el  uso de Docker como motor de virtualización ligera permite generalizar el despliegue y operación de aplicaciones de distinta naturaleza y de distinta tecnología. Se propone como mejora categorizar nuevas naturalezas de aplicación así como integrar aplicaciones basadas en otras tecnologías. Para ello se presenta como referencia el conjunto de imágenes docker disponibles públicamente en Docker Hub:~\cite{dhub}   \url{https://hub.docker.com/search?q=&type=image}
 
 \subsubsection{Definir el Concepto Proyecto Generativo}
 
-La idea sería definir un nuevo modelo de datos definido proyecto generativo con idea de representar a un conjunto reducido de aplicaciones de diversa naturaleza y tecnología que funcionan en conjunto para formar una solución generativa. Por ejemplo generar una Api-Rest y su servicio de persistencia como una sola entidad que engloba ambas aplicaciones. Para modelarlo se propone hacer uso de orquestadores de contenedores como Kubernetes\cite{kube} o Docker-Compose\url{https://docs.docker.com/compose}.  
+La idea sería definir un nuevo modelo de datos definido proyecto generativo con idea de representar a un conjunto reducido de aplicaciones de diversa naturaleza y tecnología que funcionan en conjunto para formar una solución generativa. Por ejemplo generar una Api-Rest y su servicio de persistencia como una sola entidad que engloba ambas aplicaciones. Para modelarlo se propone hacer uso de orquestadores de contenedores como Kubernetes~\cite{kube} o Docker-Compose\url{https://docs.docker.com/compose}.  
 
 \subsection{Testing}
 
