@@ -581,7 +581,7 @@ Amazon Web Services~\cite{aws} presenta  CodePipeline~\cite{awspipe} como servic
 
 \subsubsection{Comparativa}
 
-En la siguiente tabla se comparan las tecnologías del mercado prestando especial atención al tipo de funcionalidad que cubren en términos de los objetivos de este proyecto. La idea es mostrar como GCM:Coode-Runner cubre las funcionalidades propuestas.
+En la siguiente tabla se comparan las tecnologías del mercado prestando especial atención al tipo de funcionalidad que cubren en términos de los objetivos de este proyecto. La idea es mostrar como GCM:Coode-Runner integra las funcionalidades propuestas para servir una solución completa.
 
 \begin{figure}[H]
 \centering
@@ -604,6 +604,8 @@ Por otra parte, para garantizar el correcto funcionamiento de este sistema softw
 
 
 \chapter{Planificación y Análisis}
+
+Este capítulo se centra en analizar el problema y definir la solución del sistema a construir en términos de ingeniería software. Para ello, se incluye la planificación temporal de las tareas a realizar junto con el análisis software dirigido por requisitos y diagramas de casos de uso.
 
 \section{Planificación}
 
@@ -677,7 +679,7 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 \textbf{RF-1.3.} El sistema permitirá ejecutar aplicaciones.
 \begin{itemize}
  \item \textbf{RF-1.3.1.} El sistema será capaz de hacer a las aplicaciones accesibles vía Internet.
- \item  \textbf{RF-1.3.2.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones puedan ser ejecutas en local y ser accesibles vía \textbf{localhost}  \\
+ \item  \textbf{RF-1.3.2.} El sistema proporcionará las herramientas  y configuraciones necesarias para que las aplicaciones puedan ser ejecutas en local y ser accesibles vía \textbf{localhost}.  \\
 \end{itemize}
 
 
@@ -799,7 +801,7 @@ Los componentes~\cite{mvc3} del Modelo-Vista-Controlador se pueden definir en:
 \item \textbf{Controlador:} Responde a eventos invocando peticiones al modelo cuando se hace alguna solicitud de la información (por ejemplo, editar un documento o un registro en base de datos). El controlador interactúa con su vista asociada para realizar cambios en la forma de representar el modelo.
 \end{enumerate}
 
-Como parte del desarrollo del proyecto también se ha utilizado la metodología de ingeniería del software conocida como desarrollo basado en test o TDD. Dicha metodología consiste en escribir los test necesarios para cubrir las funcionalidades del sistema y a partir de ellos, escribir el código necesario para que dichas pruebas sean superadas, cumpliendo así la funcionalidad que se esta poniendo a prueba.  En las siguientes secciones se detallan las partes que forman el sistema así como las tecnologías utilizadas. 
+Como parte del desarrollo del proyecto también se ha utilizado la metodología de ingeniería del software conocida como desarrollo basado en tests (Test-Driven Development, TDD). Dicha metodología consiste en escribir los test necesarios para cubrir las funcionalidades del sistema y a partir de ellos, escribir el código necesario para que dichas pruebas sean superadas, cumpliendo así la funcionalidad que se esta poniendo a prueba.  En las siguientes secciones se detallan las partes que forman el sistema así como las tecnologías utilizadas. 
 
 \subsection{Back-End}
 
@@ -807,37 +809,32 @@ El Back-End o servidor se refiere a la parte trasera del sistema, donde ocurre t
 
 \subsubsection{Servidor}
 
-El servidor es la entidad principal del Back-End, contiene la lógica del sistema y es el responsable de la comunicación entre el resto de componentes del sistema y de servir o renderizar las vistas al cliente.
-El servidor ha sido desarrollado utilizando Golang~\cite{go} como lenguaje de programación. Inicialmente se pensó en utilizar JavaScript bajo el framework Node.JS, ya que dicho marco de trabajo funciona de manera asíncrona, lo que facilita muchas de las operaciones en segundo plano que este sistema ha de realizar, ademas Node.JS facilita la integración del servidor con diversas tecnologías cliente basadas también en JavaScript. Una de las principales deficiencias  observadas en el uso de JavaScript para el desarrollo del servidor de este proyecto es el manejo de plantillas para el generador de código por lo que este lenguaje fue descartado.
+El servidor es la entidad principal del Back-End, contiene la lógica del sistema y es el responsable de la comunicación entre el resto de componentes del sistema y de servir o renderizar las vistas al cliente. El servidor ha sido desarrollado utilizando Golang~\cite{go} como lenguaje de programación. Inicialmente se pensó en utilizar JavaScript bajo el framework Node.JS, ya que dicho marco de trabajo funciona de manera asíncrona, lo que facilita muchas de las operaciones en segundo plano que este sistema ha de realizar, ademas Node.JS facilita la integración del servidor con diversas tecnologías cliente basadas también en JavaScript. Una de las principales deficiencias  observadas en el uso de JavaScript para el desarrollo del servidor de este proyecto es el manejo de plantillas para el generador de código por lo que este lenguaje fue descartado. 
 
 En la etapa de generación de código la templatización de los modelos de datos necesarios para producir aplicaciones es vital, no solo en su implementación si no también en la eficiencia de estas operaciones y es aquí donde Golang destaca, ya que permite serializar estructuras de datos complejas y utilizar dicha representación para crear contenido. Otra ventaja que proporciona utilizar Golang en este proyecto es el uso de Go-Routinas, es decir, la capacidad de ejecutar funcionalidad en segundo plano de una manera sencilla y controlada junto con la generalización que se alcanza al usar interfaces. Estos motivos hacen que Golang sea el lenguaje de programación adecuado para el desarrollo de este proyecto.  Es interesante destacar que Golang ha sido diseñado para optimizar el uso concurrente de las aplicaciones creadas con él, lo que mejora considerablemente los tiempos de respuesta y la experiencia de usuario de cara a que el proyecto sea utilizado por numerosos clientes a través de Internet.
 
-\subsubsection{Persistencia de Datos}
 
+
+
+\subsubsection{Persistencia de Datos}
 La parte imprescindible para la capa de acceso a datos es el sistema gestor de bases de datos, encargado de almacenar los modelos del sistema. Como propuesta inicial para el desarrollo del sistema, se pensó en utilizar un esquema relacional utilizando sistemas gestores de bases de datos relacionales como MySQL o PostgreSQL  por la facilidad de diseño e implementación basada en entidad-relación.
 
 La principal desventaja de modelar el problema mediante entidad-relación es la perdida en la flexibilidad de los modelos de datos ya que este esquema tradicional obliga a que todas las filas de una tabla representativa de un modelo tengan los mismos campos para mantener la entidad referencial y debido a la diversidad de aplicaciones que este sistema es capaz de generar se requiere que el modelo de datos sea flexible. Debido a esto, se ha decido utilizar MongoDB~\cite{mg} como sistema gestor de bases de datos no-relaciones también denominadas bases de datos documentales, con el objetivo de conseguir un esquema interno flexible y eficiente. Es decir, el modelo de aplicación que el usuario define para generar aplicaciones podría ser evolucionado y mejorado sin romper el esquema actual. 
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.30]{imagenes/mongo.jpg}
-\caption{ Arquitectura MongoDB~\cite{mongoA}  }
-\end{figure}
-
-MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON. Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
+MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON. Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
 
 En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando las entradas de la base de datos dependen de la naturaleza de las aplicaciones que el usuario final quiera generar.
 
 
 \subsubsection{Repositorio de Código}\label{repo}
 
-Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros ( README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros producidos por el sistema son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github~\cite{github} aprovechando de este gestor de repositorios las siguientes funcionalidades: 
+Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros (README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github~\cite{github} aprovechando de este gestor de repositorios las siguientes funcionalidades: 
 
 \begin{enumerate}
 \item \textbf{ Autenticación.} El usuario final que utilice este sistema para generar aplicaciones necesita una cuenta de Github, ya que la autenticación mediante usuario y contraseña corresponde con el las credenciales  de su perfil de Github. Esto permite al sistema crear repositorios y subir el código generado a dichos repositorios bajo el perfil del usuario registrado. El proceso de autenticación contra Github proporciona una Token  de acceso el cual es aprovechado por una parte por el sistema generativo para realizar llamadas a la API  de Github y automatizar ciertas operaciones en nombre del usuario final y por otra parte los usuarios finales del sistema  pueden utilizar este Token para trabajar localmente con las aplicaciones generadas por el sistema.
 
-\item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions~\cite{github3}  que permiten automatizar, personalizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generatión este sistema produce un fichero  en la ruta:\\
-\textbf{repositorio/.github/workflows/ci.yml}\ref{anexci} donde se describe el proceso o etapas de compilación, testing y empaquetado del la aplicación contenida en el repositorio, independientemente de la naturaleza de la aplicación, dando lugar a un artefacto auto-contenido listo para ser desplegado sobre un entorno virtual. Esto garantiza el uso de las buenas prácticas  de integración y entrega continua relativas al desarrollo software en todas las aplicaciones generadas.
+\item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions~\cite{github3}  que permiten automatizar, personalizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generation este sistema produce un fichero  en la ruta:\\
+\textbf{repositorio/.github/workflows/ci.yml}~\ref{anexci} donde se describe el proceso o etapas de compilación, testing y empaquetado del la aplicación contenida en el repositorio, independientemente de la naturaleza de la aplicación, dando lugar a un artefacto auto-contenido listo para ser desplegado sobre un entorno virtual. Esto garantiza el uso de las buenas prácticas  de integración y entrega continua relativas al desarrollo software en todas las aplicaciones generadas.
 
 \item \textbf{Gestión de Artefactos} Github proporciona los denominados GitHub-Packages~\cite{github4} que permiten publicar y consumir paquetes o artefactos resultado de la compilación y empaquetado de las aplicaciones software albergadas en un repositorio de código. GitHub-Packages es capaz de gestionar paquetes de diversa naturaleza, siendo las imágenes docker las utilizadas en este proyecto.
 \end{enumerate}
@@ -845,7 +842,7 @@ Las entidades generadas por este sistema ( aplicaciones) están compuestas por u
 \subsubsection{Infraestructura Virtual de las Aplicaciones}\label{infra}
 
 La infraestructura virtual de las aplicaciones  representa al entorno de computación en la nube que cuenta con los recursos necesarios para ejecutar o desplegar las aplicaciones generadas por el proyecto, permitiendo a los usuarios utilizar las aplicaciones generadas vía Internet.
-Con el objetivo de generalizar la gestión de aplicaciones  se ha decidido utilizar Docker como tecnología de virtualización ligera.
+Con el objetivo de generalizar las operaciones sobre las aplicaciones  se ha decidido utilizar Docker como tecnología de virtualización ligera.
 
 Docker~\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de sistemas Unix  para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales completas.
 
@@ -855,19 +852,19 @@ Docker~\cite{dk} es una herramienta para automatizar el despliegue de aplicacion
 \caption{ Virtualización Docker~\cite{dkw}}
 \end{figure}
 
-La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores disponen de recursos similares pero de manera compartida con el núcleo  del sistema operativo anfitrion y junto con otros contenedores los cuales se ejecutan  como procesos asilados en el espacio de usuario del sistema operativo. No están vinculados con ninguna infraestructura especifica.
+La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores disponen de recursos similares pero de manera compartida con el núcleo  del sistema operativo anfitrion y junto con otros contenedores los cuales se ejecutan  como procesos asilados en el espacio de usuario del sistema operativo. No están vinculados con ninguna infraestructura específica.
 
-Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se produce un fichero denominado Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración y entrega continua de la aplicación  para producir una imagen docker como artefacto. Este artefacto es utilizado para crear un contenedor docker en un entorno virtual accesible a Internet( máquina virtual), habilitando el puerto necesario para garantizar que el trafico es re-direccionamiento al contenedor correspondiente y de esta manera permitir que el usuario del sistema generativo consuma a través de Internet la aplicación generada, siendo todo esto trasparente para él. 
+Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se produce un fichero denominado Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración y entrega continua de la aplicación  para producir una imagen docker como artefacto. Este artefacto es utilizado para crear un contenedor docker en un entorno virtual accesible a Internet (máquina virtual), habilitando el puerto necesario para garantizar que el tráfico es re-direccionado al contenedor correspondiente y de esta manera permitir que el usuario del sistema generativo consuma a través de Internet la aplicación generada, siendo todo esto trasparente para él. 
 
 
-\subsection{Front-end}
+\subsection{Front-End}
 
-El Front-End, capa de presentación o capa de cliente es la encargada de controlar la interacción con el usuario. En este proyecto la programación en el lado cliente se utiliza para mantener  información actualizada del estado en el que se encuentran las aplicaciones producidas por el sistema. Para ello, se aprovecha el motor de plantillas proporcionado por el servidor Golang junto con JQuery y Ajax para realizar llamadas asíncronas al servidor y actualizar dinámicamente los datos que percibe el cliente. De manera adicional, el sistema proporciona una consola de monitorización  que permite al usuario inspeccionar en tiempo real los logs de su aplicación así como el tráfico que dicha aplicación está soportando usando para ellos WebSockets. 
+El Front-End, capa de presentación o capa de cliente es la encargada de controlar la interacción con el usuario. En este proyecto, la programación en el lado cliente se utiliza para mantener  información actualizada del estado en el que se encuentran las aplicaciones producidas por el sistema. Para ello, se aprovecha el motor de plantillas proporcionado por el servidor Golang junto con JQuery y Ajax para realizar llamadas asíncronas al servidor y actualizar dinámicamente los datos que percibe el cliente. De manera adicional, el sistema proporciona una consola de monitorización  que permite al usuario inspeccionar en tiempo real los logs de su aplicación así como el tráfico que dicha aplicación está soportando usando para ellos WebSockets. 
 
 \subsubsection{Tecnología Cliente}
 
 
-JQuery~\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a la web. Jquery funciona en múltiples navegadores y es compatible con CSS3.
+JQuery~\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a la web. JQuery funciona en múltiples navegadores y es compatible con CSS3.
 
 Ajax~\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador.
 
@@ -878,25 +875,25 @@ Por último destacar que para los estilos de la capa cliente se ha utilizado la 
 
 \subsection{Infraestructura Virtual}\label{iv}
 
-Para que el sistema software sea consumido por los clientes se han disponibilizado dos entornos independientes con las siguientes características:
+Para que el sistema software sea consumido por los clientes, se han disponibilizado dos entornos independientes con las siguientes características:
 
 \subsubsection{Entorno de Desarrollo}
 
-El entorno\url{https://coderunner.herokuapp.com/} ha estado disponible desde el comienzo de la etapa formal del proyecto. El objetivo de este entorno es el de facilitar el proceso de desarrollo ya que  como se ha visto en los diagramas de caso de uso y en la sección anterior dedicada al Back-End, el sistema esta compuesto por 4 piezas principales y ha sido necesario disponer de ellas en Internet para trabajar en su integración y comportamiento de cara a cumplir con los requisitos propuestos. Este entorno se caracteriza por la siguiente distribución: 
+El entorno  ~\url{https://coderunner.herokuapp.com} ha estado disponible desde el comienzo de la etapa formal del proyecto. El objetivo de este entorno es facilitar el proceso de desarrollo, ya que  como se ha visto en los diagramas de caso de uso y en la sección anterior dedicada al Back-End, el sistema está compuesto por 4 piezas principales y ha sido necesario disponer de ellas en Internet para trabajar en su integración y comportamiento de cara a cumplir con los requisitos propuestos. Este entorno se caracteriza por la siguiente distribución: 
 
 
 \begin{enumerate}
 \item Servidor principal (code-runner.go): Desplegado en Heroku~\cite{hero}
 \item Capa de persistencia (MongoDB): Consumido desde el servicio de bases de datos gestionadas \url{https://mlab.com}
 \item Gestor de repositorios: Github~\cite{github}
-\item Demonio Docker: Maquina virtual expuesta a Internet con TLS sobre el proveedor de nube publica Google Cloud(trial)~\cite{gcp}
+\item Demonio Docker: Máquina virtual expuesta a Internet con TLS sobre el proveedor de nube publica Google Cloud(trial)~\cite{gcp}
 \end{enumerate}
 
-El objetivo de esta configuración ha sido el de conseguir el conjunto de recursos virtuales necesarios para el proyecto con el menor gasto posible (0€)
+El objetivo de esta configuración ha sido el de conseguir el conjunto de recursos virtuales necesarios para el proyecto con el menor gasto posible (0€).
 
 \subsubsection{Entorno Formal}
 
-El entorno\url{https://apps.gcm-coderunner.com/} ha sido creado en las últimas etapas del proyecto, teniendo claras las necesidades a cubrir y prestando especial atención a los posibles cuellos de botella, como puede ser la capacidad de las máquinas virtuales expuestas a Internet para instanciar contenedores.  También se ha prestado especial atención en implementar medidas de seguridad como es el uso de certificados (TLS) o el no consumir servicios de terceros para la capa de persistencia y servir MongoDB de manera asilada. Este entorno se caracteriza por la siguiente distribución: 
+El entorno  ~\url{https://apps.gcm-coderunner.com} ha sido creado en las últimas etapas del proyecto, teniendo claras las necesidades a cubrir y prestando especial atención a los posibles cuellos de botella, como puede ser la capacidad de las máquinas virtuales expuestas a Internet para instanciar contenedores.  También se ha prestado especial atención en implementar medidas de seguridad como por ejemplo el uso de certificados (TLS) o no consumir servicios de terceros para la capa de persistencia y servir MongoDB de manera asilada. Este entorno se caracteriza por la siguiente distribución: 
 
 \begin{enumerate}
 \item Servidor principal (code-runner.go): Desplegado en VM de GoogleCloud~\cite{gcp}
@@ -906,13 +903,13 @@ El entorno\url{https://apps.gcm-coderunner.com/} ha sido creado en las últimas 
 \end{enumerate}
 
 
-El objetivo de esta configuración ha sido el de conseguir el conjunto de recursos virtuales necesarios para el proyecto prestando especial atención a la seguridad y también a la capacidad, ya que el dimensionamiento de las VMs de este entorno es notablemente superior al de el entorno de desarrollo lo que permite la ejecución de números contenedores por diversos usuarios concurrentes.  El mantenimiento de este entorno produce gasto directamente proporcional al dimensionamiento de las máquinas virtuales que se utilizan así como el nombre de dominio usado. 
+El objetivo de esta configuración ha sido el de conseguir el conjunto de recursos virtuales necesarios para el proyecto prestando especial atención a la seguridad y también a la capacidad, ya que el dimensionamiento de las VMs de este entorno es notablemente superior al de el entorno de desarrollo, lo que permite la ejecución de números contenedores por diversos usuarios concurrentes.  El mantenimiento de este entorno produce gasto directamente proporcional al dimensionamiento de las máquinas virtuales que se utilizan, así como el nombre de dominio usado. 
 
 \subsection{Seguridad}
 
 \subsubsection{Credenciales de Usuario}
 
-Como se indicó anteriormente, las credenciales de usuario necesarias para utilizar el sistema se corresponden con las credenciales del perfil del usuario en Github. Esto es así debido a que la autenticación (¿Quien es usted?) y la autorización (¿Qué le permite usted hacer al sistema sobre sus repositorios de código?) son delegadas a Github mediante las denominado OAuth Apps. Una aplicación OAuth consise en autenticación delegada a terceros, es decir, cuando el usuario comienza a utilizar este sistema, los servidores de Github validan sus credenciales y emiten un token de acceso con el que realizar operaciones vía API. Este token es almacenado en una sesión del servidor con un tiempo de espiración determinado. 
+Como se indicó anteriormente, las credenciales de usuario necesarias para utilizar el sistema se corresponden con las credenciales del perfil del usuario en Github. Esto es así debido a que la autenticación (¿Quien es usted?) y la autorización (¿Qué le permite usted hacer al sistema sobre sus repositorios de código?) son delegadas a Github mediante las denominadas OAuth Apps. Una aplicación OAuth consise en autenticación delegada a terceros, es decir, cuando el usuario comienza a utilizar este sistema, los servidores de Github validan sus credenciales y emiten un token de acceso con el que realizar operaciones vía API. Este token es almacenado en una sesión del servidor con un tiempo de espiración determinado. 
 
 \subsubsection{Comunicación Cliente-Servidor}
 
@@ -927,11 +924,11 @@ Para mostrar las capacidades del sistema software \textbf{GCM:Code-Runner} se pr
 \item \url{https://coderunner.herokuapp.com}
 \end{enumerate}
 
-En este caso de uso se va a utilizar el primero de ellos por ser mas seguro y disponer de un dimensionamiento mayor (mejores prestaciones).
+En este caso de uso, se va a utilizar el primero de ellos por ser más seguro y disponer de un dimensionamiento mayor (mejores prestaciones).
 
 \subsection{Autenticación y Autorización}
 
-Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realizar operaciones sobre sus repositorios de código. Para ello, desde un explorador web ha de navegar hasta \url{https://apps.gcm-coderunner.com}. Se presenta la pagina de bienvenida. 
+Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realizar operaciones sobre sus repositorios de código. Para ello, desde un explorador web ha de navegar hasta \url{https://apps.gcm-coderunner.com}. Se presenta la página de bienvenida. 
 
 \begin{figure}[H]
 \centering
@@ -1137,7 +1134,7 @@ Una vez generadas las aplicaciones propuestas, el usuario puede navegar entre el
 
 \subsection{Consumiendo Aplicaciones}
 
-El sistema dota al usuario de las operaciones básicas para consumir las aplicaciones generas. Esta sección ejemplifica como el usuario es capaz de consumir u operar una API-Rest y un servicio de datos. Las operaciones que se muestran a continuación son comunes a todas las aplicaciones producidas por el sistema. 
+El sistema dota al usuario de las operaciones básicas para consumir las aplicaciones generas. Esta sección ejemplifica cómo el usuario es capaz de consumir u operar una API-Rest y un servicio de datos. Las operaciones que se muestran a continuación son comunes a todas las aplicaciones producidas por el sistema. 
 
 \subsubsection{Consumiendo Api-Rest}
 Para consumir la aplicación generada \textbf{demoapi} el usuario dispone de las siguientes operaciones. Haciendo click en el botón \textbf{Stop} detiene el actual despliegue de la aplicación, liberando los recursos virtuales consumidos por ella y cambiando su estado:
@@ -1148,7 +1145,7 @@ Para consumir la aplicación generada \textbf{demoapi} el usuario dispone de las
 \caption{  Consumiendo Aplicaciones: Api-Rest  Stop}
 \end{figure}
 
-Haciendo click en el botón \textbf{Run} se produce un nuevo despliegue de la aplicación utilizando para ello la última versión generada del artefacto ( la imagen docker) 
+Haciendo click en el botón \textbf{Run} se produce un nuevo despliegue de la aplicación, utilizando para ello la última versión generada del artefacto (la imagen Docker) 
 
 
 \begin{figure}[H]
@@ -1158,7 +1155,7 @@ Haciendo click en el botón \textbf{Run} se produce un nuevo despliegue de la ap
 \end{figure}
 
 
-Haciendo click en el botón \textbf{View} el usuario es redirigido a una vista concreta de la aplicación. 
+Haciendo click en el botón \textbf{View}, el usuario es redirigido a una vista concreta de la aplicación. 
 
 \begin{figure}[H]
 \centering
@@ -1166,7 +1163,7 @@ Haciendo click en el botón \textbf{View} el usuario es redirigido a una vista c
 \caption{ Consumiendo Aplicaciones: Api-Rest View   }
 \end{figure}
 
-El sistema permite inspeccionar el trafico atendido por la aplicación en tiempo real haciendo click en el botón \textbf{View App Logs}. Esta operación abre un socket TCP con el docker que ejecuta la aplicación y emite en streaming todos los logs producidos por la misma. Las siguientes evidencias muestran operaciones básicas realizadas utilizando la interfaz de usuario que acompaña a las aplicaciones de naturaleza Api-Rest:
+El sistema permite inspeccionar el tráfico atendido por la aplicación en tiempo real haciendo click en el botón \textbf{View App Logs}. Esta operación abre un socket TCP con el docker que ejecuta la aplicación y emite en streaming todos los logs producidos por la misma. Las siguientes evidencias muestran operaciones básicas realizadas utilizando la interfaz de usuario que acompaña a las aplicaciones de naturaleza Api-Rest:
 
 \begin{figure}[H]
 \centering
@@ -1209,32 +1206,32 @@ En este caso de uso, es necesario un cliente por linea de comandos para este tip
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.2]{imagenes/casouso/1_14.png}
-\caption{  Consumiendo Aplicaciones: Data-Service View Logs Conexión I  }
+\caption{  Consumiendo Aplicaciones: Data-Service View Logs I  }
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.2]{imagenes/casouso/1_15.png}
-\caption{  Consumiendo Aplicaciones: Data-Service View Logs Conexión II }
+\caption{  Consumiendo Aplicaciones: Data-Service View Logs II }
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.2]{imagenes/casouso/1_16.png}
-\caption{ Consumiendo Aplicaciones: Data-Service View Logs Conexión III  }
+\caption{ Consumiendo Aplicaciones: Data-Service View Logs III  }
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.2]{imagenes/casouso/1_17.png}
-\caption{ Consumiendo Aplicaciones: Data-Service View Logs Conexión IV   }
+\caption{ Consumiendo Aplicaciones: Data-Service View Logs IV   }
 \end{figure}
 
 
 
 \subsection{Actualizando Aplicaciones}
 
-El sistema proporciona al usuario los mecanismos necesarios para evolucionar las aplicaciones generas, de esta forma permite que el usuario manipule, pruebe, mejore y aprenda utilizando el código generado. En última instancia el usuario es capaz de re-generar la aplicación devolviéndola a su estado inicial. El sistema presenta los siguientes mecanismos:
+El sistema proporciona al usuario los mecanismos necesarios para evolucionar las aplicaciones. De esta forma permite que el usuario manipule, pruebe, mejore y aprenda utilizando el código generado. En última instancia el usuario es capaz de re-generar la aplicación devolviéndola a su estado inicial. El sistema presenta los siguientes mecanismos:
 
 \subsubsection{Flujo Continuo de Integración Software}
 
@@ -1252,7 +1249,7 @@ El primer mecanismo integrado en todas las aplicaciones es el flujo de integraci
 \caption{  Actualizando Aplicaciones: Single-Page Consulta }
 \end{figure}
 
- El usuario ha de clonar la aplicación en su sistema local, haciendo uso de la url del repositorio proporcionada:
+ El usuario ha de clonar la aplicación en su sistema local, haciendo uso de la URL del repositorio proporcionada:
  
  \begin{figure}[H]
 \centering
@@ -1273,7 +1270,7 @@ cd demoapp
 atom . #editor de texto
 \end{lstlisting}
 
- Ha de integrar nueva funcionalidad, en el caso de está aplicación, modificar el color de la hoja de estilos css:
+ Ha de integrar nueva funcionalidad, en el caso de esta aplicación, modificar el color de la hoja de estilos CSS:
  
  \begin{figure}[H]
 \centering
@@ -1306,7 +1303,7 @@ git push
 \caption{ Actualizando Aplicaciones: Single-Page CI Finish  }
 \end{figure}
 
- Una vez completado el ciclo de integración continua el usuario percibe que una nueva Release y un nuevo Arterfacto están disponibles en el repositorio:
+ Una vez completado el ciclo de integración continua, el usuario percibe que una nueva Release y un nuevo Arterfacto están disponibles en el repositorio:
  
    \begin{figure}[H]
 \centering
@@ -1368,7 +1365,7 @@ La idea es que el sistema ilustre al usuario en como ha de trabajar con las apli
 \caption{   Trabajo Local: Help}
 \end{figure}
 
-Por ejemplo, si el usuario integra una nueva funcionalidad sobre la aplicación actual ( 0.0.1) como es el cambio de rojo a azul en la hoja de estilos, puede producir y desplegar una nueva versión sin ejecutar el ciclo de integración continua
+Por ejemplo, si el usuario integra una nueva funcionalidad sobre la aplicación actual (0.0.1) como es el cambio de rojo a azul en la hoja de estilos, puede producir y desplegar una nueva versión sin ejecutar el ciclo de integración continua:
 
    \begin{figure}[H]
 \centering
@@ -1382,7 +1379,7 @@ Por ejemplo, si el usuario integra una nueva funcionalidad sobre la aplicación 
 \caption{ Trabajo Local: Single-Page make push  }
 \end{figure}
 
-De esta forma, se crean una nueva Release y un nuevo artefacto 
+De esta forma, se crean una nueva Release y un nuevo artefacto :
 
    \begin{figure}[H]
 \centering
@@ -1516,17 +1513,17 @@ La aplicación entra en estado de no retorno \textbf{deleting} y se procede  a l
 
 \chapter{Conclusiones}
 
-Se ha demostrado como el uso de servicios cloud y la programación generativa son capaces de producir un sistema generativo que ofrece al usuario final un entorno virtual capaz de interpretar especificaciones de aplicación, generar su código fuente y crear los recursos necesarios para que sean consumidas por Internet.   Este proyecto pone de manifiesto que la integración de buenas practicas en los procesos relativos al ciclo de vida del desarrollo software mejora aspectos tales como la rápida iteración e integración  de nuevas funcionalidades. Por otra parte también se beneficia la entrega constante de nuevas versiones facilitando la evolución del software junto con mejoras en el tiempo de implantación fruto del despliegue continuo. El proporcionar un sistema cloud como este favorece el aprendizaje a los desarrolladores ya que disponen de un conjunto de aplicaciones de prueba en cuestión de segundos.  
+Se ha demostrado cómo el uso de servicios cloud y la programación generativa son capaces de producir un sistema generativo que ofrece al usuario final un entorno virtual capaz de interpretar especificaciones de aplicación, generar su código fuente y crear los recursos necesarios para que sean consumidas por Internet.   Este proyecto pone de manifiesto que la integración de buenas prácticas en los procesos relativos al ciclo de vida del desarrollo software mejora aspectos tales como la rápida iteración e integración  de nuevas funcionalidades. Por otra parte, también se beneficia la entrega constante de nuevas versiones facilitando la evolución del software junto con mejoras en el tiempo de implantación fruto del despliegue continuo. El proporcionar un sistema cloud como éste, favorece el aprendizaje a los desarrolladores ya que disponen de un conjunto de aplicaciones de prueba en cuestión de segundos.  
 
- El proceso de desarrollo software mejora integrando buenas prácticas y automatizando las tareas recurrentes, la gran barrera a superar viene impuesta normalmente por los actuales procesos de las organizaciones ya que actualizar su modelo de trabajo conlleva la inversión de una gran cantidad de recursos ( económicos y humanos).
+ El proceso de desarrollo software mejora integrando buenas prácticas y automatizando las tareas recurrentes, la gran barrera a superar viene impuesta normalmente por los actuales procesos de las organizaciones, ya que actualizar su modelo de trabajo conlleva la inversión de una gran cantidad de recursos (económicos y humanos).
 
 \section{Mejoras y Trabajos Futuros}
 
-En esta sección se presentan ciertas mejoras a integrar en el proyecto mejorando sus aspectos principales y dando paso a futuras ramas de estudio. 
+En esta sección, se proponen ciertas extensiones del proyecto que mejoran sus aspectos principales y dan paso a futuras ramas de estudio. 
 
 \subsection{Proceso Generativo}
 
-Actualmente el motor de plantillas encargado de generar las aplicaciones está completamente integrado en el código fuente de Code-Runner. Se propone como mejora la externalización de dichas plantillas a un repositorio de código ajeno al proyecto. De esta manera se podría trabajar en nuevas versiones de las aplicaciones generadas sin necesidad de liberar y desplegar una nueva versión del sistema software en si. Como punto de partida para la mejora se propone por ejemplo que Code-Runner sea capaz de cargar en memoria el contenido del repositorio de plantillas y utilizar dicho contenido para la producción de código. Adicionalmente este mecanismo debería refrescar periódicamente la copia en memoria del repositorio, de esta forma el sistema sería capaz de integrar nuevas versiones a generar sin perdida de servicio. 
+Actualmente, el motor de plantillas encargado de generar las aplicaciones está completamente integrado en el código fuente de Code-Runner. Se propone como mejora la externalización de dichas plantillas a un repositorio de código ajeno al proyecto. De esta manera, se podría trabajar en nuevas versiones de las aplicaciones generadas sin necesidad de liberar y desplegar una nueva versión del sistema software en si. Como punto de partida para la mejora se propone, por ejemplo, que Code-Runner sea capaz de cargar en memoria el contenido del repositorio de plantillas y utilizar dicho contenido para la producción de código. Adicionalmente, este mecanismo debería refrescar periódicamente la copia en memoria del repositorio. De esta forma, el sistema sería capaz de integrar nuevas versiones a generar sin perdida de servicio. 
 \subsubsection{Especificación de Aplicación}
 
 Se propone como mejora adicional la actualización del la especificación de aplicación solicitada al usuario para cubrir escenarios mas complejos, como por ejemplo para la  generación de aplicaciones  Api-Rest podrían definirse diversos modelos de datos junto con las relaciones u operaciones que existan entre ellos. Los servicios de datos también puede mejorar si la especificación soportara configuración de credenciales(contraseñas).
@@ -1537,19 +1534,19 @@ Se propone como mejora la capacidad de importar aplicaciones ya existentes en re
 
 \subsection{Naturaleza y Tecnología}
 
-Se ha demostrado que el  uso de Docker como motor de virtualización ligera permite generalizar el despliegue y operación de aplicaciones de distinta naturaleza y de distinta tecnología. Se propone como mejora categorizar nuevas naturalezas de aplicación así como integrar aplicaciones basadas en otras tecnologías. Para ello se presenta como referencia el conjunto de imágenes docker disponibles públicamente en Docker Hub:~\cite{dhub}   \url{https://hub.docker.com/search?q=&type=image}
+Se ha demostrado que el  uso de Docker como motor de virtualización ligera permite generalizar el despliegue y operación de aplicaciones de distinta naturaleza y de distinta tecnología. Se propone como mejora categorizar nuevas naturalezas de aplicación, así como integrar aplicaciones basadas en otras tecnologías. Para ello se presenta como referencia el conjunto de imágenes Docker disponibles públicamente en Docker Hub: ~\cite{dhub}    ~\url{https://hub.docker.com/search?q=&type=image}
 
 \subsubsection{Definir el Concepto Proyecto Generativo}
 
-La idea sería definir un nuevo modelo de datos definido proyecto generativo con idea de representar a un conjunto reducido de aplicaciones de diversa naturaleza y tecnología que funcionan en conjunto para formar una solución generativa. Por ejemplo generar una Api-Rest y su servicio de persistencia como una sola entidad que engloba ambas aplicaciones. Para modelarlo se propone hacer uso de orquestadores de contenedores como Kubernetes~\cite{kube} o Docker-Compose\url{https://docs.docker.com/compose}.  
+La idea sería definir un nuevo modelo de datos dentro del proyecto con idea de representar a un conjunto reducido de aplicaciones de diversa naturaleza y tecnología que funcionen en conjunto para formar una solución generativa. Por ejemplo, generar una Api-Rest y su servicio de persistencia como una sola entidad que englobe ambas aplicaciones. Para modelarlo se propone hacer uso de orquestadores de contenedores como Kubernetes~\cite{kube} o Docker-Compose\url{https://docs.docker.com/compose}.  
 
 \subsection{Testing}
 
- En el proceso de desarrollo software, el testing o validación es una etapa fundamental para garantizar el correcto funcionamiento de las piezas desarrolladas así como la integración de nuevas funcionalidades. Aunque en el ciclo de integración continua definido para las aplicaciones generadas por el sistema se contempla una etapa de ejecución de pruebas unitarias no se están generando el código fuente necesario para materializarlas. Por ello, se propone como trabajo futuro la definición y generación de pruebas software para las aplicaciones generadas en función de su naturaleza. Las pruebas pueden ser en primer lugar de carácter unitario para ser ejecutadas durante el ciclo de integración continua y en segundo lugar de carácter sistema o pruebas de caja negra para ser ejecutadas cada vez que se despliega una nueva versión. 
+ En el proceso de desarrollo software, el testing o validación es una etapa fundamental para garantizar el correcto funcionamiento de las piezas desarrolladas así como la integración de nuevas funcionalidades. Aunque en el ciclo de integración continua definido para las aplicaciones generadas por el sistema se contempla una etapa de ejecución de pruebas unitarias, no se está generando el código fuente necesario para materializarlas. Por ello, se propone como trabajo futuro la definición y generación de pruebas software para las aplicaciones generadas en función de su naturaleza. Las pruebas pueden ser, en primer lugar, de carácter unitario para ser ejecutadas durante el ciclo de integración continua y en segundo lugar, de carácter sistema o pruebas de caja negra para ser ejecutadas cada vez que se despliega una nueva versión. 
 
 \subsection{Material Didáctico}
 
-Con el objetivo de mejorar el aprendizaje del usuario en el desarrollo, uso y consumo de aplicaciones web o servicios cloud se propone como trabajo futuro la definición de material didáctico, documentación exhaustiva, ejemplos y retos que acompañen al código fuente generado. De esta forma, el sistema proporcionaría al usuario de una linea de trabajo o actividades a realizar con el software que ha decidido generar, enriqueciendo y facilitando su proceso de aprendizaje. 
+Con el objetivo de mejorar el aprendizaje del usuario en el desarrollo, uso y consumo de aplicaciones web o servicios cloud, se propone como trabajo futuro la definición de material didáctico, documentación exhaustiva, ejemplos y retos que acompañen al código fuente generado. De esta forma, el sistema proporcionaría al usuario una linea de trabajo o actividades a realizar con el software que ha decidido generar, enriqueciendo y facilitando su proceso de aprendizaje. 
 
 \subsection{Interfaz de Sistema Cloud}
 
