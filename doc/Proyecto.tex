@@ -459,14 +459,7 @@ El sistema aquí propuesto entra en la categoría generativa de \textbf{model dr
 
 La real academia de la ingeniería, define la computación en la nube o Cloud Computing\citep{realacademia}  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.” La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios~\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión, ya que la computación en la nube juega un papel fundamental en la resolución  del problema planteado.
 
-La nube  o el cloud computing  puede definirse  como el conjunto de tecnologías que permiten acceder a servicios información a través de Internet, es decir, sin necesidad de instalar programas software. No hay que entender a la nube como una entidad física, sino como una red de servidores distribuidos en todo el mundo, que inter-conectados entre si funcionan como un único ecosistema.  El paradigma que presenta la nube se basa en que en lugar de acceder a archivos y datos desde un equipo personal o local, se accede a ellos en línea desde cualquier dispositivo conectado a Internet. La siguiente imagen muestra los beneficios de la computación en la nube:
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{imagenes/beneficiosCC.jpg}
-\caption{ Beneficios Cloud Computing~\cite{beneficios} }
-\end{figure}
-
+La nube  o el cloud computing  puede definirse  como el conjunto de tecnologías que permiten acceder a servicios información a través de Internet, es decir, sin necesidad de instalar programas software. No hay que entender a la nube como una entidad física, sino como una red de servidores distribuidos en todo el mundo, que inter-conectados entre si funcionan como un único ecosistema.  El paradigma que presenta la nube se basa en que en lugar de acceder a archivos y datos desde un equipo personal o local, se accede a ellos en línea desde cualquier dispositivo conectado a Internet. 
 
 \subsection{Tipos de Nube}
 
@@ -487,14 +480,6 @@ Las nubes híbridas se caracterizan por combinar los modelos de nube pública y 
 \subsection{Tipos de Servicios en la Nube}
 
 La computación en la nube permite la integración de servicios en red a nivel mundial y además contribuye al uso eficiente de la energía aunque la centralización de las aplicaciones y el almacenamiento de los datos origina una interdependencia con los proveedores de servicios. La disponibilidad de estos servicios necesita de conexión a Internet.  En el artículo \textbf{Comparison Among Cloud Technologies and Cloud Performance}~\cite{cloudtech} se revisan las distintas tecnologías que configuran la nube comparando distintas herramientas para trabajar con este tipo de servicios.
-
-Los servicios proporcionados por la nube pueden clasificarse en las siguientes categorías:
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{imagenes/arquitecturaCC.jpg}
-\caption{ Arquitectura Cloud Computing~\cite{arquitecturaCC} }
-\end{figure}
 
 \subsubsection{Software como servicio}\label{secsaas}
 
@@ -581,12 +566,13 @@ Amazon Web Services~\cite{aws} presenta  CodePipeline~\cite{awspipe} como servic
 
 \subsubsection{Comparativa}
 
-En la siguiente tabla se comparan las tecnologías del mercado prestando especial atención al tipo de funcionalidad que cubren en términos de los objetivos de este proyecto. La idea es mostrar como GCM:Coode-Runner integra las funcionalidades propuestas para servir una solución completa.
+En la figura ~\ref{comp} se comparan las tecnologías del mercado prestando especial atención al tipo de funcionalidad que cubren en términos de los objetivos de este proyecto. La idea es mostrar como GCM:Coode-Runner integra las funcionalidades propuestas para servir una solución completa.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.30]{imagenes/comparativa.png}
+\includegraphics[scale=0.35]{imagenes/comparativa.png}
 \caption{ Tabla Comparativa: Tecnología VS. Funcionalidad }
+\label{comp}
 \end{figure}
 
 
@@ -609,7 +595,7 @@ Este capítulo se centra en analizar el problema y definir la solución del sist
 
 \section{Planificación}
 
-La planificación temporal muestra mediante el uso de diagramas de Gant la distribución en el tiempo de las tareas necesarias para cumplir con los objetivos de este proyecto. Los siguientes diagramas han sido confeccionados con la herramienta online Tom's Planner~\cite{tom}
+La planificación temporal muestra mediante el uso de diagramas de Gant la distribución en el tiempo de las tareas necesarias para cumplir con los objetivos de este proyecto. Los diagramas de Gant han sido confeccionados con la herramienta online Tom's Planner~\cite{tom}
 
 \begin{figure}[H]
 \centering
@@ -932,7 +918,7 @@ Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realiz
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1.png}
+\includegraphics[scale=0.2]{imagenes/casouso/1_a.png}
 \caption{  Autenticación y Autorización: Index }
 \end{figure}
 
@@ -940,7 +926,7 @@ Para iniciar sesión, es necesario hacer click en el botón de \textbf{Login wit
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2.png}
+\includegraphics[scale=0.45]{imagenes/casouso/2_a.png}
 \caption{  Autenticación y Autorización: Autenticación }
 \end{figure}
 
@@ -948,19 +934,11 @@ Es necesario introducir usuario y contraseña correspondientes al perfil de Gith
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3.png}
+\includegraphics[scale=0.45]{imagenes/casouso/3_a.png}
 \caption{  Autenticación y Autorización: Autorización }
 \end{figure}
 
-La autorización consiste en conceder permisos al sistema para realizar operaciones en nombre del usuario. Haciendo click en el botón de \textbf{Authorize} se conceden permisos para gestionar repositorios, gestionar paquetes, crear releases y utilizar flujos de integración continua. 
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/4.png}
-\caption{ Autenticación y Autorización: Workspace  }
-\end{figure}
-
-Finalmente accede a su \textbf{Workspace} personal que actualmente se encuentra vacío ya que aun no ha creado ninguna aplicación. 
+La autorización consiste en conceder permisos al sistema para realizar operaciones en nombre del usuario. Haciendo click en el botón de \textbf{Authorize} se conceden permisos para gestionar repositorios, gestionar paquetes, crear releases y utilizar flujos de integración continua. Finalmente accede a su \textbf{Workspace} personal. 
 
 \subsection{Generando Aplicaciones}
 
@@ -968,7 +946,7 @@ Para comenzar a generar aplicaciones, el usuario ha de hacer click en el botón 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/5.png}
+\includegraphics[scale=0.45]{imagenes/casouso/5_a.png}
 \caption{ Generando Aplicaciones: Formulario de Creación  }
 \end{figure}
 
@@ -983,7 +961,7 @@ De manera general, la especificación solicita el nombre de la aplicación, una 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/6.png}
+\includegraphics[scale=0.45]{imagenes/casouso/6_a.png}
 \caption{  Generando Aplicaciones: Naturalezas  }
 \end{figure}
 \subsubsection{Single-Page}
@@ -992,14 +970,14 @@ Las tecnologías soportadas para este tipo de aplicación son las siguientes:
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/7.png}
+\includegraphics[scale=0.45]{imagenes/casouso/7_a.png}
 \caption{ Generando Aplicaciones: Single-Page   }
 \end{figure}
 
 Se establece el puerto de despliegue \textbf{8805} y se hace click sobre el botón \textbf{Generate}.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/8.png}
+\includegraphics[scale=0.45]{imagenes/casouso/8_a.png}
 \caption{  Generando Aplicaciones: Single-Page  }
 \end{figure}
 
@@ -1007,7 +985,7 @@ El usuario es redirigido de nuevo al \textbf{Workspace} y la aplicación comienz
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/9.png}
+\includegraphics[scale=0.25]{imagenes/casouso/9_a.png}
 \caption{ Generando Aplicaciones: Single-Page  }
 \end{figure}
 
@@ -1025,14 +1003,14 @@ Cuando el proceso de generación finaliza, comienza el ciclo de integración con
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/11.png}
+\includegraphics[scale=0.25]{imagenes/casouso/11_a.png}
 \caption{  Generando Aplicaciones: Single-Page CI }
 \end{figure}
 
 Si el usuario vuelve al \textbf{Workspace} puede comprobar que efectivamente el estado de la aplicación es \textbf{building}. 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/12.png}
+\includegraphics[scale=0.25]{imagenes/casouso/12_a.png}
 \caption{ Generando Aplicaciones: Single-Page Compilación  }
 \end{figure}
 
@@ -1062,33 +1040,34 @@ El resultado de este flujo es por una parte un Release que identifica de manera 
 Si el usuario vuelve a poner el foco en su \textbf{Workspace} encuentra de nuevo un cambio de estado, la aplicación esta \textbf{running}, es decir, ha sido desplegada. 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/16.png}
+\includegraphics[scale=0.25]{imagenes/casouso/16_a.png}
 \caption{   Generando Aplicaciones: Single-Page Desplegada }
 \end{figure}
+
+~\\
+~\\
+
 
  Haciendo uso del enlace disponible en la entrada \textbf{Deploy-Address} puede consumirla a través de Internet. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/17.png}
+\includegraphics[scale=0.25]{imagenes/casouso/17_a.png}
 \caption{  Generando Aplicaciones: Single-Page Consultada }
 \end{figure}
 
+\newpage
 \subsubsection{Api-Rest}
-
 Las tecnologías soportadas para este tipo de aplicación son las siguientes: 
-
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/18.png}
+\includegraphics[scale=0.4]{imagenes/casouso/18_a.png}
 \caption{  Generando Aplicaciones: Api-Rest Tecnología }
 \end{figure}
-
 Una de las principales características de las aplicaciones base REST es que soportan lógica de negocio para realizar operaciones sobre un modelo de datos. Por ello, para esta naturaleza la especificación requiere de un modelo de datos en formato JSON:
-
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/19.png}
+\includegraphics[scale=0.4]{imagenes/casouso/19_a.png}
 \caption{  Generando Aplicaciones: Api-Rest Modelo de Datos  }
 \end{figure}
 
@@ -1098,7 +1077,7 @@ Las tecnologías soportadas para este tipo de aplicación son las siguientes:
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/20.png}
+\includegraphics[scale=0.35]{imagenes/casouso/20_a.png}
 \caption{  Generando Aplicaciones: Data-Service Tecnología  }
 \end{figure}
 
@@ -1110,12 +1089,13 @@ Las tecnologías soportadas para este tipo de aplicación son las siguientes:
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/21.png}
+\includegraphics[scale=0.4]{imagenes/casouso/21_a.png}
 \caption{ Generando Aplicaciones: DevOps-Service Tecnología   }
 \end{figure}
 
 Presentando por ejemplo un servidor de automatización de tareas como es el caso de Jenkins CI. 
 
+\newpage
 \subsubsection{Workspace}
 
 Una vez generadas las aplicaciones propuestas, el usuario puede navegar entre ellas desde su \textbf{Workspace} . El ciclo de integración continua es similar para todas ellas. 
@@ -1239,13 +1219,13 @@ El primer mecanismo integrado en todas las aplicaciones es el flujo de integraci
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_1.png}
+\includegraphics[scale=0.25]{imagenes/casouso/2_1_a.png}
 \caption{ Actualizando Aplicaciones: Single-Page en Ejecución  }
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_2.png}
+\includegraphics[scale=0.25]{imagenes/casouso/2_2_a.png}
 \caption{  Actualizando Aplicaciones: Single-Page Consulta }
 \end{figure}
 
@@ -1321,14 +1301,14 @@ git push
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_10.png}
+\includegraphics[scale=0.25]{imagenes/casouso/2_10_a.png}
 \caption{   Actualizando Aplicaciones: Single-Page Stop 0.0.0  }
 \end{figure}
  
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_11.png}
+\includegraphics[scale=0.25]{imagenes/casouso/2_11_a.png}
 \caption{   Actualizando Aplicaciones: Single-Page Run 0.0.1  }
 \end{figure}
  
@@ -1337,7 +1317,7 @@ git push
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_12.png}
+\includegraphics[scale=0.25]{imagenes/casouso/2_12_a.png}
 \caption{  Actualizando Aplicaciones: Single-Page Consulta 0.0.1 }
 \end{figure}
 
@@ -1347,13 +1327,13 @@ El sistema produce las herramientas necesarias para trabajar en local con las ap
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_1.png}
+\includegraphics[scale=0.25]{imagenes/casouso/3_1_a.png}
 \caption{  Trabajo Local:  Show Access Token}
 \end{figure}
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_3.png}
+\includegraphics[scale=0.25]{imagenes/casouso/3_3_a.png}
 \caption{ Trabajo Local:  Access Token  }
 \end{figure}
 
@@ -1398,14 +1378,14 @@ De esta forma, se crean una nueva Release y un nuevo artefacto :
  
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_9.png}
+\includegraphics[scale=0.25]{imagenes/casouso/3_9_a.png}
 \caption{ Trabajo Local: Single-Page Stop 0.0.1    }
 \end{figure}
  
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_10.png}
+\includegraphics[scale=0.25]{imagenes/casouso/3_10_a.png}
 \caption{  Trabajo Local: Single-Page Run 0.0.2 }
 \end{figure}
  
@@ -1414,7 +1394,7 @@ De esta forma, se crean una nueva Release y un nuevo artefacto :
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_11.png}
+\includegraphics[scale=0.25]{imagenes/casouso/3_11_a.png}
 \caption{   Trabajo Local: Single-Page Consulta 0.0.2}
 \end{figure}
 
@@ -1423,23 +1403,23 @@ De esta forma, se crean una nueva Release y un nuevo artefacto :
 
 Si por algún motivo, el usuario decide que quiere volver al punto de partida, el sistema proporciona la posibilidad de re-generar la aplicación en cuestión llevando el código fuente modificado a su estado base inicial. Para ello, con el foco en su \textbf{Workspace}, el usuario puede hacer click en el botón \textbf{Re-Generate}
 
-   \begin{figure}[H]
+ \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_1.png}
+\includegraphics[scale=0.25]{imagenes/casouso/4_1_a.png}
 \caption{  Re-Generación: Single-Page 0.0.2 }
 \end{figure}
 
 
-   \begin{figure}[H]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_2.png}
+\includegraphics[scale=0.25]{imagenes/casouso/4_2_a.png}
 \caption{  Re-Generación: Single-Page 0.0.2 Stop}
 \end{figure}
 
 
-   \begin{figure}[H]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_3.png}
+\includegraphics[scale=0.25]{imagenes/casouso/4_3_a.png}
 \caption{ Re-Generación: Single-Page Generating  }
 \end{figure}
 
@@ -1474,14 +1454,14 @@ Si por algún motivo, el usuario decide que quiere volver al punto de partida, e
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_8.png}
+\includegraphics[scale=0.25]{imagenes/casouso/4_8_a.png}
 \caption{  Re-Generación: Single-Page 0.0.3 Running }
 \end{figure}
 
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_9.png}
+\includegraphics[scale=0.25]{imagenes/casouso/4_9_a.png}
 \caption{ Re-Generación: Single-Page 0.0.3 Consulta  }
 \end{figure}
 
@@ -1492,7 +1472,7 @@ Si el usuario considera finalizado su trabajo puede eliminar todos los recursos 
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/5_1.png}
+\includegraphics[scale=0.25]{imagenes/casouso/5_1_a.png}
 \caption{  Limpieza: Single-Page 0.0.3 Delete }
 \end{figure}
 
@@ -1500,13 +1480,15 @@ La aplicación entra en estado de no retorno \textbf{deleting} y se procede  a l
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/5_2.png}
+\includegraphics[scale=0.25]{imagenes/casouso/5_2_a.png}
 \caption{  Limpieza: Single-Page 0.0.3 Deleting }
 \end{figure}
 
+~\\
+
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/5_3.png}
+\includegraphics[scale=0.25]{imagenes/casouso/5_3_a.png}
 \caption{ Limpieza: Workspace  }
 \end{figure}
 
