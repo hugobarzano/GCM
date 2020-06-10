@@ -914,43 +914,47 @@ En este caso de uso, se va a utilizar el primero de ellos por ser más seguro y 
 
 \subsection{Autenticación y Autorización}
 
-Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realizar operaciones sobre sus repositorios de código. Para ello, desde un explorador web ha de navegar hasta \url{https://apps.gcm-coderunner.com}. Se presenta la página de bienvenida. 
+Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realizar operaciones sobre sus repositorios de código. Para ello, desde un explorador web ha de navegar hasta \url{https://apps.gcm-coderunner.com}. En la figura ~\ref{1} se presenta la página de bienvenida. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.2]{imagenes/casouso/1_a.png}
 \caption{  Autenticación y Autorización: Index }
+\label{1}
 \end{figure}
 
-Para iniciar sesión, es necesario hacer click en el botón de \textbf{Login with Github} y el proceso de autenticación es delegado a este servicio:
+Para iniciar sesión, es necesario hacer click en el botón de \textbf{Login with Github}. La figura ~\ref{2} muestra como el proceso de autenticación es delegado a este servicio. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso/2_a.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/2.png}
 \caption{  Autenticación y Autorización: Autenticación }
+\label{2}
 \end{figure}
 
-Es necesario introducir usuario y contraseña correspondientes al perfil de Github. Haciendo click en el botón de  \textbf{Sign In} el mecanismo de autenticación continua con la autorización: 
+Es necesario introducir usuario y contraseña correspondientes al perfil de Github. Haciendo click en el botón de  \textbf{Sign In} el mecanismo de autenticación da paso a  la autorización tal y como se muestra en la figura  ~\ref{3}.  
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso/3_a.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/3.png}
 \caption{  Autenticación y Autorización: Autorización }
+\label{3}
 \end{figure}
 
 La autorización consiste en conceder permisos al sistema para realizar operaciones en nombre del usuario. Haciendo click en el botón de \textbf{Authorize} se conceden permisos para gestionar repositorios, gestionar paquetes, crear releases y utilizar flujos de integración continua. Finalmente accede a su \textbf{Workspace} personal. 
 
 \subsection{Generando Aplicaciones}
 
-Para comenzar a generar aplicaciones, el usuario ha de hacer click en el botón de \textbf{Create App} situado a la izquierda de la barra de navegación superior. El usuario es dirigido al formulario donde especificar el tipo de aplicación que desea generar. 
+Para comenzar a generar aplicaciones, el usuario ha de hacer click en el botón de \textbf{Create App} situado a la izquierda de la barra de navegación superior. El usuario es dirigido al formulario que se muestra en la figura   ~\ref{5}  donde especificar el tipo de aplicación que desea generar. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso/5_a.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/5.png}
 \caption{ Generando Aplicaciones: Formulario de Creación  }
+\label{5}
 \end{figure}
 
-De manera general, la especificación solicita el nombre de la aplicación, una descripción, la naturaleza de la aplicación, la tecnología y el puerto donde se desea desplegar. Las naturalezas soportadas son:
+De manera general, la especificación solicita el nombre de la aplicación, una descripción, la naturaleza de la aplicación, la tecnología y el puerto donde se desea desplegar. La figura ~\ref{6} muestra las naturalezas soportadas en el formulario de creación. Estas naturalezas son:
 
 \begin{enumerate}
 \item \textbf{ Single-Page: } Aplicaciones web estáticas que se caracterizan por servir contenido estático en una sola pagina con el objetivo de mejorar la experiencia de usuario. 
@@ -961,156 +965,157 @@ De manera general, la especificación solicita el nombre de la aplicación, una 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso/6_a.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/6.png}
 \caption{  Generando Aplicaciones: Naturalezas  }
+\label{6}
 \end{figure}
+
+
 \subsubsection{Single-Page}
 
-Las tecnologías soportadas para este tipo de aplicación son las siguientes: 
+La figura ~\ref{7} muestra las tecnologías soportadas para este tipo de aplicación.  
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso/7_a.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/7.png}
 \caption{ Generando Aplicaciones: Single-Page   }
+\label{7}
 \end{figure}
 
 Se establece el puerto de despliegue \textbf{8805} y se hace click sobre el botón \textbf{Generate}.
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.45]{imagenes/casouso/8_a.png}
-\caption{  Generando Aplicaciones: Single-Page  }
-\end{figure}
-
-El usuario es redirigido de nuevo al \textbf{Workspace} y la aplicación comienza a ser generada. 
+El usuario es redirigido de nuevo al \textbf{Workspace}. La figura   ~\ref{9} muestra como la aplicación comienza a ser generada. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/9_a.png}
-\caption{ Generando Aplicaciones: Single-Page  }
+\includegraphics[scale=0.45]{imagenes/casouso_a/9.png}
+\caption{ Generando Aplicaciones: Single-Page}
+\label{9}
 \end{figure}
 
 
 Toda la producción de código fuente es albergada en un repositorio de código creado en la cuenta del usuario. Haciendo click en el enlace disponible en el apartado \textbf{Source-Code}
-el usuario puede consultar dicho código fuente. 
+el usuario puede consultar dicho código fuente.  La figura ~\ref{10} muestra el repositorio de código para la aplicación. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/10.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/10.png}
 \caption{  Generando Aplicaciones: Single-Page Repositorio }
+\label{10}
 \end{figure}
 
-Cuando el proceso de generación finaliza, comienza el ciclo de integración continua, el cual es definido como una \textbf{Github Action}.
+Cuando el proceso de generación finaliza, comienza el ciclo de integración continua, el cual se define como una \textbf{Github Action}. La figura ~\ref{11} muestra dicho flujo de integración. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/11_a.png}
+\includegraphics[scale=0.35]{imagenes/casouso_a/11.png}
 \caption{  Generando Aplicaciones: Single-Page CI }
+\label{11}
 \end{figure}
 
-Si el usuario vuelve al \textbf{Workspace} puede comprobar que efectivamente el estado de la aplicación es \textbf{building}. 
+Si el usuario vuelve al \textbf{Workspace} puede comprobar que efectivamente la aplicación ha sufrido un cambio de estado. La figura ~\ref{12} muestra el estado  \textbf{building}. 
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/12_a.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/12.png}
 \caption{ Generando Aplicaciones: Single-Page Compilación  }
+\label{12}
 \end{figure}
 
 
-Este flujo de integración continua se divide en una serie de fases en las que se ejecutan las pruebas unitarias, se compila la aplicación generada y finalmente se empaqueta el artefacto:
+Este flujo de integración continua se divide en una serie de fases en las que se ejecutan las pruebas unitarias, se compila la aplicación generada y finalmente se empaqueta el artefacto. La figura ~\ref{13} muestra el ciclo de integración continua completado. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/13.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/13.png}
 \caption{ Generando Aplicaciones: Single-Page CI Completado  }
+\label{13}
 \end{figure}
 
-El resultado de este flujo es por una parte un Release que identifica de manera única al estado del código fuente y por otra el artefacto que se va a desplegar: 
+El resultado de este flujo es por una parte un Release que identifica de manera única al estado del código fuente tal y como se muestra en la figura ~\ref{14} y por otra el artefacto que se va a desplegar. La figura ~\ref{15} muestra el artefacto disponible dentro del repositorio de código.  
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/14.png}
+\includegraphics[scale=0.35]{imagenes/casouso_a/14.png}
 \caption{ Generando Aplicaciones: Single-Page Release  }
+\label{14}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/15.png}
+\includegraphics[scale=0.35]{imagenes/casouso_a/15.png}
 \caption{  Generando Aplicaciones: Single-Page Artefacto}
+\label{15}
 \end{figure}
 
-Si el usuario vuelve a poner el foco en su \textbf{Workspace} encuentra de nuevo un cambio de estado, la aplicación esta \textbf{running}, es decir, ha sido desplegada. 
+Si el usuario vuelve a poner el foco en su \textbf{Workspace} encuentra de nuevo un cambio de estado, la aplicación ha sido desplegada. La figura ~\ref{16} indica el estado \textbf{running} de la aplicación. 
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/16_a.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/16.png}
 \caption{   Generando Aplicaciones: Single-Page Desplegada }
+\label{16}
 \end{figure}
 
 ~\\
 ~\\
 
 
- Haciendo uso del enlace disponible en la entrada \textbf{Deploy-Address} puede consumirla a través de Internet. 
+ Haciendo uso del enlace disponible en la entrada \textbf{Deploy-Address} puede consumirla a través de Internet. La imagen ~\ref{17} muestra una consulta a  la aplicación. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/17_a.png}
+\includegraphics[scale=0.2]{imagenes/casouso_a/17.png}
 \caption{  Generando Aplicaciones: Single-Page Consultada }
+\label{17}
 \end{figure}
 
 \newpage
 \subsubsection{Api-Rest}
-Las tecnologías soportadas para este tipo de aplicación son las siguientes: 
+
+La figura ~\ref{18} muestra las tecnologías para este tipo de aplicación. 
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{imagenes/casouso/18_a.png}
+\includegraphics[scale=0.37]{imagenes/casouso_a/18.png}
 \caption{  Generando Aplicaciones: Api-Rest Tecnología }
+\label{18}
 \end{figure}
-Una de las principales características de las aplicaciones base REST es que soportan lógica de negocio para realizar operaciones sobre un modelo de datos. Por ello, para esta naturaleza la especificación requiere de un modelo de datos en formato JSON:
+
+Una de las principales características de las aplicaciones base REST es que soportan lógica de negocio para realizar operaciones sobre un modelo de datos. Por ello, para esta naturaleza la especificación requiere de un modelo de datos en formato JSON. La figura ~\ref{19} muestra el modelo por defecto que se sirve en el formulario de creación. 
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{imagenes/casouso/19_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/19.png}
 \caption{  Generando Aplicaciones: Api-Rest Modelo de Datos  }
+\label{19}
 \end{figure}
 
 \subsubsection{Data-Service}
 
-Las tecnologías soportadas para este tipo de aplicación son las siguientes: 
+La figura ~\ref{20} muestra las tecnologías para este tipo de aplicación. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.35]{imagenes/casouso/20_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/20.png}
 \caption{  Generando Aplicaciones: Data-Service Tecnología  }
+\label{20}
 \end{figure}
 
 Esta caracterización abarca principalmente servicios para la persistencia de datos o mecanismo de cache.
 
 \subsubsection{DevOps-Service}
 
-Las tecnologías soportadas para este tipo de aplicación son las siguientes: 
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.4]{imagenes/casouso/21_a.png}
-\caption{ Generando Aplicaciones: DevOps-Service Tecnología   }
-\end{figure}
-
-Presentando por ejemplo un servidor de automatización de tareas como es el caso de Jenkins CI. 
-
-\newpage
-\subsubsection{Workspace}
-
-Una vez generadas las aplicaciones propuestas, el usuario puede navegar entre ellas desde su \textbf{Workspace} . El ciclo de integración continua es similar para todas ellas. 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_1.png}
-\caption{  Generando Aplicaciones:Workspace I  }
-\end{figure}
+La figura ~\ref{21} muestra las tecnologías para este tipo de aplicación, presentando un servidor de automatización de tareas como es el caso de Jenkins CI. 
 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_2.png}
-\caption{   Generando Aplicaciones:Workspace II }
+\includegraphics[scale=0.4]{imagenes/casouso_a/21.png}
+\caption{ Generando Aplicaciones: DevOps-Service Tecnología}
+\label{21}
 \end{figure}
+
+
 
 \subsection{Consumiendo Aplicaciones}
 
