@@ -595,30 +595,35 @@ Este capítulo se centra en analizar el problema y definir la solución del sist
 
 \section{Planificación}
 
-La planificación temporal muestra mediante el uso de diagramas de Gant la distribución en el tiempo de las tareas necesarias para cumplir con los objetivos de este proyecto. Los diagramas de Gant han sido confeccionados con la herramienta online Tom's Planner~\cite{tom}
+La planificación temporal muestra mediante el uso de diagramas de Gant la distribución en el tiempo de las tareas necesarias para cumplir con los objetivos de este proyecto. Las figuras ~\ref{p1}, ~\ref{p2}, ~\ref{p3} y ~\ref{p4} reflejan las distintas etapas del proyecto. Los diagramas de Gant han sido confeccionados con la herramienta online Tom's Planner~\cite{tom}.
+
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.20]{imagenes/gant1.png}
 \caption{ Planificación: Definición del Proyecto}
+\label{p1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.20]{imagenes/gant2.png}
 \caption{ Planificación: Análisis y Desarrollo Inicial }
+\label{p2}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.20]{imagenes/gant3.png}
 \caption{ Planificación: Desarrollo Formal}
+\label{p3}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.20]{imagenes/gant4.png}
 \caption{ Planificación: Documentación Formal}
+\label{p4}
 \end{figure}
 
 
@@ -633,7 +638,7 @@ Los requisitos de información se caracterizan por reunir la información releva
 \textbf{RI-1. Workspace:} Representación del espacio de trabajo del usuario. Contiene el conjunto de las aplicaciones que el usuario ha creado usando el sistema. Concepto similar al del Escritorio o "Desktop" de un sistema operativo.
 Contenido: nombre de usuario o propietario del workspace, referencia al conjunto de aplicaciones generadas. \\
 \textbf{RI-2. App:} Representación de cada una de las aplicaciones generadas por el sistema.
-Contenido en Anexo: Modelo de Datos\ref{anexmodel}\\
+Contenido en Anexo: Modelo de Datos ~\ref{anexmodel}\\
 \textbf{RI-3. Información de Usuario:} Información sensible del usuario o desarrollador que va a usar el sistema. Credenciales al sistema de gestión de repositorios para el código fuente, en este caso relativa al perfil de github.
 Contenido: nombre de usuario, correo electrónico, organización. \\
 
@@ -710,41 +715,46 @@ Los requisitos no funcionales, se refieren a todos los requisitos que no describ
 
 \textbf{RNF-4} Se prestará especial atención en la seguridad del  las aplicaciones expuestas a Internet.
 \subsection{Casos de Uso}
-Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema.
+Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Las figuraras ~\ref{c1}, ~\ref{c2}  y ~\ref{c3} describen el punto de vista de los usuarios  en el sistema.
 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.50]{imagenes/casosUso1.jpg}
 \caption{ Casos de uso - Gestión Aplicaciones I~\cite{diagrama}  }
+\label{c1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.50]{imagenes/casosUso2.jpg}
 \caption{ Casos de uso - Gestión Aplicaciones II~\cite{diagrama}  }
+\label{c2}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.50]{imagenes/casosUso3.jpg}
 \caption{ Casos de uso - Gestión Credenciales~\cite{diagrama}  }
+\label{c3}
 \end{figure}
 
 \subsection{Diagramas de Secuencia}
-Los diagramas de secuencia especifican las interacciones temporales entre las piezas internas del sistema para cumplir con las funcionalidades requeridas. Normalmente la tecnología que implementa cada una de las piezas internas del sistema no es incluida en este tipo de diagramas pero en este caso se incluye para mejorar la compresión del sistema por parte del lector. 
+Los diagramas de secuencia presentados en las figuras ~\ref{s1}, ~\ref{s2}, ~\ref{s3}  y ~\ref{s4} especifican las interacciones temporales entre las piezas internas del sistema para cumplir con las funcionalidades requeridas. Normalmente la tecnología que implementa cada una de las piezas internas del sistema no es incluida en este tipo de diagramas pero en este caso se incluye para mejorar la compresión del sistema por parte del lector. 
 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.45]{imagenes/secuencia1.jpg}
 \caption{ Diagramas de Secuencia - Inicio sesión ~\cite{diagrama}  }
+\label{s1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.43]{imagenes/secuencia2.jpg}
 \caption{ Diagramas de Secuencia - Crear Aplicación~\cite{diagrama}  }
+\label{s2}
 \end{figure}
 
 
@@ -752,30 +762,22 @@ Los diagramas de secuencia especifican las interacciones temporales entre las pi
 \centering
 \includegraphics[scale=0.43]{imagenes/secuencia3.jpg}
 \caption{ Diagramas de Secuencia - Ejecutar, Inspeccionar y Detener Aplicación~\cite{diagrama}  }
+\label{s3}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.43]{imagenes/secuencia4.jpg}
 \caption{ Diagramas de Secuencia - Eliminar Aplicación~\cite{diagrama}  }
+\label{s4}
 \end{figure}
-
-
-
 
 
 \chapter{ Implementación y Pruebas}
 
-
 \section{Implementación y Desarrollo}\label{secid}
+En el proceso de desarrollo e implementación del sistema, se ha seguido el patrón de arquitectura software Modelo-Vista-Controlador (MVC) cuya finalidad es separar los datos y la lógica de aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y escalabilidad del software resultante.
 
-En el proceso de desarrollo e implementación del sistema, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)~\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y escalabilidad del software resultante.
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.20]{imagenes/mvc.png}
-\caption{ Modelo-Vista-Controlador~\cite{mvc2}  }
-\end{figure}
 
 Los componentes~\cite{mvc3} del Modelo-Vista-Controlador se pueden definir en:
 
@@ -830,12 +832,13 @@ Las entidades generadas por este sistema ( aplicaciones) están compuestas por u
 La infraestructura virtual de las aplicaciones  representa al entorno de computación en la nube que cuenta con los recursos necesarios para ejecutar o desplegar las aplicaciones generadas por el proyecto, permitiendo a los usuarios utilizar las aplicaciones generadas vía Internet.
 Con el objetivo de generalizar las operaciones sobre las aplicaciones  se ha decidido utilizar Docker como tecnología de virtualización ligera.
 
-Docker~\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de sistemas Unix  para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales completas.
+Docker~\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de sistemas Unix  para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales completas. La figura ~\ref{d} muestra las interacciones Docker sobre el sistema operativo anfitrión. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.35]{imagenes/docker.png}
 \caption{ Virtualización Docker~\cite{dkw}}
+\label{d}
 \end{figure}
 
 La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores disponen de recursos similares pero de manera compartida con el núcleo  del sistema operativo anfitrion y junto con otros contenedores los cuales se ejecutan  como procesos asilados en el espacio de usuario del sistema operativo. No están vinculados con ninguna infraestructura específica.
@@ -927,7 +930,7 @@ Para iniciar sesión, es necesario hacer click en el botón de \textbf{Login wit
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso_a/2.png}
+\includegraphics[scale=0.7]{imagenes/casouso_a/2.png}
 \caption{  Autenticación y Autorización: Autenticación }
 \label{2}
 \end{figure}
@@ -962,32 +965,41 @@ De manera general, la especificación solicita el nombre de la aplicación, una 
 \item \textbf{ Data-Service:} Servicios cloud que ofrecen acceso a datos bajo demanda de los usuarios. 
 \item \textbf{ DevOps-Service: } Servicios cloud orientados al desarrollo y operación de sistemas software. 
 \end{enumerate}
+\vspace{0.5cm}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso_a/6.png}
+\includegraphics[scale=0.5]{imagenes/casouso_a/6.png}
 \caption{  Generando Aplicaciones: Naturalezas  }
 \label{6}
 \end{figure}
 
+\newpage
 
 \subsubsection{Single-Page}
-
 La figura ~\ref{7} muestra las tecnologías soportadas para este tipo de aplicación.  
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso_a/7.png}
+\includegraphics[scale=0.5]{imagenes/casouso_a/7.png}
 \caption{ Generando Aplicaciones: Single-Page   }
 \label{7}
 \end{figure}
+~\\
+~\\
+~\\
 
 Se establece el puerto de despliegue \textbf{8805} y se hace click sobre el botón \textbf{Generate}.
 El usuario es redirigido de nuevo al \textbf{Workspace}. La figura   ~\ref{9} muestra como la aplicación comienza a ser generada. 
-
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso_a/9.png}
+\includegraphics[scale=0.5]{imagenes/casouso_a/9.png}
 \caption{ Generando Aplicaciones: Single-Page}
 \label{9}
 \end{figure}
@@ -995,19 +1007,35 @@ El usuario es redirigido de nuevo al \textbf{Workspace}. La figura   ~\ref{9} mu
 
 Toda la producción de código fuente es albergada en un repositorio de código creado en la cuenta del usuario. Haciendo click en el enlace disponible en el apartado \textbf{Source-Code}
 el usuario puede consultar dicho código fuente.  La figura ~\ref{10} muestra el repositorio de código para la aplicación. 
-
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.45]{imagenes/casouso_a/10.png}
+\includegraphics[scale=0.5]{imagenes/casouso_a/10.png}
 \caption{  Generando Aplicaciones: Single-Page Repositorio }
 \label{10}
 \end{figure}
 
 Cuando el proceso de generación finaliza, comienza el ciclo de integración continua, el cual se define como una \textbf{Github Action}. La figura ~\ref{11} muestra dicho flujo de integración. 
+~\\
+~\\
+~\\
+~\\
+~\\
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.35]{imagenes/casouso_a/11.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/11.png}
 \caption{  Generando Aplicaciones: Single-Page CI }
 \label{11}
 \end{figure}
@@ -1030,15 +1058,24 @@ Este flujo de integración continua se divide en una serie de fases en las que s
 \caption{ Generando Aplicaciones: Single-Page CI Completado  }
 \label{13}
 \end{figure}
-
+~\\
+~\\
+~\\
 El resultado de este flujo es por una parte un Release que identifica de manera única al estado del código fuente tal y como se muestra en la figura ~\ref{14} y por otra el artefacto que se va a desplegar. La figura ~\ref{15} muestra el artefacto disponible dentro del repositorio de código.  
-
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.35]{imagenes/casouso_a/14.png}
 \caption{ Generando Aplicaciones: Single-Page Release  }
 \label{14}
 \end{figure}
+~\\
 
 \begin{figure}[H]
 \centering
@@ -1046,7 +1083,9 @@ El resultado de este flujo es por una parte un Release que identifica de manera 
 \caption{  Generando Aplicaciones: Single-Page Artefacto}
 \label{15}
 \end{figure}
-
+~\\
+~\\
+~\\
 Si el usuario vuelve a poner el foco en su \textbf{Workspace} encuentra de nuevo un cambio de estado, la aplicación ha sido desplegada. La figura ~\ref{16} indica el estado \textbf{running} de la aplicación. 
 
 \begin{figure}[H]
@@ -1076,41 +1115,53 @@ La figura ~\ref{18} muestra las tecnologías para este tipo de aplicación.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.37]{imagenes/casouso_a/18.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/18.png}
 \caption{  Generando Aplicaciones: Api-Rest Tecnología }
 \label{18}
 \end{figure}
 
 Una de las principales características de las aplicaciones base REST es que soportan lógica de negocio para realizar operaciones sobre un modelo de datos. Por ello, para esta naturaleza la especificación requiere de un modelo de datos en formato JSON. La figura ~\ref{19} muestra el modelo por defecto que se sirve en el formulario de creación. 
-
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{imagenes/casouso_a/19.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/19.png}
 \caption{  Generando Aplicaciones: Api-Rest Modelo de Datos  }
 \label{19}
 \end{figure}
 
+\newpage
 \subsubsection{Data-Service}
 
-La figura ~\ref{20} muestra las tecnologías para este tipo de aplicación. 
+La figura ~\ref{20} muestra las tecnologías para este tipo de aplicación. Esta caracterización abarca principalmente servicios para la persistencia de datos o mecanismo de cache.
+
+
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{imagenes/casouso_a/20.png}
+\includegraphics[scale=0.5]{imagenes/casouso_a/20.png}
 \caption{  Generando Aplicaciones: Data-Service Tecnología  }
 \label{20}
 \end{figure}
 
-Esta caracterización abarca principalmente servicios para la persistencia de datos o mecanismo de cache.
 
 \subsubsection{DevOps-Service}
 
 La figura ~\ref{21} muestra las tecnologías para este tipo de aplicación, presentando un servidor de automatización de tareas como es el caso de Jenkins CI. 
-
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{imagenes/casouso_a/21.png}
+\includegraphics[scale=0.45]{imagenes/casouso_a/21.png}
 \caption{ Generando Aplicaciones: DevOps-Service Tecnología}
 \label{21}
 \end{figure}
@@ -1122,96 +1173,134 @@ La figura ~\ref{21} muestra las tecnologías para este tipo de aplicación, pres
 El sistema dota al usuario de las operaciones básicas para consumir las aplicaciones generas. Esta sección ejemplifica cómo el usuario es capaz de consumir u operar una API-Rest y un servicio de datos. Las operaciones que se muestran a continuación son comunes a todas las aplicaciones producidas por el sistema. 
 
 \subsubsection{Consumiendo Api-Rest}
-Para consumir la aplicación generada \textbf{demoapi} el usuario dispone de las siguientes operaciones. Haciendo click en el botón \textbf{Stop} detiene el actual despliegue de la aplicación, liberando los recursos virtuales consumidos por ella y cambiando su estado:
+Para consumir la aplicación generada \textbf{demoapi} el usuario dispone de las siguientes operaciones. Haciendo click en el botón \textbf{Stop} detiene el actual despliegue de la aplicación, liberando los recursos virtuales consumidos por ella. La figura ~\ref{1_3}  refleja el cambio de estado.
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_3.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/1_3.png}
 \caption{  Consumiendo Aplicaciones: Api-Rest  Stop}
+\label{1_3}
 \end{figure}
 
-Haciendo click en el botón \textbf{Run} se produce un nuevo despliegue de la aplicación, utilizando para ello la última versión generada del artefacto (la imagen Docker) 
-
-
+Haciendo click en el botón \textbf{Run} se produce un nuevo despliegue de la aplicación, utilizando para ello la última versión generada del artefacto (la imagen Docker). La figura ~\ref{1_4} refleja la aplicación en ejecución. 
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_4.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/1_4.png}
 \caption{ Consumiendo Aplicaciones: Api-Rest Run  }
+\label{1_4}
 \end{figure}
 
 
-Haciendo click en el botón \textbf{View}, el usuario es redirigido a una vista concreta de la aplicación. 
-
+Haciendo click en el botón \textbf{View}, el usuario es redirigido tal y como muestra la figura ~\ref{1_5} a una vista concreta de la aplicación. 
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_5.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/1_5.png}
 \caption{ Consumiendo Aplicaciones: Api-Rest View   }
+\label{1_5}
 \end{figure}
 
-El sistema permite inspeccionar el tráfico atendido por la aplicación en tiempo real haciendo click en el botón \textbf{View App Logs}. Esta operación abre un socket TCP con el docker que ejecuta la aplicación y emite en streaming todos los logs producidos por la misma. Las siguientes evidencias muestran operaciones básicas realizadas utilizando la interfaz de usuario que acompaña a las aplicaciones de naturaleza Api-Rest:
+El sistema permite inspeccionar el tráfico atendido por la aplicación en tiempo real haciendo click en el botón \textbf{View App Logs}. Esta operación abre un socket TCP con el docker que ejecuta la aplicación y emite en streaming todos los logs producidos por la misma. Las  figuras de la ~\ref{1_7} a la ~\ref{1_10}  se presentan  como evidencia de las operaciones básicas realizadas utilizando la interfaz de usuario que acompaña a las aplicaciones de naturaleza Api-Rest. 
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{imagenes/casouso_a/1_7.png}
+\caption{  Consumiendo Aplicaciones: Api-Rest View Logs Index}
+\label{1_7}
+\end{figure}
+
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_7.png}
-\caption{  Consumiendo Aplicaciones: Api-Rest View Logs Index }
+\includegraphics[scale=0.25]{imagenes/casouso_a/1_8.png}
+\caption{  Consumiendo Aplicaciones: Api-Rest View Logs UI}
+\label{1_8}
 \end{figure}
 
+~\\
+~\\
+~\\
+~\\
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{imagenes/casouso_a/1_9.png}
+\caption{ Consumiendo Aplicaciones: Api-Rest View Logs POST}
+\label{1_9}
+\end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_8.png}
-\caption{  Consumiendo Aplicaciones: Api-Rest View Logs UI }
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_10.png}
-\caption{ Consumiendo Aplicaciones: Api-Rest View Logs POST  }
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_11.png}
-\caption{ Consumiendo Aplicaciones: Api-Rest View Logs DELETE  }
+\includegraphics[scale=0.25]{imagenes/casouso_a/1_10.png}
+\caption{ Consumiendo Aplicaciones: Api-Rest View Logs DELETE }
+\label{1_10}
 \end{figure}
 
 \subsubsection{Consumiendo Data-Service}
 
-Continuando con el caso de uso de como consumir las aplicaciones generadas se presenta un servicio de datos. En este ejemplo el usuario inspecciona una base de datos MongoDB: 
-
+Continuando con el caso de uso de como consumir las aplicaciones generadas se presenta un servicio de datos. En este ejemplo el usuario inspecciona una base de datos MongoDB, para ello, es necesario un cliente por linea de comandos para conectar a este tipo de base de datos haciendo uso de la terminal de un sistema operativo. Las figuras ~\ref{1_14} y ~\ref{1_15} muestran como evidencia que los logs de la aplicación registran el numero de nuevas conexiones. 
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_13.png}
-\caption{ Consumiendo Aplicaciones: Data-Service View Logs  }
-\end{figure}
-
-En este caso de uso, es necesario un cliente por linea de comandos para este tipo de base de datos haciendo uso de la terminal de un sistema operativo, los logs de la aplicación registran el numero de nuevas conexiones: 
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_14.png}
+\includegraphics[scale=0.25]{imagenes/casouso_a/1_14.png}
 \caption{  Consumiendo Aplicaciones: Data-Service View Logs I  }
+\label{1_14}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_15.png}
+\includegraphics[scale=0.25]{imagenes/casouso_a/1_15.png}
 \caption{  Consumiendo Aplicaciones: Data-Service View Logs II }
+\label{1_15}
 \end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_16.png}
-\caption{ Consumiendo Aplicaciones: Data-Service View Logs III  }
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/1_17.png}
-\caption{ Consumiendo Aplicaciones: Data-Service View Logs IV   }
-\end{figure}
-
 
 
 \subsection{Actualizando Aplicaciones}
@@ -1220,33 +1309,44 @@ El sistema proporciona al usuario los mecanismos necesarios para evolucionar las
 
 \subsubsection{Flujo Continuo de Integración Software}
 
-El primer mecanismo integrado en todas las aplicaciones es el flujo de integración y entrega continuos que permiten al usuario integrar nuevas funcionalidades siguiendo buenas prácticas, para ello, dada una aplicación Single-Page en ejecución:
-
+El primer mecanismo integrado en todas las aplicaciones es el flujo de integración y entrega continuos que permiten al usuario integrar nuevas funcionalidades siguiendo buenas prácticas, para su demostración se va a utilizar una aplicación Single-Page en ejecución como la mostrada en las figuras  ~\ref{2_1}  y  ~\ref{2_2}.
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/2_1_a.png}
-\caption{ Actualizando Aplicaciones: Single-Page en Ejecución  }
+\includegraphics[scale=0.45]{imagenes/casouso_a/2_1.png}
+\caption{ Actualizando Aplicaciones: Single-Page en Ejecución}
+\label{2_1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/2_2_a.png}
+\includegraphics[scale=0.2]{imagenes/casouso_a/2_2.png}
 \caption{  Actualizando Aplicaciones: Single-Page Consulta }
+\label{2_2}
 \end{figure}
 
- El usuario ha de clonar la aplicación en su sistema local, haciendo uso de la URL del repositorio proporcionada:
+ El usuario ha de clonar la aplicación en su sistema local, haciendo uso de la URL del repositorio proporcionada. Las figuras ~\ref{2_3} y ~\ref{2_4} detallan esto. 
  
  \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_3.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/2_3.png}
 \caption{  Actualizando Aplicaciones: Single-Page Clonar I }
+\label{2_3}
 \end{figure}
 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_4.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/2_4.png}
 \caption{  Actualizando Aplicaciones: Single-Page Clonar II }
+\label{2_4}
 \end{figure}
 
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -1255,15 +1355,15 @@ cd demoapp
 atom . #editor de texto
 \end{lstlisting}
 
- Ha de integrar nueva funcionalidad, en el caso de esta aplicación, modificar el color de la hoja de estilos CSS:
+ Ha de integrar nueva funcionalidad, en el caso de esta aplicación, modificar el color de la hoja de estilos CSS y  subir los cambios a la rama Master del repositorio. La figura ~\ref{2_5} muestra este cambio. 
  
  \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_5.png}
-\caption{ Actualizando Aplicaciones: Single-Page CSS   }
+\includegraphics[scale=0.4]{imagenes/casouso_a/2_5.png}
+\caption{ Actualizando Aplicaciones: Single-Page CSS}
+\label{2_5}
 \end{figure}
 
- Subir los cambios a la rama Master del repositorio:
  
  
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -1274,47 +1374,54 @@ git push
 
 
  
- El flujo de integración continua se dispara ante el evento \textbf{push} relacionado con subir nuevo código al repositorio y de nuevo somete a la aplicación a las mismas etapas que cuando fue generada:
+ Tal y como se refleja en las figuras  ~\ref{2_6} y  ~\ref{2_7},  el flujo de integración continua se dispara ante el evento \textbf{push} relacionado con subir nuevo código al repositorio y de nuevo somete a la aplicación a las mismas etapas que cuando fue generada.
  
   \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_6.png}
-\caption{  Actualizando Aplicaciones: Single-Page CI Start }
+\includegraphics[scale=0.3]{imagenes/casouso_a/2_6.png}
+\caption{  Actualizando Aplicaciones: Single-Page CI }
+\label{2_6}
 \end{figure}
 
   \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_7.png}
-\caption{ Actualizando Aplicaciones: Single-Page CI Finish  }
+\includegraphics[scale=0.4]{imagenes/casouso_a/2_7.png}
+\caption{ Actualizando Aplicaciones: Single-Page CI View  }
+\label{2_7}
 \end{figure}
 
- Una vez completado el ciclo de integración continua, el usuario percibe que una nueva Release y un nuevo Arterfacto están disponibles en el repositorio:
+ Una vez completado el ciclo de integración continua, el usuario percibe que una nueva Release y un nuevo Arterfacto están disponibles en el repositorio tal y como se muestran en las figuras ~\ref{2_8} y ~\ref{2_9}. 
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_8.png}
-\caption{  Actualizando Aplicaciones: Single-Page Release 0.0.1  }
+\includegraphics[scale=0.27]{imagenes/casouso_a/2_8.png}
+\caption{  Actualizando Aplicaciones: Single-Page Release 0.0.1}
+\label{2_8}
 \end{figure}
 
-  \begin{figure}[H]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/2_9.png}
+\includegraphics[scale=0.27]{imagenes/casouso_a/2_9.png}
 \caption{  Actualizando Aplicaciones: Single-Page Artefecto 0.0.1 }
+\label{2_9}
 \end{figure}
  
+ \newpage
  El usuario ha de poner el foco en su \textbf{Workspace} , hacer clic en el botón \textbf{Stop} y de nuevo en el botón \textbf{Run}, desplegando así la nueva versión de la aplicación. 
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/2_10_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/2_10.png}
 \caption{   Actualizando Aplicaciones: Single-Page Stop 0.0.0  }
+\label{2_10}
 \end{figure}
  
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/2_11_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/2_11.png}
 \caption{   Actualizando Aplicaciones: Single-Page Run 0.0.1  }
+\label{2_11}
 \end{figure}
  
  Si ahora vuelve a consumir la aplicación en la dirección de despliegue proporcionada, percibe que el cambio ha sido aplicado y desplegado. 
@@ -1322,60 +1429,75 @@ git push
  
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/2_12_a.png}
+\includegraphics[scale=0.23]{imagenes/casouso_a/2_12.png}
 \caption{  Actualizando Aplicaciones: Single-Page Consulta 0.0.1 }
+\label{2_12}
 \end{figure}
+
+Las figuras ~\ref{2_10},  ~\ref{2_11}  y  ~\ref{2_12} demuestran este proceso de actualización. 
 
 \subsubsection{Trabajo Local}
 
-El sistema produce las herramientas necesarias para trabajar en local con las aplicaciones. Para poder interactuar con el repositorio de código y realizar operaciones no públicas, como por ejemplo compilar y subir una nueva versión sin seguir el ciclo de integración software es necesario utilizar el token de acceso del usuario. Con su foco en el \textbf{Workspace}, el usuario ha de hacer click en el botón \textbf{Show Access Token}
+El sistema produce las herramientas necesarias para trabajar en local con las aplicaciones. Para poder interactuar con el repositorio de código y realizar operaciones no públicas, como por ejemplo compilar y subir una nueva versión sin seguir el ciclo de integración software es necesario utilizar el token de acceso del usuario. Con su foco en el \textbf{Workspace}, el usuario ha de hacer click en el botón \textbf{Show Access Token}. La figura  ~\ref{3_1} muestra el token de acceso proporcionado por el sistema. 
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/3_1_a.png}
+\includegraphics[scale=0.22]{imagenes/casouso_a/3_1.png}
 \caption{  Trabajo Local:  Show Access Token}
+\label{3_1}
 \end{figure}
+
+
+La idea es que el sistema ilustre al usuario en como ha de trabajar con las aplicaciones generadas, por lo  que haciendo click en el botón \textbf{Help!}  tal y como se muestra en la figura ~\ref{3_4},   el usuario dispone de una guía con las operaciones que puede realizar localmente sobre la aplicación.
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/3_3_a.png}
-\caption{ Trabajo Local:  Access Token  }
-\end{figure}
-
-La idea es que el sistema ilustre al usuario en como ha de trabajar con las aplicaciones generadas, por lo  que haciendo click en el botón \textbf{Help!} el usuario dispone de una guía con las operaciones que puede realizar localmente sobre la aplicación:
-
-   \begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_4.png}
+\includegraphics[scale=0.5]{imagenes/casouso_a/3_4.png}
 \caption{   Trabajo Local: Help}
+\label{3_4}
 \end{figure}
 
-Por ejemplo, si el usuario integra una nueva funcionalidad sobre la aplicación actual (0.0.1) como es el cambio de rojo a azul en la hoja de estilos, puede producir y desplegar una nueva versión sin ejecutar el ciclo de integración continua:
+Por ejemplo, si el usuario integra una nueva funcionalidad sobre la aplicación actual (0.0.1) como es el cambio de rojo a azul en la hoja de estilos, puede producir y desplegar una nueva versión sin ejecutar el ciclo de integración continua. La figura ~\ref{3_6} muestra la ejecución local de la siguiente  instrucción:
+~\\
+~\\
 
-   \begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_5.png}
-\caption{   Trabajo Local: Single-Page Actualización CSS}
-\end{figure}
+\begin{lstlisting}[language=json,firstnumber=1]
+make push user=hugobarzano token=xxxxxx
+\end{lstlisting}
 
-   \begin{figure}[H]
+~\\
+~\\
+~\\
+~\\
+
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_6.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/3_6.png}
 \caption{ Trabajo Local: Single-Page make push  }
+\label{3_6}
 \end{figure}
 
-De esta forma, se crean una nueva Release y un nuevo artefacto :
-
+Las figuras ~\ref{3_7} y ~\ref{3_8} muestran la nueva versión de la aplicación en forma de Release y artefacto. 
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_7.png}
+\includegraphics[scale=0.3]{imagenes/casouso_a/3_7.png}
 \caption{  Trabajo Local: Single-Page Release 0.0.2 }
+\label{3_7}
 \end{figure}
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/3_8.png}
+\includegraphics[scale=0.3]{imagenes/casouso_a/3_8.png}
 \caption{ Trabajo Local: Single-Page Artefacto 0.0.2  }
+\label{3_8}
 \end{figure}
 
 
@@ -1383,119 +1505,100 @@ De esta forma, se crean una nueva Release y un nuevo artefacto :
  
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/3_9_a.png}
-\caption{ Trabajo Local: Single-Page Stop 0.0.1    }
+\includegraphics[scale=0.4]{imagenes/casouso_a/3_9.png}
+\caption{ Trabajo Local: Single-Page Stop 0.0.1}
+\label{3_9}
 \end{figure}
  
- 
-   \begin{figure}[H]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/3_10_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/3_10.png}
 \caption{  Trabajo Local: Single-Page Run 0.0.2 }
+\label{3_10}
 \end{figure}
  
- Si ahora vuelve a consumir la aplicación en la dirección de despliegue proporcionada, percibe que el cambio local ha sido aplicado y desplegado en forma de nueva versión
- 
- 
-   \begin{figure}[H]
+ \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/3_11_a.png}
+\includegraphics[scale=0.22]{imagenes/casouso_a/3_11.png}
 \caption{   Trabajo Local: Single-Page Consulta 0.0.2}
+\label{3_11}
 \end{figure}
+
+Las figuras ~\ref{3_9},  ~\ref{3_10}  y  ~\ref{3_11} demuestran como el cambio local ha sido aplicado correctamente.
 
 
 \subsubsection{Re-Generación}
 
-Si por algún motivo, el usuario decide que quiere volver al punto de partida, el sistema proporciona la posibilidad de re-generar la aplicación en cuestión llevando el código fuente modificado a su estado base inicial. Para ello, con el foco en su \textbf{Workspace}, el usuario puede hacer click en el botón \textbf{Re-Generate}
+Si por algún motivo, el usuario decide que quiere volver al punto de partida, el sistema proporciona la posibilidad de re-generar la aplicación en cuestión llevando el código fuente modificado a su estado base inicial. Para ello, con el foco en su \textbf{Workspace}, el usuario puede hacer click en el botón \textbf{Re-Generate}. Las figuras de la ~\ref{4_1}  a la ~\ref{4_9} muestran el proceso de re-generación. 
 
  \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/4_1_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/4_1.png}
 \caption{  Re-Generación: Single-Page 0.0.2 }
+\label{4_1}
 \end{figure}
 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/4_2_a.png}
-\caption{  Re-Generación: Single-Page 0.0.2 Stop}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.25]{imagenes/casouso/4_3_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/4_3.png}
 \caption{ Re-Generación: Single-Page Generating  }
+\label{4_3}
 \end{figure}
-
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_4.png}
-\caption{  Re-Generación: Single-Page Building }
-\end{figure}
-
-
-   \begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_5.png}
+\includegraphics[scale=0.3]{imagenes/casouso_a/4_5.png}
 \caption{  Re-Generación: Single-Page Ready }
+\label{4_5}
 \end{figure}
 
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_6.png}
+\includegraphics[scale=0.27]{imagenes/casouso_a/4_6.png}
 \caption{  Re-Generación: Single-Page Release 0.0.3 }
+\label{4_6}
 \end{figure}
 
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{imagenes/casouso/4_7.png}
+\includegraphics[scale=0.3]{imagenes/casouso_a/4_7.png}
 \caption{  Re-Generación: Single-Page Artefacto 0.0.3 }
+\label{4_7}
 \end{figure}
 
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/4_8_a.png}
+\includegraphics[scale=0.4]{imagenes/casouso_a/4_8.png}
 \caption{  Re-Generación: Single-Page 0.0.3 Running }
+\label{4_8}
 \end{figure}
 
-
-   \begin{figure}[H]
-\centering
-\includegraphics[scale=0.25]{imagenes/casouso/4_9_a.png}
-\caption{ Re-Generación: Single-Page 0.0.3 Consulta  }
-\end{figure}
-
-\subsubsection{Limpieza}
-
-Si el usuario considera finalizado su trabajo puede eliminar todos los recursos virtuales creados por el sistema haciendo click en el botón \textbf{Delete}
-
-
-   \begin{figure}[H]
-\centering
-\includegraphics[scale=0.25]{imagenes/casouso/5_1_a.png}
-\caption{  Limpieza: Single-Page 0.0.3 Delete }
-\end{figure}
-
-La aplicación entra en estado de no retorno \textbf{deleting} y se procede  a la limpieza de los recursos virtuales utilizados. 
-
-   \begin{figure}[H]
-\centering
-\includegraphics[scale=0.25]{imagenes/casouso/5_2_a.png}
-\caption{  Limpieza: Single-Page 0.0.3 Deleting }
-\end{figure}
-
+~\\
 ~\\
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.25]{imagenes/casouso/5_3_a.png}
-\caption{ Limpieza: Workspace  }
+\includegraphics[scale=0.22]{imagenes/casouso_a/4_9.png}
+\caption{ Re-Generación: Single-Page 0.0.3 Consulta  }
+\label{4_9}
 \end{figure}
+
+\subsubsection{Limpieza}
+
+Si el usuario considera finalizado su trabajo puede eliminar todos los recursos virtuales creados por el sistema haciendo click en el botón \textbf{Delete}. La figura ~\ref{5_2} muestran como la aplicación entra en el estado \textbf{deleting}  de no retorno y se procede a la eliminación de los recursos virtuales utilizados.   
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{imagenes/casouso_a/5_2.png}
+\caption{  Limpieza: Single-Page 0.0.3 Deleting }
+\label{5_2}
+\end{figure}
+
 
 
 \chapter{Conclusiones}
@@ -1538,23 +1641,26 @@ Con el objetivo de mejorar el aprendizaje del usuario en el desarrollo, uso y co
 \subsection{Interfaz de Sistema Cloud}
 
 
-El estado actual del Code-Runner produce aplicaciones consumibles tal que  \textbf{ https://code-runner.com:8081/api/}  donde probar la solución generada. Es decir: 
+El estado actual del Code-Runner produce aplicaciones consumibles tal que  \textbf{ https://code-runner.com:8081/api/}  donde probar la solución generada tal y como se muestra en la figura ~\ref{sc_1}
 
    \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{imagenes/api.png}
+\includegraphics[scale=0.75]{imagenes/api.png}
 \caption{ Ejemplo App  }
+\label{sc_1}
 \end{figure}
-La extensión que se propone sería la de incluir, en la etapa de generación de código, todo lo necesario para servir una interfaz interna o de sistema de manera común a todas las soluciones generadas, sirviendo  cierta información sobre la aplicación:
+
+La extensión que se propone sería la de incluir, en la etapa de generación de código, todo lo necesario para servir una interfaz interna o de sistema de manera común a todas las soluciones generadas, sirviendo  cierta información sobre la aplicación. La figura ~\ref{sc_2} ejemplifica esta idea. 
 
 
-   \begin{figure}[H]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{imagenes/system.png}
+\includegraphics[scale=0.75]{imagenes/system.png}
 \caption{ Ejemplo Interfaz Sistema  }
+\label{sc_2}
 \end{figure}
 
-la interfaz \textbf{\char`_system/} podría servir información como por ejemplo:
+La interfaz \textbf{\char`_system/} podría servir información como por ejemplo:
 
 \begin{enumerate}
 \item\textbf{ https://code-runner.com:8081/\char`_system/version }: Versión software
