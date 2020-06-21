@@ -32,7 +32,7 @@ const makeApp = () => {
     app.use('/api/ui', swaggerUi.serve, swaggerUi.setup(apiDefinition));
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
-    app.use("/api",home);
+    app.use("/api/home",home);
     connect(app);
     return app
 };

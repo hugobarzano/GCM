@@ -15,7 +15,7 @@ const (
 	READY    AppStatus = "ready"
 	RUNNING  AppStatus = "running"
 	STOPPED  AppStatus = "stopped"
-	DELETING  AppStatus = "deleting"
+	DELETING AppStatus = "deleting"
 )
 
 type App struct {
@@ -57,8 +57,14 @@ func (app *App) SetDeployURL(port string) {
 		appUrl = fmt.Sprintf("http://%v:%v",
 			config.GetConfig().DeployAddress, port)
 	case constants.ApiRest:
-		appUrl = fmt.Sprintf("http://%v:%v/api",
-			config.GetConfig().DeployAddress, port)
+		switch app.Spec["tech"] {
+		case "js":
+			appUrl = fmt.Sprintf("http://%v:%v/api/home",
+				config.GetConfig().DeployAddress, port)
+		default:
+			appUrl = fmt.Sprintf("http://%v:%v/api",
+				config.GetConfig().DeployAddress, port)
+		}
 	case constants.DataService:
 		switch app.Spec["tech"] {
 		case "mongodb":

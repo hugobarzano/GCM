@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	"{{.api}}/model"
 	"net/http"
+	"log"
 )
 
 
@@ -19,12 +20,14 @@ func Init()  {
 }
 
 func ListAll(w http.ResponseWriter, r *http.Request) {
+	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(DATA)
 }
 
 func CreateOne(w http.ResponseWriter, r *http.Request) {
+	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	var obj model.{{.model}}
 	_ = json.NewDecoder(r.Body).Decode(&obj)
@@ -44,6 +47,7 @@ func CreateOne(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetOne(w http.ResponseWriter, r *http.Request) {
+	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for _, item := range DATA {
@@ -59,6 +63,7 @@ func GetOne(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateOne(w http.ResponseWriter, r *http.Request) {
+	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for index, item := range DATA {
@@ -79,6 +84,7 @@ func UpdateOne(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteOne(w http.ResponseWriter, r *http.Request) {
+	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for index, item := range DATA {

@@ -7,6 +7,7 @@ var DATA = new Map();
 
 // API Operations
 const listAll = (req, res) => {
+    console.log(req.method+ "  "+req.url+"\n"+req.headers);
     var response = [];
     for (var [, value] of DATA) {
         response.push(value)
@@ -15,6 +16,7 @@ const listAll = (req, res) => {
 };
 
 const getOne = (req, res) => {
+    console.log(req.method+ "  "+req.url+"\n"+req.headers);
     var id = req.params.id;
     if (DATA.has(id)){
         return res.json(DATA.get(id))
@@ -23,6 +25,7 @@ const getOne = (req, res) => {
 };
 
 const createOne = (req, res) => {
+    console.log(req.method+ "  "+req.url+"\n"+req.headers);
     var obj = req.body;
     var id = obj.id;
     if (DATA.has(id)){
@@ -33,6 +36,7 @@ const createOne = (req, res) => {
 };
 
 const updateOne = (req, res) => {
+    console.log(req.method+ "  "+req.url+"\n"+req.headers);
     var idToUpdate = req.params.id;
     if (DATA.has(idToUpdate)){
         var obj = req.body;
@@ -44,6 +48,7 @@ const updateOne = (req, res) => {
 };
 
 const deleteOne = (req, res) => {
+    console.log(req.method+ "  "+req.url+"\n"+req.headers);
     var idToRemove = req.params.id;
     if (DATA.has(idToRemove)){
         DATA.delete(idToRemove)

@@ -81,7 +81,7 @@ func (appDocker *DockerApp) imagePull(ctx context.Context, token string) error {
 	pkgAddr := appDocker.App.GetPKGName(genApp.GetLastRelease(ctx))
 
 	img, err := appDocker.Client.ImagePull(ctx, pkgAddr, opts)
-	timeout := time.Duration(5 * time.Minute)
+	timeout := time.Duration(7 * time.Minute)
 	start := time.Now()
 	for img == nil {
 		log.Println(fmt.Sprintf("image: %v not ready. Status: %v\n", pkgAddr, appDocker.App.Status))
