@@ -46,19 +46,6 @@ func runApp(user, token, app string) {
 		dockerApp := generator.DockerApp{
 			App: appObj,
 		}
-		err = dockerApp.Initialize()
-		if err != nil {
-			log.Println("Initialize error: " + err.Error())
-		}
-
-		err = dockerApp.ContainerStop(ctx)
-		if err != nil {
-			log.Println("ContainerStop error: " + err.Error())
-		}
-		err = dockerApp.ContainerRemove(ctx)
-		if err != nil {
-			log.Println("ContainerRemove error: " + err.Error())
-		}
 		dockerApp.ContainerStart(token)
 	}
 }
