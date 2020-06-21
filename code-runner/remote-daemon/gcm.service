@@ -3,8 +3,8 @@ Description=GCM:code-runner
 After=network.target
 
 [Service]
-Environment=DOCKER_CERT_PATH="/opt/GCM/code-runner/env/google/remote-daemon/client"
-Environment=DOCKER_HOST="https://127.0.0.1:5555"
+Environment=DOCKER_CERT_PATH=/opt/GCM/code-runner/env/google/remote-daemon/client
+Environment=DOCKER_HOST=https://127.0.0.1:5555
 Type=simple
 ExecStart=/bin/sh -c 'cd /opt/GCM/code-runner/ && ./code-runner.linux  --config /opt/GCM/code-runner/env/google/gcp-config.json 2>&1 | tee gcm.log'
 Restart=always
