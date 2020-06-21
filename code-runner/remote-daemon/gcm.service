@@ -6,9 +6,9 @@ After=network.target
 Environment=DOCKER_CERT_PATH="/opt/GCM/code-runner/env/google/remote-daemon/client"
 Environment=DOCKER_HOST="https://127.0.0.1:5555"
 Type=simple
-ExecStart=/bin/sh -c '/opt/GCM/code-runner/code-runner.linux --config /opt/GCM/code-runner/env/google/gcp-config.json '
+ExecStart=/bin/sh -c 'cd /opt/GCM/code-runner/ && ./code-runner.linux  --config /opt/GCM/code-runner/env/google/gcp-config.json 2>&1 | tee gcm.log'
 Restart=always
-RestartSec=3
+RestartSec=2
 
 [Install]
 WantedBy=multi-user.target
