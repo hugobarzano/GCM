@@ -32,7 +32,7 @@ func workspace(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 	} else {
-		log.Println(user + ": Already has a workspace")
+		log.Println(user + ": Already has a workspace... Loading Apps...\n")
 	}
 
 	if err := userAccessViews["workspace"].Render(w, workspace); err != nil {

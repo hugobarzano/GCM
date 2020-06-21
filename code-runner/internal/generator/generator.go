@@ -63,7 +63,7 @@ func (app *GenApp) InitializeCode(user string, token string, mail string) {
 	dockerApp := DockerApp{
 		App: app.App,
 	}
-	go dockerApp.ContainerStart(token)
+	dockerApp.ContainerStart(token)
 }
 
 func (app *GenApp) ReGenerateCode(user string, token string, mail string) {
@@ -108,7 +108,7 @@ func (app *GenApp) ReGenerateCode(user string, token string, mail string) {
 	dockerApp := DockerApp{
 		App: app.App,
 	}
-	go dockerApp.ContainerRegenerate(token)
+	dockerApp.ContainerRegenerate(token)
 }
 
 func (app *GenApp) generateSourceCode() {

@@ -39,24 +39,26 @@ func runApp(user, token, app string) {
 	ctx := context.Background()
 	appObj, err := store.ClientStore.GetApp(ctx, user, app)
 	if err != nil {
-
-		log.Println("Initialize error: " + err.Error())
-	}
-	dockerApp := generator.DockerApp{
-		App: appObj,
-	}
-	err = dockerApp.Initialize()
-	if err != nil {
-		log.Println("Initialize error: " + err.Error())
+		log.Println("error Getting App: " + err.Error())
 	}
 
-	err = dockerApp.ContainerStop(ctx)
-	if err != nil {
-		log.Println("ContainerStop error: " + err.Error())
+	if appObj != nil {
+		dockerApp := generator.DockerApp{
+			App: appObj,
+		}
+		err = dockerApp.Initialize()
+		if err != nil {
+			log.Println("Initialize error: " + err.Error())
+		}
+
+		err = dockerApp.ContainerStop(ctx)
+		if err != nil {
+			log.Println("ContainerStop error: " + err.Error())
+		}
+		err = dockerApp.ContainerRemove(ctx)
+		if err != nil {
+			log.Println("ContainerRemove error: " + err.Error())
+		}
+		dockerApp.ContainerStart(token)
 	}
-	err = dockerApp.ContainerRemove(ctx)
-	if err != nil {
-		log.Println("ContainerRemove error: " + err.Error())
-	}
-	dockerApp.ContainerStart(token)
 }

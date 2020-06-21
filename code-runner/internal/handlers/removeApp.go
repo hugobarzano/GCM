@@ -47,45 +47,48 @@ func removeApp(user, token, app string) {
 		log.Println(fmt.Sprintf("error getting app:%s", err.Error()))
 	}
 
-	dockerApp := generator.DockerApp{
-		App: appObj,
-	}
+	if appObj != nil {
 
-	appObj.Status = models.DELETING
-	appObj.Url = ""
-	_, err = store.ClientStore.UpdateApp(ctx, appObj)
-	if err != nil {
-		log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
-	}
+		dockerApp := generator.DockerApp{
+			App: appObj,
+		}
 
-	err = dockerApp.Initialize()
+		appObj.Status = models.DELETING
+		appObj.Url = ""
+		_, err = store.ClientStore.UpdateApp(ctx, appObj)
+		if err != nil {
+			log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
+		}
 
-	if err != nil {
-		log.Println(fmt.Sprintf("error Initialize docker engine:%s", err.Error()))
-	}
+		err = dockerApp.Initialize()
 
-	err = dockerApp.ContainerStop(ctx)
-	if err != nil {
-		log.Println(fmt.Sprintf("error stoping app container:%s", err.Error()))
-	}
+		if err != nil {
+			log.Println(fmt.Sprintf("error Initialize docker engine:%s", err.Error()))
+		}
 
-	err = dockerApp.ContainerRemove(ctx)
-	if err != nil {
-		log.Println(fmt.Sprintf("error removing app container:%s", err.Error()))
-	}
+		err = dockerApp.ContainerStop(ctx)
+		if err != nil {
+			log.Println(fmt.Sprintf("error stoping app container:%s", err.Error()))
+		}
 
-	genApp := generator.GenApp{
-		App: appObj,
-	}
+		err = dockerApp.ContainerRemove(ctx)
+		if err != nil {
+			log.Println(fmt.Sprintf("error removing app container:%s", err.Error()))
+		}
 
-	genApp.InitGit(ctx, token)
-	_, err = genApp.DeleteRepo(ctx)
-	if err != nil {
-		log.Println(fmt.Sprintf("error removing code repository:%s", err.Error()))
-	}
+		genApp := generator.GenApp{
+			App: appObj,
+		}
 
-	err = store.ClientStore.DeleteApp(ctx, user, app)
-	if err != nil {
-		log.Println(fmt.Sprintf("error removing app: " + err.Error()))
+		genApp.InitGit(ctx, token)
+		_, err = genApp.DeleteRepo(ctx)
+		if err != nil {
+			log.Println(fmt.Sprintf("error removing code repository:%s", err.Error()))
+		}
+
+		err = store.ClientStore.DeleteApp(ctx, user, app)
+		if err != nil {
+			log.Println(fmt.Sprintf("error removing app: " + err.Error()))
+		}
 	}
 }

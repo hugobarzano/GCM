@@ -44,35 +44,37 @@ func stopApp(user, token, app string) {
 		log.Println(fmt.Sprintf("error getting app:%s", err.Error()))
 	}
 
-	appObj.Status = models.STOPPED
-	appObj.Url = ""
-	_, err = store.ClientStore.UpdateApp(ctx, appObj)
-	if err != nil {
-		log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
-	}
+	if appObj != nil {
 
-	dockerApp := generator.DockerApp{
-		App: appObj,
-	}
+		appObj.Status = models.STOPPED
+		appObj.Url = ""
+		_, err = store.ClientStore.UpdateApp(ctx, appObj)
+		if err != nil {
+			log.Println(fmt.Sprintf("error updating DB with stopped app:%s", err.Error()))
+		}
 
-	err = dockerApp.Initialize()
-	if err != nil {
-		log.Println(fmt.Sprintf("error Initialize docker engine:%s", err.Error()))
-	}
+		dockerApp := generator.DockerApp{
+			App: appObj,
+		}
 
-	err = dockerApp.ContainerStop(ctx)
-	if err != nil {
-		log.Println(fmt.Sprintf("error stoping app container: %s", err.Error()))
-	}
+		err = dockerApp.Initialize()
+		if err != nil {
+			log.Println(fmt.Sprintf("error Initialize docker engine:%s", err.Error()))
+		}
 
-	err = dockerApp.ContainerRemove(ctx)
-	if err != nil {
-		log.Println(fmt.Sprintf("error removing app container: %s", err.Error()))
-	}
+		err = dockerApp.ContainerStop(ctx)
+		if err != nil {
+			log.Println(fmt.Sprintf("error stoping app container: %s", err.Error()))
+		}
 
-	err = dockerApp.ImageRemove(ctx, token)
-	if err != nil {
-		log.Println(fmt.Sprintf("error removing image: %s", err.Error()))
-	}
+		err = dockerApp.ContainerRemove(ctx)
+		if err != nil {
+			log.Println(fmt.Sprintf("error removing app container: %s", err.Error()))
+		}
 
+		err = dockerApp.ImageRemove(ctx, token)
+		if err != nil {
+			log.Println(fmt.Sprintf("error removing image: %s", err.Error()))
+		}
+	}
 }
