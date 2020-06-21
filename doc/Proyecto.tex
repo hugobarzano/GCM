@@ -328,7 +328,7 @@ La entidad de propósito general \textbf{aplicación} es definida por el siguien
 \item \textbf{ Codigo Fuente.}Representa el software en si, contiene la lógica de la aplicación.  
 \item \textbf{ Configuración.} Representa la configuración necesaria para ejecutar la aplicación. 
 \item \textbf{ Documentación.} Representa la documentación o especificación de la aplicación. 
-\item \textbf{ Dockerfile.} Define al artefacto necesario para ejecutar la aplicación. Dicho artefacto es una Imagen docker. 
+\item \textbf{ Dockerfile.} Define al artefacto necesario para ejecutar la aplicación. Dicho artefacto es una Imagen Docker. 
 \end{enumerate}
 
 
@@ -558,7 +558,7 @@ Docker Hub~\cite{dhub} es un repositorio de artefactos alojado en la nube. Pone 
 
 \subsubsection{AWS:CodeDeploy}
 
-Amazon Web Services~\cite{aws} presenta  CodeDeploy~\cite{awscode} como servicio gestionado para automatizar tareas de despliegue software sobre diversos recursos virtuales de su propia nube como máquinas virtuales ( EC2), contenedores docker (Fargate), funciones cloud ( Lambda) o servidores locales. Este tipo de servicios optimizan el ciclo de vida del desarrollo software y permiten aplicar buenas prácticas como el despliegue continuo de software. 
+Amazon Web Services~\cite{aws} presenta  CodeDeploy~\cite{awscode} como servicio gestionado para automatizar tareas de despliegue software sobre diversos recursos virtuales de su propia nube como máquinas virtuales ( EC2), contenedores Docker (Fargate), funciones cloud ( Lambda) o servidores locales. Este tipo de servicios optimizan el ciclo de vida del desarrollo software y permiten aplicar buenas prácticas como el despliegue continuo de software. 
 
 \subsubsection{AWS: CodePipeline}
 Amazon Web Services~\cite{aws} presenta  CodePipeline~\cite{awspipe} como servicio administrado para la implementación de entrega continua en proyectos software. Este servicio automatiza las actualizaciones de infraestructura y de aplicación. Su objetivo es el de mejorar el ciclo de vida del desarrollo software reduciendo las tareas manuales relativas al desarrollo y operaciones. Aunque inicialmente fue pensado para servicios de la propia nube de AWS sus últimas actualizaciones permiten su integración con servicios de terceros.  
@@ -714,10 +714,16 @@ Los requisitos no funcionales, se refieren a todos los requisitos que no describ
 \textbf{RNF-3} Se prestará especial atención en la gestión de credenciales de los usuarios.\\
 
 \textbf{RNF-4} Se prestará especial atención en la seguridad del  las aplicaciones expuestas a Internet.
+
 \subsection{Casos de Uso}
 Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Las figuraras ~\ref{c1}, ~\ref{c2}  y ~\ref{c3} describen el punto de vista de los usuarios  en el sistema.
 
-
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.50]{imagenes/casosUso1.jpg}
@@ -779,7 +785,7 @@ Los diagramas de secuencia presentados en las figuras ~\ref{s1}, ~\ref{s2}, ~\re
 En el proceso de desarrollo e implementación del sistema, se ha seguido el patrón de arquitectura software Modelo-Vista-Controlador (MVC) cuya finalidad es separar los datos y la lógica de aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la re-utilización de código y separación de conceptos. El objetivo de esta metodología es el de facilitar el desarrollo, mantenimiento y escalabilidad del software resultante.
 
 
-Los componentes~\cite{mvc3} del Modelo-Vista-Controlador se pueden definir en:
+Los componentes del Modelo-Vista-Controlador~\cite{mvc3} se pueden definir en:
 
 \begin{enumerate}
 \item \textbf{Modelo:} Representa la información, gestionando los accesos a ella, la base de datos  o capa de persistencia es un componente del modelo.
@@ -816,7 +822,7 @@ En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen
 
 \subsubsection{Repositorio de Código}\label{repo}
 
-Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros (README, licencia, código fuente, configuración, scripts, makefile, dockerfile...etc), estos ficheros son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github~\cite{github} aprovechando de este gestor de repositorios las siguientes funcionalidades: 
+Las entidades generadas por este sistema ( aplicaciones) están compuestas por un conjunto de ficheros (README, licencia, código fuente, configuración, scripts, makefile, Dockerfile...etc), estos ficheros son almacenados en repositorios de código alojados en la nube de manera pública, para ello, este proyecto esta completamente integrado con Github~\cite{github} aprovechando de este gestor de repositorios las siguientes funcionalidades: 
 
 \begin{enumerate}
 \item \textbf{ Autenticación.} El usuario final que utilice este sistema para generar aplicaciones necesita una cuenta de Github, ya que la autenticación mediante usuario y contraseña corresponde con el las credenciales  de su perfil de Github. Esto permite al sistema crear repositorios y subir el código generado a dichos repositorios bajo el perfil del usuario registrado. El proceso de autenticación contra Github proporciona una Token  de acceso el cual es aprovechado por una parte por el sistema generativo para realizar llamadas a la API  de Github y automatizar ciertas operaciones en nombre del usuario final y por otra parte los usuarios finales del sistema  pueden utilizar este Token para trabajar localmente con las aplicaciones generadas por el sistema.
@@ -824,7 +830,7 @@ Las entidades generadas por este sistema ( aplicaciones) están compuestas por u
 \item   \textbf{Integración Continua.} Github proporciona las denominadas GitHub-Actions~\cite{github3}  que permiten automatizar, personalizar y ejecutar flujos de integración continua  sobre los proyectos software alojados en sus repositorios, para ello, en el proceso de Code Generation este sistema produce un fichero  en la ruta:\\
 \textbf{repositorio/.github/workflows/ci.yml}~\ref{anexci} donde se describe el proceso o etapas de compilación, testing y empaquetado del la aplicación contenida en el repositorio, independientemente de la naturaleza de la aplicación, dando lugar a un artefacto auto-contenido listo para ser desplegado sobre un entorno virtual. Esto garantiza el uso de las buenas prácticas  de integración y entrega continua relativas al desarrollo software en todas las aplicaciones generadas.
 
-\item \textbf{Gestión de Artefactos} Github proporciona los denominados GitHub-Packages~\cite{github4} que permiten publicar y consumir paquetes o artefactos resultado de la compilación y empaquetado de las aplicaciones software albergadas en un repositorio de código. GitHub-Packages es capaz de gestionar paquetes de diversa naturaleza, siendo las imágenes docker las utilizadas en este proyecto.
+\item \textbf{Gestión de Artefactos} Github proporciona los denominados GitHub-Packages~\cite{github4} que permiten publicar y consumir paquetes o artefactos resultado de la compilación y empaquetado de las aplicaciones software albergadas en un repositorio de código. GitHub-Packages es capaz de gestionar paquetes de diversa naturaleza, siendo las imágenes Docker las utilizadas en este proyecto.
 \end{enumerate}
 
 \subsubsection{Infraestructura Virtual de las Aplicaciones}\label{infra}
@@ -832,18 +838,11 @@ Las entidades generadas por este sistema ( aplicaciones) están compuestas por u
 La infraestructura virtual de las aplicaciones  representa al entorno de computación en la nube que cuenta con los recursos necesarios para ejecutar o desplegar las aplicaciones generadas por el proyecto, permitiendo a los usuarios utilizar las aplicaciones generadas vía Internet.
 Con el objetivo de generalizar las operaciones sobre las aplicaciones  se ha decidido utilizar Docker como tecnología de virtualización ligera.
 
-Docker~\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de sistemas Unix  para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales completas. La figura ~\ref{d} muestra las interacciones Docker sobre el sistema operativo anfitrión. 
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.35]{imagenes/docker.png}
-\caption{ Virtualización Docker~\cite{dkw}}
-\label{d}
-\end{figure}
+Docker~\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de sistemas Unix  para permitir que contenedores independientes se ejecuten dentro de una sola máquina, evitando la sobrecarga de iniciar y mantener máquinas virtuales completas.
 
 La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores disponen de recursos similares pero de manera compartida con el núcleo  del sistema operativo anfitrion y junto con otros contenedores los cuales se ejecutan  como procesos asilados en el espacio de usuario del sistema operativo. No están vinculados con ninguna infraestructura específica.
 
-Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se produce un fichero denominado Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración y entrega continua de la aplicación  para producir una imagen docker como artefacto. Este artefacto es utilizado para crear un contenedor docker en un entorno virtual accesible a Internet (máquina virtual), habilitando el puerto necesario para garantizar que el tráfico es re-direccionado al contenedor correspondiente y de esta manera permitir que el usuario del sistema generativo consuma a través de Internet la aplicación generada, siendo todo esto trasparente para él. 
+Docker aporta a este proyecto la capacidad de abstraer las aplicaciones de la infraestructura virtual subyacente. En la etapa de Code Generation se produce un fichero denominado Dockerfile con la definición necesaria para ejecutar la aplicación producida en un contenedor. Este fichero es aprovechado  por el flujo de integración y entrega continua de la aplicación  para producir una imagen Docker como artefacto. Este artefacto es utilizado para crear un contenedor Docker en un entorno virtual accesible a Internet (máquina virtual), habilitando el puerto necesario para garantizar que el tráfico es re-direccionado al contenedor correspondiente y de esta manera permitir que el usuario del sistema generativo consuma a través de Internet la aplicación generada, siendo todo esto trasparente para él. 
 
 
 \subsection{Front-End}
@@ -858,7 +857,7 @@ JQuery~\cite{jq} es una librería de JavaScript, que permite interactuar con los
 Ajax~\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador.
 
 
-WebSocket es un tecnología basada en JavaScript que permite la comunicación bidireccional entre cliente y servidor mediante un único enlace TCP. Los WebSockets pueden entenderse como una evolución de Ajax, ya que permiten recopilar información del servidor sin tener que solicitarla expresamente, es decir, la información del servidor fluye hasta el cliente cuando esta es producida por lo que es ideal para implementar la consola de inspección en tiempo real. Para ello, desde la capa cliente se abre un socket TCP con el servidor, el cual emite por este canal toda la información que el docker de la aplicación produce al atender peticiones.  
+WebSocket es un tecnología basada en JavaScript que permite la comunicación bidireccional entre cliente y servidor mediante un único enlace TCP. Los WebSockets pueden entenderse como una evolución de Ajax, ya que permiten recopilar información del servidor sin tener que solicitarla expresamente, es decir, la información del servidor fluye hasta el cliente cuando esta es producida por lo que es ideal para implementar la consola de inspección en tiempo real. Para ello, desde la capa cliente se abre un socket TCP con el servidor, el cual emite por este canal toda la información que el Docker de la aplicación produce al atender peticiones.  
 
 Por último destacar que para los estilos de la capa cliente se ha utilizado la librería CSS Bootstrap~\cite{boot}
 
@@ -887,7 +886,7 @@ El entorno  ~\url{https://apps.gcm-coderunner.com} ha sido creado en las última
 \begin{enumerate}
 \item Servidor principal (code-runner.go): Desplegado en VM de GoogleCloud~\cite{gcp}
 \item Capa de persistencia (MongoDB): Instalada en la misma VM donde corre el servidor principal y expuesta solo para ser consumida por procesos ejecutados en localhost. 
-\item Gestor de repositorios: Github~github
+\item Gestor de repositorios: Github~\cite{github}
 \item Demonio Docker: Ejecutado en la misma VM que el servidor principal  pero expuesto con TLS a localhost, limitando de esta forma los posibles ataques externos que reciba el sistema, pues solo se exponen a Internet los contenedores de los usuarios, no el servicio de contenedores en si. 
 \end{enumerate}
 
@@ -902,11 +901,12 @@ Como se indicó anteriormente, las credenciales de usuario necesarias para utili
 
 \subsubsection{Comunicación Cliente-Servidor}
 
-Este proyecto implementa Transport Layer Security (TLS) para garantizar que la información intercambiada entre el servidor y los clientes es segura y viaja encriptada exponiendo su servicio mediante protocolo HTTPS. Por otra parte, la comunicación del servidor con el demonio docker donde se ejecutan las aplicaciones generadas por el usuario también utiliza TLS.
+Este proyecto implementa Transport Layer Security (TLS) para garantizar que la información intercambiada entre el servidor y los clientes es segura y viaja encriptada exponiendo su servicio mediante protocolo HTTPS. Por otra parte, la comunicación del servidor con el demonio Docker donde se ejecutan las aplicaciones generadas por el usuario también utiliza TLS.
 
 \section{Caso de Uso}
 
 Para mostrar las capacidades del sistema software \textbf{GCM:Code-Runner} se presenta el siguiente caso de uso desglosado en las distintas operaciones que el usuario final es capaz de realizar sobre el sistema en cualquiera de los dos entornos disponibles:
+~\\
 
 \begin{enumerate}
 \item \url{https://apps.gcm-coderunner.com}
@@ -914,10 +914,22 @@ Para mostrar las capacidades del sistema software \textbf{GCM:Code-Runner} se pr
 \end{enumerate}
 
 En este caso de uso, se va a utilizar el primero de ellos por ser más seguro y disponer de un dimensionamiento mayor (mejores prestaciones).
+~\\
+~\\
+~\\
+~\\
+~\\
 
 \subsection{Autenticación y Autorización}
 
-Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realizar operaciones sobre sus repositorios de código. Para ello, desde un explorador web ha de navegar hasta \url{https://apps.gcm-coderunner.com}. En la figura ~\ref{1} se presenta la página de bienvenida. 
+Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realizar operaciones sobre sus repositorios de código. Para ello, desde un explorador web ha de navegar hasta \url{https://apps.gcm-coderunner.com}. En la figura ~\ref{1} se presenta la página de bienvenida. Para iniciar sesión, es necesario hacer click en el botón de \textbf{Login with Github}. La figura ~\ref{2} muestra como el proceso de autenticación es delegado a este servicio. 
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+
 
 \begin{figure}[H]
 \centering
@@ -926,7 +938,7 @@ Como paso inicial, el usuario ha de autenticarse y autorizar al sistema a realiz
 \label{1}
 \end{figure}
 
-Para iniciar sesión, es necesario hacer click en el botón de \textbf{Login with Github}. La figura ~\ref{2} muestra como el proceso de autenticación es delegado a este servicio. 
+
 
 \begin{figure}[H]
 \centering
@@ -1226,7 +1238,7 @@ Haciendo click en el botón \textbf{View}, el usuario es redirigido tal y como m
 \label{1_5}
 \end{figure}
 
-El sistema permite inspeccionar el tráfico atendido por la aplicación en tiempo real haciendo click en el botón \textbf{View App Logs}. Esta operación abre un socket TCP con el docker que ejecuta la aplicación y emite en streaming todos los logs producidos por la misma. Las  figuras de la ~\ref{1_7} a la ~\ref{1_10}  se presentan  como evidencia de las operaciones básicas realizadas utilizando la interfaz de usuario que acompaña a las aplicaciones de naturaleza Api-Rest. 
+El sistema permite inspeccionar el tráfico atendido por la aplicación en tiempo real haciendo click en el botón \textbf{View App Logs}. Esta operación abre un socket TCP con el Docker que ejecuta la aplicación y emite en streaming todos los logs producidos por la misma. Las  figuras de la ~\ref{1_7} a la ~\ref{1_10}  se presentan  como evidencia de las operaciones básicas realizadas utilizando la interfaz de usuario que acompaña a las aplicaciones de naturaleza Api-Rest. 
 ~\\
 ~\\
 ~\\
@@ -1278,23 +1290,19 @@ Continuando con el caso de uso de como consumir las aplicaciones generadas se pr
 ~\\
 ~\\
 ~\\
-~\\
-~\\
-~\\
-~\\
-~\\
-~\\
-~\\
-~\\
-~\\
-~\\
+
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.25]{imagenes/casouso_a/1_14.png}
 \caption{  Consumiendo Aplicaciones: Data-Service View Logs I  }
 \label{1_14}
 \end{figure}
-
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.25]{imagenes/casouso_a/1_15.png}
