@@ -1,0 +1,71 @@
+1-
+
+Hola, soy Hugo Bárzano y hoy en el marco de trabajo de fin de master en investigación
+para la ingeniería software y sistemas informáticos voy a presentaros GCM: Code-Runner,
+un sistema orientado a la generación y despliegue de aplicaciones cloud, bajo la tutela de Rubén Heradio.
+Todo el material relativo al proyecto pueden encontrarlo en el repositorio del mismo.
+
+2º-
+
+Para comenzar, estos son los puntos que se abordarán en el resto de la presentación:
+    Idea General y conceptos de como la cadena de produción puede aplicar en ingeniería del software.
+    Tecnologías Actuales que cubren por separado funcionalidades cubiertas por este proyecto.
+    La idea es mostrar la tendencia de la industria.
+    En este proyecto:
+      Caracteristicas, Etapas, aplicaciones, arquitectura, Entornos
+    Demo
+    Conclusiones
+
+3º-
+
+A principios de 1900, Henrry Ford popularizó la idea de Ransom Olds, en la que se mejoraba el proceso de produción
+de coches mediante la implementación de una cadena de produción. La idea es que dado un diseño inicial,
+en este caso un coche, la linea de produción automatizaba el proceso de construción en un una serie de etapas,
+dando como resultado un vehiculo funcional.
+En cada una de estas etapas se ensaba un determinado componente del vehiculo y la suma de N etapas resultaba
+en el vehiculo completamente funcional. Este concepto ha sido ampliamente aplicado en multiples procesos de produción de
+diversos sectores y este proyecto muestra como este concepto puede ser aplicaco a la ingeniería software.
+
+4º-
+
+  1º- La idea es que dada una especificación de aplicación materializarla en una aplicación en ejecución.
+  2º- Code-Runner implementa la cadena de producción software
+
+5º-
+  Hablar de los conceptos necesarios para implementar la cadena de produción software:
+    - Es necesario un generador que produzca el código fuente
+    - Es necesario gestionar el código fuente usando para ello repositorios de código
+    - Buenas practicas en el ciclo de vida desarrollo software:
+      - Integración de nuevas funcionalidades
+      - Disponer de ejecutables o entregables que representan la aplicación
+      - Desplegar de manera automatizada el código generador
+    - Finalmente es necesario disponer de herramientas que permitan loggar y operar las aplicaciones en ejecución.
+6º - Generación y Gestión de código fuente: Las tecnologías del mercado crean recursos aislados o se presentan como plugins
+    para IDES pero NO generaan aplicaciones compeltas.
+7º-  Integración y Entrega Continua: Permiten definir el flujo de integración software pero normalmente estan orientados a serie
+       integrados con servicios de terceros para conseguir soluciones completas
+
+8º- Despliegue continuo: Automatizan gran parte de las tareas  y mejoran los tiempos de produción pero se guian por el lema
+    "From Code to Cloud" es decir, dependen de que el código ya exista y no solo del código si no de su artefacto y configuruaicón asociada.
+
+9º- Todo sistema que permita el despliegue de aplicaciones ha de habilitar las herramientas necesarias para operar dichas aplicaciones
+   así como analizarlas.
+
+10º-  Hablar de las Caracteristicas de este proyecto:
+    - Lema "From Spec to Cloud" --> Materializar especificacion de aplicación en aplicación funcional y en ejecución
+    - Diversa Naturalezas y Tecnologías
+    - Aplicaciones generadas son OpenSource, publicas y autcontenidas, es decir, funcionales fuera del marco de este proyecto.
+    - Implementan las buenas practicas relativas a integración, entrega y Despliegue continio
+    - Habilita las herramientas necesarias para Operar y analizar las aplicaciones en ejecución
+
+11º- Explicar las etapas de este proyecto --> Corregir imagenes. 
+
+12º y 13º- Explicar las aplicaciones soportadas por este proyecto
+
+14º - Hablar de la arquitectura
+
+15º- Entornos disponibles ( ¿Demo aquí o continuar?)
+
+16º- Conclusiones
+
+17º- THE END MY FRIEND
