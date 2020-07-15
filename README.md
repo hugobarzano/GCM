@@ -12,7 +12,7 @@ applications or cloud services cleanly and quickly.
 
 Checkout [GCM: Code-Runner](https://github.com/hugobarzano/GCM/blob/master/doc/GCM-CodeRunner-CesarHugoB%C3%A1rzanoCruz-77138361h.pdf) LaTEX Documentation.
 
-Checkout DOC [GCM: Code-Runner](https://github.com/hugobarzano/GCM/blob/master/doc/presentacion/GCM_Code-Runner.pdf) Slides.
+Checkout [GCM: Code-Runner](https://github.com/hugobarzano/GCM/blob/master/doc/presentacion/GCM_Code-Runner.pdf) Slides.
 
 ## How it works
 
