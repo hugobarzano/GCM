@@ -12,6 +12,8 @@ applications or cloud services cleanly and quickly.
 
 Checkout [GCM: Code-Runner](https://github.com/hugobarzano/GCM/blob/master/doc/GCM-CodeRunner-CesarHugoB%C3%A1rzanoCruz-77138361h.pdf) LaTEX Documentation.
 
+Checkout DOC [GCM: Code-Runner](https://github.com/hugobarzano/GCM/blob/master/doc/presentacion/GCM_Code-Runner.pdf) Slides.
+
 ## How it works
 
 Code-Runner use a high-level specification as input to generate a
