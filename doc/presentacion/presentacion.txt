@@ -58,7 +58,7 @@ diversos sectores y este proyecto muestra como este concepto puede ser aplicaco 
     - Implementan las buenas practicas relativas a integración, entrega y Despliegue continio
     - Habilita las herramientas necesarias para Operar y analizar las aplicaciones en ejecución
 
-11º- Explicar las etapas de este proyecto --> Corregir imagenes. 
+11º- Explicar las etapas de este proyecto --> Corregir imagenes.
 
 12º y 13º- Explicar las aplicaciones soportadas por este proyecto
 
